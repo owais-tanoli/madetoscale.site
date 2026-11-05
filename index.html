@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js')</script>
 <title>Made to Scale | Websites, SEO &amp; Automation for Businesses</title>
 <meta name="description" content="Made to Scale builds websites, SEO, ads, GoHighLevel CRM and automation as one connected growth system for businesses worldwide.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta name="theme-color" content="#1A130E">
+<meta name="theme-color" content="#000000">
 <link rel="canonical" href="https://madetoscale.site/">
 <link rel="alternate" hreflang="en" href="https://madetoscale.site/">
 <link rel="alternate" hreflang="x-default" href="https://madetoscale.site/">
@@ -24,12 +25,13 @@
 <meta name="twitter:title" content="Made to Scale | Websites, SEO &amp; Automation for Growing Businesses">
 <meta name="twitter:description" content="Websites, SEO, CRM and automation built as one growth system, for businesses worldwide.">
 <meta name="twitter:image" content="https://madetoscale.site/assets/icons/og.jpg">
-<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/icons/favicon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/img/earth-hero.jpg">
 <link rel="stylesheet" href="css/style.css">
 <script type="application/ld+json">
 {
@@ -222,7 +224,7 @@
 
 <header class="top">
   <div class="wrap top__row">
-    <a class="wordmark" href="#top" aria-label="Made to Scale home"><img src="assets/icons/logo.png" alt="Made to Scale" width="860" height="180"></a>
+    <a class="wordmark" href="#top" aria-label="Made to Scale home"><img src="assets/icons/logo.png" alt="Made to Scale" width="760" height="334"></a>
     <nav class="top__nav" id="nav-links" aria-label="Main">
       <a href="#services">Services</a>
       <a href="#journey">How It Connects</a>
@@ -232,8 +234,12 @@
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="btn btn--amber top__cta" href="#contact">Let's Build Something</a>
-    <button class="top__menu" id="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    <div class="top__actions">
+      <a class="btn btn--amber top__cta" href="#contact">Let's Build Something</a>
+      <a class="icon-btn" href="mailto:iowaismuhammad@gmail.com" aria-label="Email us"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+      <a class="icon-btn" href="tel:+971552571702" aria-label="Call us"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+      <button class="top__menu" id="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    </div>
   </div>
 </header>
 
@@ -241,24 +247,20 @@
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-    <source src="assets/icons/hero-bg.mp4" type="video/mp4">
-  </video>
-  <div class="hero__shade" aria-hidden="true"></div>
-  <div class="wrap hero__grid">
-    <h1 class="hero__title">We build the systems behind business growth.</h1>
-    <div class="hero__copy">
-      <p class="hero__lede">We combine websites, SEO, digital marketing and intelligent automation to help businesses worldwide attract, convert and manage more customers.</p>
-      <div class="hero__actions">
-        <a class="btn btn--amber" href="#contact">Let's Build Something</a>
-        <a class="btn btn--ghost" href="#services">Explore Our Services</a>
-      </div>
+  <div class="hero__earth" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+    <h1 class="hero__title">We build the systems behind <span class="accent">business growth.</span></h1>
+    <p class="hero__lede">We combine websites, SEO, digital marketing and intelligent automation to help businesses worldwide attract, convert and manage more customers.</p>
+    <div class="hero__actions">
+      <a class="btn btn--amber" href="#contact">Let's Build Something</a>
+      <a class="btn btn--ghost" href="#services">Explore Our Services</a>
     </div>
   </div>
+  <a class="hero__scroll" href="#intro" aria-label="Scroll down"></a>
 </section>
 
 <!-- INTRO STATEMENT -->
-<section class="intro">
+<section class="intro" id="intro">
   <div class="wrap">
     <p class="statement">Most lost growth is not a lack of effort. It is enquiries that arrive, wait and quietly disappear.</p>
     <ul class="facts">
@@ -274,7 +276,7 @@
 <section class="section journey" id="journey">
     <div class="wrap">
       <header class="section__head">
-        <h2>One customer journey, connected.</h2>
+        <h2>One customer journey, <span class="accent">connected.</span></h2>
         <p>Select each step to see what it does. The exact tools depend on your business and requirements.</p>
       </header>
       <div class="journey__wrap">
@@ -307,7 +309,7 @@
 <section class="section services" id="services">
   <div class="wrap">
     <header class="section__head">
-      <h2>Four parts of one growth system.</h2>
+      <h2>Four parts of one <span class="accent">growth system.</span></h2>
       <p>Each part works on its own. Together they connect: the website captures, the marketing brings people in, the CRM organises them and automation keeps them moving.</p>
     </header>
 
@@ -387,7 +389,7 @@
 <section class="section why">
   <div class="wrap">
     <header class="section__head">
-      <h2>Why Made to Scale</h2>
+      <h2>Why <span class="accent">Made to Scale</span></h2>
     </header>
     <ol class="why__list">
       <li><h3>Outcomes, not deliverables.</h3><p>The measure is more enquiries and more booked work, not a list of pages handed over.</p></li>
@@ -402,7 +404,7 @@
 <section class="section process">
   <div class="wrap">
     <header class="section__head">
-      <h2>How we work</h2>
+      <h2>How <span class="accent">we work</span></h2>
     </header>
     <ol class="steps">
       <li><span class="steps__no">01</span><h3>Discover</h3><p>Understand the business and its challenges.</p></li>
@@ -417,7 +419,7 @@
 <section class="section work" id="work">
   <div class="wrap">
     <header class="section__head">
-      <h2>Live proof and concept builds</h2>
+      <h2>Live proof and <span class="accent">concept builds</span></h2>
       <p>This website is live and built by us. The six others are concept builds: planned systems with a clear scope. Nothing here is presented as a client result.</p>
     </header>
 
@@ -508,7 +510,7 @@
 <section class="section industries" id="industries">
   <div class="wrap">
     <header class="section__head">
-      <h2>Industries we understand</h2>
+      <h2>Industries <span class="accent">we understand</span></h2>
     </header>
     <ul class="ind">
       <li><h3>Home Services</h3><p>Plumbers, HVAC, electricians and roofers, whose growth depends on calls and quotes.</p></li>
@@ -550,7 +552,7 @@
 <section class="section faq" id="faq">
   <div class="wrap faq__grid">
     <header class="faq__head">
-      <h2>Questions people ask</h2>
+      <h2>Questions <span class="accent">people ask</span></h2>
     </header>
     <div class="faq__text">
       <details class="faq-q">
@@ -638,7 +640,7 @@
 <section class="section contact" id="contact">
   <div class="wrap contact__grid">
     <div class="contact__copy">
-      <h2>Discuss a project</h2>
+      <h2>Discuss a <span class="accent">project</span></h2>
       <p>Tell us what isn't working and what you want more of. The form goes straight to our inbox.</p>
       <ol class="contact__steps">
         <li><strong>You share the goal.</strong> What isn't working, and what you want more of.</li>
@@ -693,7 +695,7 @@
 <footer class="foot">
   <div class="wrap foot__cols">
     <div>
-      <p class="foot__name">Made to Scale</p>
+      <img class="foot__logo" src="assets/icons/logo.png" alt="Made to Scale" width="760" height="334" loading="lazy">
       <p class="foot__tag">Build &middot; Automate &middot; Grow</p>
       <p>Websites, CRM and automation, built as one system.</p>
     </div>

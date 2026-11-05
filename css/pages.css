@@ -108,3 +108,27 @@
   .svc-q summary{ grid-template-columns: 40px 1fr auto; }
   .page-hero__links .btn, .page-close__row .btn{ width: 100%; }
 }
+
+
+/* v14: black + gold look on the sub-pages */
+.page-hero{ text-align: center; border-bottom: 0; }
+.page-hero h1{ font-weight: 500; font-size: clamp(32px, 5vw, 66px); line-height: 1.08; max-width: 20ch; margin: 0 auto; }
+.page-hero p{ margin-left: auto; margin-right: auto; }
+.page-hero__links{ justify-content: center; }
+.page-section{ border-bottom: 0; }
+.page-section .section__head h2, .page-close h2{ font-size: clamp(28px, 3.6vw, 48px); }
+.build, .how4 li, .notes4 div, .result{
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 28px;
+  background: linear-gradient(180deg, rgba(211,170,106,0.07), rgba(255,255,255,0.012));
+  transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.build:hover, .how4 li:hover, .notes4 div:hover{ border-color: rgba(211,170,106,0.6); box-shadow: 0 18px 50px -20px var(--glow); transform: translateY(-4px); }
+.build h3{ font-weight: 500; font-size: clamp(22px, 2.2vw, 30px); }
+.how4 span{ font-weight: 500; }
+.result h3{ font-weight: 500; font-size: 26px; }
+.result__total b{ font-weight: 500; font-size: 44px; }
+.svc-q__no{ font-weight: 500; }
+.svc-tools .btn:hover{ background: var(--amber); color: var(--amber-ink); }
+.ctl select{ border-radius: 12px; background: #0a0908; }
+.page-close{ background: var(--amber); }
+.page-close h2{ margin-left: 0; }

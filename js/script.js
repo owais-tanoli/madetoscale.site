@@ -1,4 +1,4 @@
-/* Made to Scale: menu toggle and a paused hero video for reduced motion. Everything else works without script. */
+/* Made to Scale: menu toggle. Everything else works without script. */
 (function () {
   var toggle = document.getElementById('nav-toggle');
   var nav = document.getElementById('nav-links');
@@ -15,16 +15,6 @@
         toggle.textContent = 'Menu';
       });
     });
-  }
-
-  var video = document.querySelector('.hero__video');
-  if (video) {
-    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (still) { video.pause(); video.removeAttribute('autoplay'); }
-    else {
-      var p = video.play();
-      if (p && p.catch) p.catch(function () {});
-    }
   }
 })();
 
@@ -113,4 +103,83 @@
       more.setAttribute('aria-expanded', String(expanded));
     });
   }
+})();
+
+
+/* =========================================================
+   SCROLL EFFECTS
+   - header turns solid once you scroll
+   - thin gold progress bar at the top
+   - cards and headings fade/slide in as they come into view
+   - hero earth + text move at a slower speed (parallax)
+   Without JavaScript, or with "reduce motion" on, everything simply shows.
+   ========================================================= */
+(function () {
+  var root = document.documentElement;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var header = document.querySelector('.top');
+  var hero = document.querySelector('.hero');
+  var earth = document.querySelector('.hero__earth');
+  var heroInner = document.querySelector('.hero__inner');
+
+  // ---- reveal on scroll
+  var targets = [
+    '.section__head', '.intro .statement', '.facts li', '.journey__steps li', '.journey__panel',
+    '.svc', '.svc__note', '.why__list li', '.steps li', '.filters', '.proj--live', '.proj-grid .proj',
+    '.ind li', '.about__body', '.faq__head', '.faq-q', '.faq__more',
+    '.close__title', '.close__row', '.close__audit', '.contact__copy', '.contact__form',
+    '.page-hero > .wrap > *', '.build', '.svc-tools', '.svc-q', '.how4 li', '.ptable',
+    '.calc > *', '.notes4 > div', '.page-close .wrap > *', '.foot__cols > *'
+  ].join(',');
+  var els = Array.prototype.slice.call(document.querySelectorAll(targets));
+
+  if (!('IntersectionObserver' in window) || still) {
+    els.forEach(function (el) { el.classList.add('reveal', 'is-in'); });
+  } else {
+    var seen = new Map();
+    els.forEach(function (el) {
+      var parent = el.parentElement;
+      var n = seen.get(parent) || 0;
+      seen.set(parent, n + 1);
+      el.style.setProperty('--d', Math.min(n * 0.07, 0.42).toFixed(2) + 's');
+      if (el.matches('.contact__copy')) el.style.setProperty('--rx', '-40px');
+      if (el.matches('.contact__form')) el.style.setProperty('--rx', '40px');
+      if (el.matches('.contact__copy, .contact__form')) el.style.setProperty('--ry', '0px');
+      el.classList.add('reveal');
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  // ---- progress bar
+  var bar = document.createElement('div');
+  bar.className = 'progress';
+  bar.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(bar);
+
+  // ---- scroll handler (one per animation frame)
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var y = window.pageYOffset || 0;
+    if (header) header.classList.toggle('is-scrolled', y > 8);
+    var max = root.scrollHeight - window.innerHeight;
+    root.style.setProperty('--p', max > 0 ? Math.min(y / max, 1).toFixed(4) : '0');
+    if (!still && hero && y < hero.offsetHeight + 200) {
+      if (earth) earth.style.setProperty('--py', (y * 0.28).toFixed(1) + 'px');
+      if (heroInner) {
+        heroInner.style.setProperty('--hy', (y * 0.18).toFixed(1) + 'px');
+        heroInner.style.setProperty('--ho', Math.max(0, 1 - y / (hero.offsetHeight * 0.75)).toFixed(3));
+      }
+    }
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 })();
