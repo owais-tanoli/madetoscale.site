@@ -183,3 +183,108 @@
   window.addEventListener('resize', update);
   update();
 })();
+
+
+/* =========================================================
+   ENQUIRY FORM
+   Sends in the background (no page jump) with a 12 second limit.
+   If it cannot be sent, the visitor gets ready-made Email and WhatsApp
+   links that already contain what they typed, so no enquiry is lost.
+   Without JavaScript the form still posts normally to the action URL.
+   ========================================================= */
+(function () {
+  var form = document.querySelector('form.enquiry');
+  if (!form || !window.fetch || !window.FormData) return;
+
+  var TO_EMAIL = 'mts.madetoscale@gmail.com';
+  var WHATSAPP = '971552571702';
+  var ENDPOINT = 'https://formsubmit.co/ajax/' + TO_EMAIL;
+  var TIMEOUT_MS = 12000;
+
+  var btn = form.querySelector('.enquiry__submit');
+  var note = form.querySelector('.enquiry__note');
+  var status = document.createElement('div');
+  status.className = 'enquiry__status';
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  status.hidden = true;
+  form.appendChild(status);
+
+  function collect() {
+    var obj = {};
+    new FormData(form).forEach(function (v, k) {
+      if (k === '_captcha' || k === '_next') return;
+      obj[k] = obj[k] ? obj[k] + ', ' + v : v;
+    });
+    return obj;
+  }
+
+  function plainText(o) {
+    return 'Name: ' + (o.name || '') + '\n' +
+      'Email: ' + (o.email || '') + '\n' +
+      'Phone: ' + (o.phone || '') + '\n' +
+      'Business type: ' + (o.business || '') + '\n' +
+      'Needs: ' + (o.need || '') + '\n\n' +
+      (o.message || '');
+  }
+
+  function show(html, kind) {
+    status.className = 'enquiry__status enquiry__status--' + kind;
+    status.innerHTML = html;
+    status.hidden = false;
+    status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function succeeded() {
+    form.reset();
+    if (note) note.hidden = true;
+    show('<strong>Thank you, your enquiry was sent.</strong> We will reply to you soon.', 'ok');
+  }
+
+  function failed(o) {
+    var text = plainText(o);
+    var mail = 'mailto:' + TO_EMAIL + '?subject=' + encodeURIComponent('New enquiry from madetoscale.site') +
+      '&body=' + encodeURIComponent(text);
+    var wa = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent('Hello Made to Scale,\n\n' + text);
+    show(
+      '<strong>Sorry, we could not send that automatically.</strong> Your details are safe in the form. ' +
+      'Please send them with one click:' +
+      '<span class="enquiry__alt"><a class="btn btn--amber" href="' + mail + '">Email us</a>' +
+      '<a class="btn btn--ghost" href="' + wa + '" target="_blank" rel="noopener">WhatsApp us</a></span>',
+      'error'
+    );
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var o = collect();
+    if (o._honey) { succeeded(); return; }          // a bot filled the hidden field
+    delete o._honey;
+
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+    status.hidden = true;
+
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
+    var done = false;
+    function finish(ok) {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      if (btn) { btn.disabled = false; btn.textContent = 'Send enquiry'; }
+      if (ok) succeeded(); else failed(o);
+    }
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(o),
+      signal: ctrl ? ctrl.signal : undefined
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { finish(!!j && (j.success === true || j.success === 'true')); })
+      .catch(function () { finish(false); });
+    // safety net for browsers without AbortController
+    setTimeout(function () { finish(false); }, TIMEOUT_MS + 1500);
+  });
+})();

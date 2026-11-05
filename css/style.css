@@ -546,3 +546,11 @@ h2{ font-weight: 500; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.1; let
   .js .reveal{ opacity: 1; }
   .progress{ display: none; }
 }
+
+/* enquiry form status message */
+.enquiry__status{ padding: 18px 20px; border-radius: 14px; border: 1px solid var(--line-strong); color: var(--ink); line-height: 1.5; }
+.enquiry__status[hidden]{ display: none; }
+.enquiry__status--ok{ border-color: var(--amber); background: rgba(211,170,106,0.10); }
+.enquiry__status--error{ border-color: rgba(255,120,100,0.55); background: rgba(255,120,100,0.07); }
+.enquiry__alt{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+.enquiry__alt .btn{ min-height: 46px; }
