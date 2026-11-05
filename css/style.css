@@ -450,12 +450,20 @@ h2{ font-weight: 500; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.1; let
 .hero__title{ font-family: var(--ff-serif); font-weight: 500; font-size: clamp(32px, 5.4vw, 80px); line-height: 1.08; letter-spacing: -0.02em; max-width: 19ch; }
 .hero__lede{ margin: 26px auto 0; max-width: 58ch; color: var(--ink-soft); font-size: clamp(16px, 1.4vw, 20px); }
 .hero__actions{ margin-top: 34px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-.hero__scroll{ position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 3; width: 28px; height: 46px; border: 2px solid var(--ink); border-radius: 18px; opacity: .85; }
-.hero__scroll::before{ content: ''; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--ink); animation: wheel 1.9s ease-in-out infinite; }
-@keyframes wheel{ 0%{ opacity: 0; transform: translateY(0); } 30%{ opacity: 1; } 100%{ opacity: 0; transform: translateY(16px); } }
+.hero__scroll{ position: absolute; left: 50%; bottom: 34px; transform: translateX(-50%); z-index: 3; width: 54px; height: 54px; display: grid; place-items: center; border: 1.5px solid var(--amber); border-radius: 50%; color: #fff; background: rgba(0,0,0,0.62); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 0 0 6px rgba(0,0,0,0.18), 0 8px 30px -6px rgba(0,0,0,0.7); text-decoration: none; }
+.hero__scroll svg{ display: block; }
+@keyframes hintShow{
+  0%{ opacity: 0; visibility: visible; transform: translate(-50%, -14px); }
+  12%{ opacity: 1; transform: translate(-50%, 0); }
+  86%{ opacity: 1; transform: translate(-50%, 0); }
+  100%{ opacity: 0; visibility: hidden; transform: translate(-50%, 10px); }
+}
+@keyframes arrowBob{ 0%, 100%{ transform: translateY(-3px); } 50%{ transform: translateY(4px); } }
 @keyframes earthIn{ from{ opacity: 0; } to{ opacity: 1; } }
 @media (prefers-reduced-motion: no-preference){
   .hero__earth{ animation: earthIn 2s ease-out both; }
+  .hero__scroll{ animation: hintShow 6.5s ease 1.6s both; }
+  .hero__scroll svg{ animation: arrowBob 1.3s ease-in-out 1.6s infinite; }
   .hero__inner > *{ animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
   .hero__inner > *:nth-child(2){ animation-delay: .12s; }
   .hero__inner > *:nth-child(3){ animation-delay: .24s; }
