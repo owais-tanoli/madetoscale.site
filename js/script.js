@@ -199,7 +199,7 @@
   var TO_EMAIL = 'mts.madetoscale@gmail.com';
   var WHATSAPP = '971552571702';
   // Optional: paste a free Web3Forms access key here to send through Web3Forms instead of FormSubmit.
-  var WEB3FORMS_KEY = '';
+  var WEB3FORMS_KEY = 'a95c5b11-03cb-4e42-b60f-ddc1eddd506e';
   var ENDPOINT = WEB3FORMS_KEY ? 'https://api.web3forms.com/submit' : 'https://formsubmit.co/ajax/' + TO_EMAIL;
   var TIMEOUT_MS = 12000;
 
