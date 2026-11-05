@@ -198,7 +198,9 @@
 
   var TO_EMAIL = 'mts.madetoscale@gmail.com';
   var WHATSAPP = '971552571702';
-  var ENDPOINT = 'https://formsubmit.co/ajax/' + TO_EMAIL;
+  // Optional: paste a free Web3Forms access key here to send through Web3Forms instead of FormSubmit.
+  var WEB3FORMS_KEY = '';
+  var ENDPOINT = WEB3FORMS_KEY ? 'https://api.web3forms.com/submit' : 'https://formsubmit.co/ajax/' + TO_EMAIL;
   var TIMEOUT_MS = 12000;
 
   var btn = form.querySelector('.enquiry__submit');
@@ -261,6 +263,12 @@
     if (o._honey) { succeeded(); return; }          // a bot filled the hidden field
     delete o._honey;
 
+    var payload = o;
+    if (WEB3FORMS_KEY) {
+      payload = Object.assign({}, o, { access_key: WEB3FORMS_KEY, subject: 'New enquiry from madetoscale.site', from_name: 'Made to Scale website' });
+      delete payload._subject; delete payload._template;
+    }
+
     if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
     status.hidden = true;
 
@@ -278,11 +286,11 @@
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(o),
+      body: JSON.stringify(payload),
       signal: ctrl ? ctrl.signal : undefined
     })
       .then(function (r) { return r.json(); })
-      .then(function (j) { finish(!!j && (j.success === true || j.success === 'true')); })
+      .then(function (j) { finish(!!j && (j.success === true || j.success === 'true') && !/activat/i.test(String(j.message || ''))); })
       .catch(function () { finish(false); });
     // safety net for browsers without AbortController
     setTimeout(function () { finish(false); }, TIMEOUT_MS + 1500);
