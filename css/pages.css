@@ -1,0 +1,110 @@
+/* Made to Scale: shared styles for the Services and Pricing sub-pages.
+   Loaded after css/style.css, so it reuses the same colours, fonts and buttons. */
+
+.page-hero{ padding: clamp(72px, 9vw, 128px) 0 clamp(40px, 5vw, 72px); border-bottom: 1px solid var(--line); }
+.page-hero__label{ font-size: 14px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--amber); margin-bottom: 22px; }
+.page-hero h1{ font-family: var(--ff-serif); font-weight: 400; font-size: clamp(40px, 6.4vw, 92px); line-height: 1; letter-spacing: -0.02em; max-width: 16ch; }
+.page-hero p{ margin-top: 26px; max-width: 58ch; color: var(--ink-soft); font-size: 19px; }
+.page-hero__links{ margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+.page-section{ padding: clamp(64px, 8vw, 120px) 0; border-bottom: 1px solid var(--line); }
+.page-section:last-of-type{ border-bottom: 0; }
+.page-section .section__head{ margin-bottom: clamp(36px, 5vw, 64px); }
+.page-section .section__head h2{ font-size: clamp(34px, 4.6vw, 64px); }
+
+/* website + landing page blocks */
+.build-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.build{ border-top: 1px solid var(--line); padding-top: 28px; }
+.build h3{ font-family: var(--ff-serif); font-weight: 400; font-size: clamp(30px, 3vw, 44px); line-height: 1.05; margin-bottom: 20px; }
+.pob{ display: grid; gap: 14px; margin-bottom: 22px; }
+.pob dt{ font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 2px; }
+.pob dd{ margin: 0; color: var(--ink); }
+.pob div:nth-child(1) dt{ color: var(--blue); }
+.pob div:nth-child(3) dt{ color: var(--amber); }
+.ticks{ display: grid; gap: 10px; }
+.ticks li{ position: relative; padding-left: 22px; color: var(--ink-soft); }
+.ticks li::before{ content: ''; position: absolute; left: 0; top: .62em; width: 8px; height: 8px; background: var(--amber); }
+
+/* clickable services list */
+.svc-tools{ display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+.svc-tools .btn{ min-height: 44px; padding: 0 18px; font-size: 15px; cursor: pointer; }
+.svc-tools .btn:hover{ background: var(--ink); color: var(--bg); }
+.svc-qs{ border-bottom: 1px solid var(--line); }
+.svc-q{ border-top: 1px solid var(--line); }
+.svc-q summary{ list-style: none; cursor: pointer; display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 12px; padding: 22px 0; font-size: clamp(19px, 2vw, 24px); font-weight: 600; color: var(--ink); }
+.svc-q summary::-webkit-details-marker{ display: none; }
+.svc-q summary::after{ content: '+'; font-weight: 400; font-size: 28px; line-height: 1; color: var(--amber); }
+.svc-q[open] summary::after{ content: '\2212'; }
+.svc-q summary:hover{ color: var(--amber); }
+.svc-q summary:focus-visible{ outline: 2px solid var(--blue); outline-offset: 4px; }
+.svc-q__no{ font-family: var(--ff-serif); font-weight: 400; font-size: 22px; color: var(--ink-faint); }
+.svc-q__body{ display: grid; grid-template-columns: 56px repeat(3, 1fr); gap: 12px 32px; padding: 0 0 30px; }
+.svc-q__body > div{ grid-column: auto; }
+.svc-q__body > div:first-child{ grid-column: 2; }
+.svc-q__body h4{ margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); }
+.svc-q__body > div:nth-child(1) h4{ color: var(--blue); }
+.svc-q__body > div:nth-child(3) h4{ color: var(--amber); }
+.svc-q__body p{ color: var(--ink-soft); }
+@media (prefers-reduced-motion: no-preference){
+  .svc-q[open] .svc-q__body{ animation: rise .35s cubic-bezier(.2,.7,.2,1) both; }
+}
+
+/* how we work */
+.how4{ display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+.how4 li{ border-top: 1px solid var(--line); padding-top: 20px; }
+.how4 span{ font-family: var(--ff-serif); font-size: 40px; line-height: 1; color: var(--amber); }
+.how4 h3{ margin: 12px 0 8px; }
+.how4 p{ color: var(--ink-soft); font-size: 16px; }
+
+/* closing band */
+.page-close{ background: var(--amber); color: var(--amber-ink); padding: clamp(72px, 9vw, 128px) 0; }
+.page-close h2{ font-size: clamp(34px, 4.6vw, 64px); max-width: 18ch; }
+.page-close p{ margin-top: 18px; max-width: 52ch; font-size: 19px; }
+.page-close__row{ margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+.page-close .btn--ghost{ border-color: var(--amber-ink); color: var(--amber-ink); }
+.page-close .btn--ghost:hover{ background: var(--amber-ink); color: var(--amber); }
+
+/* pricing tables */
+.ptable{ width: 100%; border-collapse: collapse; font-size: 16px; }
+.ptable th{ text-align: left; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); padding: 0 16px 14px 0; border-bottom: 1px solid var(--line); }
+.ptable td{ padding: 20px 16px 20px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ptable td:first-child{ font-weight: 600; width: 28%; }
+.ptable td.p{ color: var(--amber); font-weight: 600; white-space: nowrap; width: 24%; }
+.ptable td.n{ color: var(--ink-soft); }
+.ptable .req{ display: inline-block; margin-left: 8px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); padding: 1px 8px; vertical-align: middle; }
+
+/* calculator */
+.calc{ display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 5vw, 80px); }
+.ctl{ margin-bottom: 26px; }
+.ctl label{ display: flex; justify-content: space-between; gap: 16px; margin-bottom: 10px; color: var(--ink); }
+.ctl label b{ color: var(--amber); font-weight: 600; }
+.ctl input[type=range]{ width: 100%; accent-color: var(--amber); }
+.ctl select{ width: 100%; min-height: 48px; padding: 0 12px; background: var(--bg-2); color: var(--ink); border: 1px solid var(--line); font: inherit; }
+.ctl--check{ display: flex; gap: 12px; align-items: center; }
+.ctl--check input{ width: 20px; height: 20px; accent-color: var(--amber); }
+.result{ border-top: 1px solid var(--line); padding-top: 24px; align-self: start; }
+.result h3{ font-family: var(--ff-serif); font-weight: 400; font-size: 32px; margin-bottom: 18px; }
+.result__line{ display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); }
+.result__line b{ color: var(--ink); font-weight: 600; }
+.result__total{ display: flex; justify-content: space-between; align-items: baseline; padding-top: 20px; }
+.result__total span{ font-weight: 600; }
+.result__total b{ font-family: var(--ff-serif); font-weight: 400; font-size: 52px; color: var(--amber); line-height: 1; }
+.result__note{ margin-top: 18px; font-size: 14px; color: var(--ink-faint); }
+
+.notes4{ display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+.notes4 div{ border-top: 1px solid var(--line); padding-top: 18px; }
+.notes4 h3{ margin-bottom: 8px; }
+.notes4 p{ color: var(--ink-soft); font-size: 16px; }
+
+@media (max-width: 1000px){
+  .build-grid, .calc{ grid-template-columns: 1fr; }
+  .how4, .notes4{ grid-template-columns: 1fr 1fr; }
+  .svc-q__body{ grid-template-columns: 1fr; }
+  .svc-q__body > div:first-child{ grid-column: auto; }
+  .ptable{ display: block; overflow-x: auto; }
+}
+@media (max-width: 720px){
+  .how4, .notes4{ grid-template-columns: 1fr; }
+  .svc-q summary{ grid-template-columns: 40px 1fr auto; }
+  .page-hero__links .btn, .page-close__row .btn{ width: 100%; }
+}
