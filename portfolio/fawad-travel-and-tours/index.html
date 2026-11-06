@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fawad Travel & Tours | Umrah & Hajj Packages</title>
+<title>Fawad Travel & Tours | Hajj, Umrah & Visit Visa</title>
 <meta name="robots" content="noindex, follow">
-<meta name="description" content="Fawad Travel & Tours — Umrah and Hajj packages for individuals, couples, families and groups. Scroll to begin your tawaf.">
-<meta property="og:title" content="Fawad Travel & Tours | Umrah & Hajj Packages">
+<meta name="description" content="Fawad Travel & Tours — Hajj, Umrah and Visit Visa packages for individuals, couples, families and groups. Scroll to begin your tawaf.">
+<meta property="og:title" content="Fawad Travel & Tours | Hajj, Umrah & Visit Visa">
 <meta property="og:description" content="Scroll to circle the Kaaba and discover our Umrah packages.">
-<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="icon" href="logo-emblem.png" type="image/png">
 <style>
   :root{
     --gold:#d9b25a; --gold-2:#f3dd9a; --gold-3:#8a6414;
@@ -22,54 +22,58 @@
 
   /* ---------- Fixed stage ---------- */
   .stage{position:fixed;inset:0;overflow:hidden;
-    background:radial-gradient(ellipse at 50% 25%,#14283f 0%,#0a1220 55%,#03050a 100%)}
+    background:linear-gradient(180deg,#030610 0%,#091325 28%,#13223a 50%,#26314a 62%,#0a0f19 100%)}
   canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 
-  /* ---------- Kaaba (CSS 3D cube) ---------- */
-  .scene{position:absolute;left:50%;top:0;width:0;height:0;perspective:1400px}
+  /* ---------- Kaaba (CSS 3D, canvas-painted kiswah textures) ---------- */
+  .scene{position:absolute;left:50%;top:0;width:0;height:0;perspective:1500px}
   .kaaba{position:absolute;left:0;top:0;transform-style:preserve-3d;
     transform:rotateX(-22deg) rotateY(25deg)}
   .face{position:absolute;left:calc(var(--s) / -2);top:calc(var(--h) / -2);
-    width:var(--s);height:var(--h);
-    background:
-      repeating-linear-gradient(90deg,transparent 0 9px,rgba(255,255,255,.035) 9px 10px),
-      linear-gradient(180deg,#1a1a1a 0%,#0b0b0b 100%);
-    backface-visibility:hidden;overflow:hidden}
-  .face::before{content:"";position:absolute;left:0;right:0;top:13%;height:11%;
-    background:
-      repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.22) 6px 8px),
-      linear-gradient(90deg,#8a6414,#f3dd9a,#b8892a,#f3dd9a,#8a6414);
-    border-top:1px solid rgba(255,245,200,.5);border-bottom:1px solid rgba(0,0,0,.6)}
-  .face.f::after{content:"";position:absolute;left:58%;width:15%;top:42%;height:40%;
-    background:linear-gradient(180deg,#f3dd9a,#b8892a 60%,#8a6414);
-    border-radius:2px 2px 0 0;box-shadow:0 0 12px rgba(243,221,154,.55)}
+    width:var(--s);height:var(--h);background:#080808 center/100% 100% no-repeat;
+    backface-visibility:hidden}
   .f{transform:translateZ(calc(var(--s) / 2))}
-  .b{transform:rotateY(180deg) translateZ(calc(var(--s) / 2));filter:brightness(.6)}
-  .r{transform:rotateY(90deg) translateZ(calc(var(--s) / 2));filter:brightness(.78)}
-  .l{transform:rotateY(-90deg) translateZ(calc(var(--s) / 2));filter:brightness(.9)}
+  .b{transform:rotateY(180deg) translateZ(calc(var(--s) / 2));filter:brightness(.62)}
+  .r{transform:rotateY(90deg) translateZ(calc(var(--s) / 2));filter:brightness(.8)}
+  .l{transform:rotateY(-90deg) translateZ(calc(var(--s) / 2));filter:brightness(.92)}
   .t{height:var(--s);top:calc(var(--s) / -2);
-    transform:rotateX(90deg) translateZ(calc(var(--h) / 2));
-    background:linear-gradient(135deg,#2b2b2b,#141414)}
-  .t::before{display:none}
+    transform:rotateX(90deg) translateZ(calc(var(--h) / 2))}
+  /* marble base (shadharwan) */
+  .plinth{position:absolute;left:0;top:calc(var(--h) / 2 - var(--ph) / 2);transform-style:preserve-3d}
+  .pface{position:absolute;left:calc(var(--sp) / -2);top:calc(var(--ph) / -2);
+    width:var(--sp);height:var(--ph);backface-visibility:hidden;
+    background:linear-gradient(180deg,#e6dcc6,#b4a78a)}
+  .pf{transform:translateZ(calc(var(--sp) / 2))}
+  .pb{transform:rotateY(180deg) translateZ(calc(var(--sp) / 2));filter:brightness(.62)}
+  .pr{transform:rotateY(90deg) translateZ(calc(var(--sp) / 2));filter:brightness(.8)}
+  .pl{transform:rotateY(-90deg) translateZ(calc(var(--sp) / 2));filter:brightness(.92)}
+  .pt{height:var(--sp);top:calc(var(--sp) / -2);background:#d2c6ab;
+    transform:rotateX(90deg) translateZ(calc(var(--ph) / 2))}
 
   /* ---------- Header / hero / HUD ---------- */
   header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;
-    justify-content:space-between;padding:12px clamp(14px,3vw,36px);
-    background:linear-gradient(180deg,rgba(3,5,10,.85),rgba(3,5,10,0))}
-  header img{height:62px;display:block}
+    justify-content:space-between;padding:10px clamp(14px,3vw,36px);
+    background:linear-gradient(180deg,rgba(3,5,10,.88),rgba(3,5,10,0))}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+  .brand img{height:58px;width:auto;display:block}
+  .brand b{display:block;font-family:Georgia,"Times New Roman",serif;font-size:21px;line-height:1.05;
+    color:#f5efe1;letter-spacing:.01em}
+  .brand small{display:block;margin-top:4px;font-family:Georgia,serif;font-style:italic;
+    font-size:12.5px;color:var(--gold)}
   .pill{color:#10150f;background:linear-gradient(135deg,var(--gold-2),var(--gold));
     padding:9px 18px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;
     box-shadow:0 4px 18px rgba(217,178,90,.3)}
 
-  .hero{position:absolute;z-index:10;top:15%;left:0;right:0;text-align:center;padding:0 20px;
-    pointer-events:none;will-change:opacity,transform}
-  .hero .ar{font-size:clamp(18px,2.4vw,28px);color:var(--gold-2);margin:0 auto 10px;max-width:none;text-align:center;
-    font-family:"Amiri","Traditional Arabic","Segoe UI",serif;direction:rtl}
+  .hero{position:absolute;z-index:10;top:9%;left:0;right:0;text-align:center;padding:0 20px;
+    pointer-events:none;will-change:opacity,transform;text-shadow:0 2px 18px rgba(0,0,0,.85)}
+  .hero::before{content:"";position:absolute;inset:-30px 8% -24px;z-index:-1;
+    background:radial-gradient(ellipse at center,rgba(3,7,15,.6),rgba(3,7,15,0) 70%)}
+  .hero .ar{font-size:clamp(18px,2.2vw,26px);color:var(--gold-2);margin:0 auto 8px;max-width:none;
+    text-align:center;font-family:"Amiri","Traditional Arabic","Segoe UI",serif;direction:rtl}
   .hero h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:700;
-    font-size:clamp(30px,5.2vw,68px);line-height:1.08;
-    background:linear-gradient(135deg,#fff6d6,var(--gold) 60%,#b8892a);
-    -webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero p{margin:14px auto 0;max-width:620px;color:#cfd6e6;font-size:clamp(14px,1.5vw,18px);text-wrap:balance}
+    font-size:clamp(28px,4.4vw,60px);line-height:1.08;color:#f4dc98}
+  .hero h1 br{display:none}
+  .hero p{margin:12px auto 0;max-width:640px;color:#d8deea;font-size:clamp(14px,1.45vw,18px);text-wrap:balance}
   .scrollhint{position:absolute;z-index:10;left:0;right:0;bottom:6%;text-align:center;
     color:var(--gold-2);font-size:13px;letter-spacing:.25em;text-transform:uppercase;pointer-events:none}
   .scrollhint i{display:block;margin:10px auto 0;width:22px;height:36px;border:2px solid var(--gold);
@@ -86,7 +90,7 @@
 
   /* ---------- Package pop-up cards ---------- */
   .card{position:absolute;z-index:11;top:50%;width:340px;padding:24px 24px 22px;border-radius:22px;
-    background:linear-gradient(160deg,rgba(18,30,48,.82),rgba(7,12,22,.86));
+    background:linear-gradient(160deg,rgba(18,30,48,.84),rgba(7,12,22,.88));
     border:1px solid rgba(217,178,90,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     box-shadow:0 24px 60px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);
     opacity:0;pointer-events:none;will-change:transform,opacity;--ty:-50%;
@@ -110,20 +114,26 @@
   .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,178,90,.4)}
   .btn.ghost{background:transparent;color:var(--gold-2);border:1px solid rgba(217,178,90,.5);margin-top:10px}
   .card.contact p{color:#cfd6e6;font-size:14.5px;margin:0 0 16px}
+  .clogo{display:block;height:104px;width:auto;margin:0 auto 10px}
 
   .mts-badge{position:fixed;right:14px;bottom:14px;z-index:30;font-size:12px;letter-spacing:.04em;
     color:#cfd6e6;background:rgba(5,8,15,.78);border:1px solid rgba(217,178,90,.35);border-radius:999px;
     padding:7px 14px;text-decoration:none;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
   .mts-badge b{color:var(--gold-2)}
   .mts-badge:hover{border-color:var(--gold)}
+
   @media (max-width:760px){
-    .mts-badge{top:62px;bottom:auto;right:12px;font-size:11px;padding:5px 11px}
-    header img{height:48px}
+    .mts-badge{top:66px;bottom:auto;right:12px;font-size:11px;padding:5px 11px}
+    .brand img{height:42px}
+    .brand b{font-size:16px}
+    .brand small{font-size:10.5px}
     .card{top:auto;bottom:60px;left:12px!important;right:12px!important;width:auto;--ty:0%;padding:18px}
     .card h3{font-size:23px;margin:10px 0 6px}
     .card li:nth-child(n+4){display:none}
     .card .num{font-size:34px}
-    .hero{top:13%}
+    .clogo{height:58px;margin-bottom:6px}
+    .hero{top:12%}
+    .hero h1 br{display:inline}
     .hud{bottom:12px}
   }
   @media (prefers-reduced-motion:reduce){.scrollhint i::after{animation:none}}
@@ -132,7 +142,10 @@
 <body>
 
 <header>
-  <img src="logo.svg" alt="Fawad Travel & Tours logo">
+  <a class="brand" href="#">
+    <img src="logo-emblem.png" alt="">
+    <span><b>Fawad Travel &amp; Tours</b><small>Hajj &middot; Umrah &amp; Visit Visa</small></span>
+  </a>
   <a class="pill" id="navWa" href="#" target="_blank" rel="noopener">WhatsApp us</a>
 </header>
 
@@ -142,6 +155,11 @@
   <canvas id="back"></canvas>
   <div class="scene" id="scene">
     <div class="kaaba" id="kaaba">
+      <div class="plinth">
+        <div class="pface pf"></div><div class="pface pb"></div>
+        <div class="pface pr"></div><div class="pface pl"></div>
+        <div class="pface pt"></div>
+      </div>
       <div class="face f"></div><div class="face b"></div>
       <div class="face r"></div><div class="face l"></div>
       <div class="face t"></div>
@@ -151,8 +169,8 @@
 
   <div class="hero" id="hero">
     <p class="ar" lang="ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</p>
-    <h1>Walk the circle<br>of faith</h1>
-    <p>Umrah &amp; Hajj journeys by Fawad Travel &amp; Tours — scroll to begin your tawaf.</p>
+    <h1>Walk the circle<br> of faith</h1>
+    <p>Hajj, Umrah &amp; Visit Visa by Fawad Travel &amp; Tours &mdash; scroll to begin your tawaf.</p>
   </div>
   <div class="scrollhint" id="hint">Scroll<i></i></div>
 
@@ -169,11 +187,11 @@
    ========================================================= */
 const CONFIG = {
   brand: "Fawad Travel & Tours",
-  whatsapp: "",   // digits only with country code, e.g. "923001234567"
-  phone: "",      // e.g. "+92 300 1234567"
+  whatsapp: "923335006869",   // digits only with country code
+  phone: "+92 333 5006869",
   email: "",
   facebook: "https://www.facebook.com/fawadtravelandtours/",
-  gbp: ""         // Google Business Profile link (when you have it)
+  gbp: ""                     // Google Business Profile link (when you have it)
 };
 
 const PACKAGES = [
@@ -195,6 +213,7 @@ const PACKAGES = [
 const TAU = Math.PI * 2;
 const CIRCUITS = 7;                 // tawaf = 7 circuits
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
 
 function waLink(msg){
   return CONFIG.whatsapp
@@ -227,13 +246,12 @@ PACKAGES.forEach((p,i)=>{
   const tel = CONFIG.phone ? `<a class="btn ghost" href="tel:${CONFIG.phone.replace(/\s/g,'')}">Call ${CONFIG.phone}</a>` : "";
   const gbp = CONFIG.gbp ? `<a class="btn ghost" target="_blank" rel="noopener" href="${CONFIG.gbp}">Find us on Google</a>` : "";
   el.innerHTML = `
-    <span class="num">✦</span>
-    <span class="tag">Your journey</span>
-    <h3>Begin your Umrah</h3>
+    <img class="clogo" src="logo-full.png" alt="Fawad Travel & Tours — Hajj Umrah & Visit Visa">
     <p>Seven circuits complete. Tell us your dates and group size and we'll shape the perfect package.</p>
     <a class="btn" target="_blank" rel="noopener" href="${waLink("Assalamu alaikum, I would like a custom Umrah quote.")}">Get a quote on WhatsApp</a>
+    ${tel}
     <a class="btn ghost" target="_blank" rel="noopener" href="${CONFIG.facebook}">Visit our Facebook page</a>
-    ${tel}${gbp}`;
+    ${gbp}`;
   cardsEl.appendChild(el);
   cards.push({el, c:(CIRCUITS-0.5)/CIRCUITS, side:-1});
 })();
@@ -244,24 +262,169 @@ for(let i=0;i<CIRCUITS;i++) dotsEl.appendChild(document.createElement("b"));
 const dotEls = [...dotsEl.children];
 const hudText = document.getElementById("hudText");
 
+/* =========================================================
+   KAABA TEXTURES — painted once on hidden canvases
+   (black silk kiswah, gold Hizam belt, calligraphy panels,
+   embroidered door curtain, golden door, Black Stone)
+   ========================================================= */
+function mk(w,h){const c=document.createElement("canvas");c.width=w;c.height=h;return c}
+function rnd(seed){let s=seed;return()=>((s=(s*16807)%2147483647)/2147483647)}
+function rr(c,x,y,w,h,r){
+  c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);
+  c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);
+  c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();
+}
+function goldGrad(c,x0,y0,x1,y1){
+  const g=c.createLinearGradient(x0,y0,x1,y1);
+  g.addColorStop(0,"#7c5c18");g.addColorStop(.35,"#f2d77f");g.addColorStop(.6,"#c39a35");g.addColorStop(1,"#8a6414");
+  return g;
+}
+/* pseudo-calligraphy: flowing strokes with alif-like verticals */
+function script(c,x,y,w,amp,r,col,lw){
+  c.strokeStyle=col;c.lineWidth=lw;c.lineCap="round";c.lineJoin="round";
+  c.beginPath();c.moveTo(x,y);
+  let cx=x;
+  while(cx<x+w){
+    const st=5+r()*9,t=r();
+    if(t<.22){c.lineTo(cx+st*.5,y);c.moveTo(cx+st*.5,y);c.lineTo(cx+st*.5,y-amp*(1.1+r()*.9));c.moveTo(cx+st,y);}
+    else if(t<.55){c.quadraticCurveTo(cx+st*.5,y+amp*(.2+r()*1.4),cx+st,y);}
+    else if(t<.8){c.bezierCurveTo(cx+st*.2,y-amp*1.3,cx+st*.8,y-amp*1.3,cx+st,y);}
+    else{c.lineTo(cx+st,y);c.arc(cx+st,y-amp*.35,amp*.35,Math.PI*.5,Math.PI*2.5);c.moveTo(cx+st,y);}
+    cx+=st;
+  }
+  c.stroke();
+}
+function panel(c,x,y,w,h,r){
+  c.fillStyle="#070707";rr(c,x,y,w,h,5);c.fill();
+  c.strokeStyle=goldGrad(c,x,y,x+w,y+h);c.lineWidth=2.6;rr(c,x+1.5,y+1.5,w-3,h-3,5);c.stroke();
+  c.lineWidth=1;c.globalAlpha=.7;rr(c,x+7,y+7,w-14,h-14,3);c.stroke();c.globalAlpha=1;
+  c.fillStyle="#d9b25a";
+  [[12,12],[w-12,12],[12,h-12],[w-12,h-12]].forEach(([dx,dy])=>{c.beginPath();c.arc(x+dx,y+dy,2.2,0,TAU);c.fill()});
+  const rows=Math.max(1,Math.floor((h-30)/17));
+  for(let i=0;i<rows;i++){
+    const ww=(w-34)*(.78+r()*.22);
+    script(c,x+(w-ww)/2,y+22+i*17+(h-30-rows*17)/2,ww,5,r,"rgba(236,200,108,.92)",1.5);
+  }
+}
+/* the golden Hizam belt */
+function belt(c,W,y,hh,r){
+  const g=c.createLinearGradient(0,y,0,y+hh);
+  g.addColorStop(0,"#76560f");g.addColorStop(.18,"#ebce76");g.addColorStop(.5,"#c9a13c");g.addColorStop(.82,"#f1da8e");g.addColorStop(1,"#74540f");
+  c.fillStyle=g;c.fillRect(0,y,W,hh);
+  const pw=128;
+  for(let i=0;i<W/pw;i++){
+    const x0=i*pw;
+    c.fillStyle="#0a0a0a";rr(c,x0+10,y+7,72,hh-14,4);c.fill();
+    c.strokeStyle="rgba(250,225,150,.55)";c.lineWidth=1;rr(c,x0+13,y+10,66,hh-20,3);c.stroke();
+    script(c,x0+19,y+hh*.4,54,4,r,"rgba(240,204,110,.95)",1.4);
+    script(c,x0+19,y+hh*.7,54,4,r,"rgba(240,204,110,.95)",1.4);
+    const mx=x0+105,my=y+hh/2,mr=hh*.36;
+    c.fillStyle="#a67c24";c.beginPath();c.arc(mx,my,mr,0,TAU);c.fill();
+    c.strokeStyle="#f6e3a1";c.lineWidth=1.6;c.beginPath();c.arc(mx,my,mr-1,0,TAU);c.stroke();
+    c.fillStyle="#0a0a0a";c.beginPath();c.arc(mx,my,mr*.58,0,TAU);c.fill();
+    c.strokeStyle="#e9c96d";c.lineWidth=1.1;
+    for(let k=0;k<4;k++){const a=k*Math.PI/4;c.beginPath();c.moveTo(mx-Math.cos(a)*mr*.45,my-Math.sin(a)*mr*.45);c.lineTo(mx+Math.cos(a)*mr*.45,my+Math.sin(a)*mr*.45);c.stroke();}
+  }
+  c.fillStyle="rgba(0,0,0,.55)";c.fillRect(0,y,W,2);c.fillRect(0,y+hh-2,W,2);
+  c.fillStyle="rgba(255,240,180,.5)";c.fillRect(0,y+2,W,1);
+  const sh=c.createLinearGradient(0,y+hh,0,y+hh+14);sh.addColorStop(0,"rgba(0,0,0,.5)");sh.addColorStop(1,"rgba(0,0,0,0)");
+  c.fillStyle=sh;c.fillRect(0,y+hh,W,14);
+}
+/* embroidered door curtain + golden door (front face only) */
+function curtain(c,x0,y0,w,h,r){
+  c.fillStyle="#050505";c.fillRect(x0,y0,w,h);
+  c.strokeStyle=goldGrad(c,x0,y0,x0+w,y0+h);c.lineWidth=5;rr(c,x0+2.5,y0+2.5,w-5,h-5,3);c.stroke();
+  c.lineWidth=1.4;c.globalAlpha=.8;rr(c,x0+12,y0+12,w-24,h-24,2);c.stroke();c.globalAlpha=1;
+  for(let i=0;i<8;i++) script(c,x0+22,y0+28+i*15,w-44,5,r,"rgba(236,200,108,.9)",1.4);
+  // medallions
+  [[.3,.27],[.7,.27]].forEach(([px,py])=>{
+    const mx=x0+w*px,my=y0+h*py;
+    c.strokeStyle="#e6c36a";c.lineWidth=1.4;
+    c.beginPath();c.arc(mx,my,13,0,TAU);c.stroke();c.beginPath();c.arc(mx,my,7,0,TAU);c.stroke();
+  });
+  // golden door
+  const dx=x0+w*.13,dy=y0+h*.36,dw=w*.74,dh=h*.62;
+  const dg=c.createLinearGradient(dx,0,dx+dw,0);
+  dg.addColorStop(0,"#7e5d14");dg.addColorStop(.25,"#f4de98");dg.addColorStop(.5,"#c99a30");dg.addColorStop(.75,"#f4de98");dg.addColorStop(1,"#7e5d14");
+  c.fillStyle=dg;rr(c,dx,dy,dw,dh,4);c.fill();
+  c.strokeStyle="rgba(60,40,5,.8)";c.lineWidth=2;rr(c,dx+1,dy+1,dw-2,dh-2,4);c.stroke();
+  const pw2=(dw-30)/2;
+  [dx+10,dx+20+pw2].forEach(px=>{
+    c.fillStyle="rgba(95,66,12,.55)";rr(c,px,dy+12,pw2,dh-26,3);c.fill();
+    c.strokeStyle="rgba(255,238,170,.7)";c.lineWidth=1.2;rr(c,px+3,dy+15,pw2-6,dh-32,2);c.stroke();
+    c.strokeStyle="rgba(255,230,150,.8)";c.lineWidth=1.2;
+    c.beginPath();c.arc(px+pw2/2,dy+dh*.32,pw2*.26,0,TAU);c.stroke();
+    c.beginPath();c.arc(px+pw2/2,dy+dh*.32,pw2*.12,0,TAU);c.stroke();
+    script(c,px+8,dy+dh*.62,pw2-16,4,r,"rgba(255,232,160,.85)",1.2);
+    script(c,px+8,dy+dh*.74,pw2-16,4,r,"rgba(255,232,160,.85)",1.2);
+  });
+  c.fillStyle="#7a560e";c.beginPath();c.arc(dx+dw/2,dy+dh*.5,5,0,TAU);c.fill();
+  c.fillStyle="#f6e3a1";c.beginPath();c.arc(dx+dw/2,dy+dh*.5,2.4,0,TAU);c.fill();
+}
+/* Hajar al-Aswad in its silver frame */
+function blackStone(c,x,y,w,h){
+  const g=c.createLinearGradient(x,y,x+w,y+h);g.addColorStop(0,"#f4f4f4");g.addColorStop(.5,"#9c9c9c");g.addColorStop(1,"#d6d6d6");
+  c.fillStyle=g;rr(c,x,y,w,h,w*.45);c.fill();
+  const sg=c.createRadialGradient(x+w*.45,y+h*.4,2,x+w*.5,y+h*.5,h*.4);sg.addColorStop(0,"#4a3426");sg.addColorStop(1,"#120d0a");
+  c.fillStyle=sg;c.beginPath();c.ellipse(x+w/2,y+h/2,w*.32,h*.34,.2,0,TAU);c.fill();
+}
+function buildTexture(kind,seed){
+  const W=512,H=573,c=mk(W,H),x=c.getContext("2d"),r=rnd(seed);
+  let g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#101011");g.addColorStop(1,"#060606");
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  // silk weave
+  x.fillStyle="#fff";x.globalAlpha=.05;for(let i=0;i<W;i+=3)x.fillRect(i,0,1,H);
+  x.globalAlpha=.035;for(let j=0;j<H;j+=3)x.fillRect(0,j,W,1);
+  x.globalAlpha=1;
+  // soft pleats
+  for(let k=0;k<8;k++){
+    const px=r()*W,pw=16+r()*44,pg=x.createLinearGradient(px,0,px+pw,0);
+    pg.addColorStop(0,"rgba(255,255,255,0)");pg.addColorStop(.5,"rgba(255,255,255,"+(.03+r()*.045)+")");pg.addColorStop(1,"rgba(255,255,255,0)");
+    x.fillStyle=pg;x.fillRect(px,0,pw,H);
+  }
+  if(kind==="top"){return c}
+  // panels above the belt
+  for(let i=0;i<4;i++)panel(x,i*128+12,34,104,84,r);
+  belt(x,W,143,50,r);
+  if(kind==="front"){
+    panel(x,24,214,150,150,r);
+    panel(x,424,214,72,300,r);
+    curtain(x,200,208,208,312,r);
+    blackStone(x,20,438,38,66);
+  }else{
+    panel(x,28,216,216,150,r);panel(x,268,216,216,150,r);
+    panel(x,28,386,216,134,r);panel(x,268,386,216,134,r);
+  }
+  const sh=x.createLinearGradient(0,0,0,H);sh.addColorStop(0,"rgba(0,0,0,0)");sh.addColorStop(1,"rgba(0,0,0,.3)");
+  x.fillStyle=sh;x.fillRect(0,0,W,H);
+  return c;
+}
+[["f","front",11],["b","side",12],["r","side",13],["l","side",14],["t","top",15]].forEach(([cls,kind,seed])=>{
+  const el=document.querySelector(".face."+cls);
+  el.style.backgroundImage="url("+buildTexture(kind,seed).toDataURL("image/jpeg",.92)+")";
+});
+
 /* ---------- Canvas + layout ---------- */
 const back = document.getElementById("back"), front = document.getElementById("front");
 const bc = back.getContext("2d"), fc = front.getContext("2d");
 const scene = document.getElementById("scene"), kaaba = document.getElementById("kaaba");
 const stage = document.getElementById("stage");
-let W,H,DPR,mobile,S,Hh,CX,CY,GY;
+let W,H,DPR,mobile,S,Hh,CX,CY,GY,RB;
 const TILT = Math.sin(22*Math.PI/180);   // ring squash = camera elevation
+const K = Math.cos(22*Math.PI/180);      // vertical foreshortening
 
 function resize(){
   W = innerWidth; H = innerHeight; DPR = Math.min(devicePixelRatio||1, 2);
   mobile = W < 760;
-  S  = mobile ? W*0.15 : Math.min(W*0.12, H*0.17);
+  S  = mobile ? W*0.15 : Math.min(W*0.11, H*0.15);
   Hh = S*1.12;
-  CX = W/2; CY = H*(mobile?0.36:0.55);
-  GY = CY + (Hh/2)*Math.cos(22*Math.PI/180);
+  CX = W/2; CY = H*(mobile?0.37:0.61);
+  GY = CY + (Hh/2)*K;
+  RB = S*3.4;                          // radius of the Haram colonnade
   [back,front].forEach(c=>{c.width=W*DPR;c.height=H*DPR});
   bc.setTransform(DPR,0,0,DPR,0,0); fc.setTransform(DPR,0,0,DPR,0,0);
   stage.style.setProperty("--s", S+"px"); stage.style.setProperty("--h", Hh+"px");
+  stage.style.setProperty("--sp", S*1.1+"px"); stage.style.setProperty("--ph", Hh*0.07+"px");
   scene.style.top = CY+"px";
 }
 addEventListener("resize", resize); resize();
@@ -276,7 +439,7 @@ for(let k=0;k<RINGS;k++){
       col: Math.random()<.78 ? "#f1ece0" : "#9fb0cc", sz:0.85+Math.random()*0.3});
   }
 }
-const stars = Array.from({length:180},()=>({x:Math.random(),y:Math.random()*0.7,r:Math.random()*1.3+.2,p:Math.random()*TAU}));
+const stars = Array.from({length:150},()=>({x:Math.random(),y:Math.random()*0.5,r:Math.random()*1.2+.2,p:Math.random()*TAU}));
 
 function person(ctx,x,y,sz,col){
   ctx.fillStyle = col;
@@ -285,30 +448,199 @@ function person(ctx,x,y,sz,col){
   ctx.beginPath(); ctx.arc(x,y-sz*1.3,sz*.42,0,TAU); ctx.fill();
 }
 
-function draw(ang, time){
+/* =========================================================
+   THE HARAM BEHIND THE KAABA
+   A ring of colonnade, gates, minarets and the Clock Tower,
+   rotated with the camera so it slides past as you scroll.
+   ========================================================= */
+function hillsAndGround(theta){
+  const Rh=S*7, yb=GY-Rh*TILT;
+  const gg=bc.createLinearGradient(0,yb-S*.3,0,H);
+  gg.addColorStop(0,"#0c1420");gg.addColorStop(1,"#06090f");
+  bc.fillStyle=gg;bc.fillRect(0,yb-S*.3,W,H);
+  bc.beginPath();
+  const pts=[];
+  for(let x=0;x<=W;x+=6){
+    const u=clamp((x-CX)/Rh,-.98,.98),a=Math.asin(u),psi=a+theta;
+    const n=.5*Math.sin(psi*3+1)+.3*Math.sin(psi*7+2)+.2*Math.sin(psi*13+.5);
+    const base=GY-Rh*TILT*Math.cos(a);
+    pts.push([x,base,base-S*(.5+.38*n)]);
+  }
+  bc.moveTo(pts[0][0],pts[0][2]);
+  pts.forEach(p=>bc.lineTo(p[0],p[2]));
+  for(let i=pts.length-1;i>=0;i--)bc.lineTo(pts[i][0],pts[i][1]+4);
+  bc.closePath();
+  const hg=bc.createLinearGradient(0,yb-S*1.1,0,yb+4);
+  hg.addColorStop(0,"#223654");hg.addColorStop(1,"#0d1624");
+  bc.fillStyle=hg;bc.fill();
+}
+
+function windowsGrid(x0,y0,w,h,step,lf,al){
+  bc.fillStyle=`rgba(255,222,150,${al*lf})`;
+  for(let yy=y0+step*.5;yy<y0+h-2;yy+=step)
+    for(let xx=x0+step*.5;xx<x0+w-2;xx+=step)
+      bc.fillRect(xx,yy,1.7,2.6);
+}
+
+function clockTower(theta){
+  const a=2.6-theta,c=Math.cos(a);
+  if(c<.08)return;
+  const Rc=S*5.5,x=CX+Rc*Math.sin(a),yb=GY-Rc*TILT*c;
+  if(x<-S*2||x>W+S*2)return;
+  const Hc=S*2.0*K,lf=.55+.45*c;
+  const col=(r,g,b,al=1)=>`rgba(${r*lf|0},${g*lf|0},${b*lf|0},${al})`;
+  // podium + side towers
+  bc.fillStyle=col(176,158,126);bc.fillRect(x-S*1.25,yb-S*.38*K,S*2.5,S*.38*K);
+  windowsGrid(x-S*1.25,yb-S*.38*K,S*2.5,S*.38*K,S*.07,lf,.4);
+  [[-.8,.62,.4],[.8,.55,.4]].forEach(([dx,hf,wf])=>{
+    bc.fillStyle=col(200,182,148);bc.fillRect(x+S*dx-S*wf/2,yb-Hc*hf,S*wf,Hc*hf);
+    windowsGrid(x+S*dx-S*wf/2,yb-Hc*hf,S*wf,Hc*hf,S*.07,lf,.45);
+    bc.fillStyle=col(222,186,100);bc.fillRect(x+S*dx-S*wf/2-1,yb-Hc*hf-3,S*wf+2,3);
+  });
+  // main shaft
+  const wc=S*.52;
+  const sg=bc.createLinearGradient(x-wc/2,0,x+wc/2,0);
+  sg.addColorStop(0,col(160,142,110));sg.addColorStop(.5,col(226,208,172));sg.addColorStop(1,col(140,124,96));
+  bc.fillStyle=sg;bc.fillRect(x-wc/2,yb-Hc*.82,wc,Hc*.82);
+  windowsGrid(x-wc/2,yb-Hc*.8,wc,Hc*.78,S*.07,lf,.5);
+  // clock block
+  const wt=S*.92;
+  bc.fillStyle=col(214,194,156);bc.fillRect(x-wt/2,yb-Hc*.97,wt,Hc*.17);
+  bc.fillStyle=col(226,186,96);bc.fillRect(x-wt/2-2,yb-Hc*.97-3,wt+4,4);
+  bc.fillRect(x-wt/2-2,yb-Hc*.8,wt+4,3);
+  const cy=yb-Hc*.885,cr=S*.26;
+  bc.fillStyle=`rgb(${31*lf|0},${143*lf|0},${110*lf|0})`;bc.beginPath();bc.arc(x,cy,cr,0,TAU);bc.fill();
+  bc.fillStyle=`rgb(${246*lf|0},${238*lf|0},${216*lf|0})`;bc.beginPath();bc.arc(x,cy,cr*.82,0,TAU);bc.fill();
+  bc.strokeStyle=`rgba(40,40,40,${lf})`;bc.lineWidth=1;
+  for(let i=0;i<12;i++){const t=i*TAU/12;bc.beginPath();bc.moveTo(x+Math.cos(t)*cr*.66,cy+Math.sin(t)*cr*.66);bc.lineTo(x+Math.cos(t)*cr*.78,cy+Math.sin(t)*cr*.78);bc.stroke()}
+  bc.lineWidth=1.5;bc.beginPath();bc.moveTo(x,cy);bc.lineTo(x+cr*.3,cy-cr*.35);bc.moveTo(x,cy);bc.lineTo(x-cr*.05,cy+cr*.5);bc.stroke();
+  // crown, spire, crescent
+  bc.fillStyle=col(228,184,92);
+  bc.beginPath();bc.moveTo(x-wt*.5,yb-Hc*.97-3);bc.lineTo(x,yb-Hc*1.08);bc.lineTo(x+wt*.5,yb-Hc*.97-3);bc.closePath();bc.fill();
+  bc.strokeStyle=col(240,200,110);bc.lineWidth=2;
+  bc.beginPath();bc.moveTo(x,yb-Hc*1.08);bc.lineTo(x,yb-Hc*1.16);bc.stroke();
+  bc.lineWidth=1.8;bc.beginPath();bc.arc(x,yb-Hc*1.18,S*.05,Math.PI*.1,Math.PI*.9);bc.stroke();
+}
+
+function colonnade(theta){
+  const N=84,dA=TAU/N,h1=S*.5*K,h2=S*.4*K,hp=S*.06*K;
+  const gateEvery=21;
+  for(let i=0;i<N;i++){
+    const a0=i*dA-theta,a1=a0+dA,mid=a0+dA/2,c=Math.cos(mid);
+    if(c<=.03)continue;
+    const xa=CX+RB*Math.sin(a0),xb=CX+RB*Math.sin(a1);
+    const xl=Math.min(xa,xb),w=Math.abs(xb-xa);
+    if(w<.4||xl>W+4||xl+w<-4)continue;
+    const yb=GY-RB*TILT*c,lf=.42+.58*c,cx=xl+w/2;
+    const sc=(r,g,b)=>`rgb(${r*lf|0},${g*lf|0},${b*lf|0})`;
+    // lower tier
+    bc.fillStyle=sc(206,190,152);bc.fillRect(xl,yb-h1,w+.6,h1);
+    const wa=w*.6,ha=h1*.74;
+    bc.fillStyle=sc(52,38,22);
+    bc.beginPath();bc.moveTo(cx-wa/2,yb);bc.lineTo(cx-wa/2,yb-ha+wa*.5);
+    bc.quadraticCurveTo(cx-wa/2,yb-ha,cx,yb-ha);bc.quadraticCurveTo(cx+wa/2,yb-ha,cx+wa/2,yb-ha+wa*.5);
+    bc.lineTo(cx+wa/2,yb);bc.closePath();bc.fill();
+    bc.fillStyle=`rgba(255,208,125,${.55+.3*c})`;
+    bc.beginPath();bc.moveTo(cx-wa*.36,yb);bc.lineTo(cx-wa*.36,yb-ha*.62);
+    bc.quadraticCurveTo(cx-wa*.36,yb-ha*.84,cx,yb-ha*.84);bc.quadraticCurveTo(cx+wa*.36,yb-ha*.84,cx+wa*.36,yb-ha*.62);
+    bc.lineTo(cx+wa*.36,yb);bc.closePath();bc.fill();
+    // ledge
+    bc.fillStyle=sc(150,132,98);bc.fillRect(xl,yb-h1-1.5,w+.6,2);
+    // upper tier
+    bc.fillStyle=sc(224,208,170);bc.fillRect(xl,yb-h1-h2,w+.6,h2-1.5);
+    const wb2=w*.42,hb2=h2*.58,ty=yb-h1-h2*.18;
+    bc.fillStyle=`rgba(255,214,135,${.5+.3*c})`;
+    bc.beginPath();bc.moveTo(cx-wb2/2,ty);bc.lineTo(cx-wb2/2,ty-hb2+wb2*.5);
+    bc.quadraticCurveTo(cx-wb2/2,ty-hb2,cx,ty-hb2);bc.quadraticCurveTo(cx+wb2/2,ty-hb2,cx+wb2/2,ty-hb2+wb2*.5);
+    bc.lineTo(cx+wb2/2,ty);bc.closePath();bc.fill();
+    // parapet
+    bc.fillStyle=sc(236,222,186);bc.fillRect(xl,yb-h1-h2-hp,w+.6,hp);
+  }
+  // gate domes + minarets, far to near
+  const gates=[],mins=[[.35],[.95],[1.55],[2.15],[2.75],[3.5],[4.4],[5.2],[5.85]];
+  for(let g=0;g<4;g++)gates.push(g*TAU/4+TAU/8);
+  const items=[];
+  gates.forEach(psi=>items.push({t:"g",a:psi-theta}));
+  mins.forEach(([psi])=>items.push({t:"m",a:psi-theta}));
+  items.filter(o=>Math.cos(o.a)>.05).sort((p,q)=>Math.cos(q.a)-Math.cos(p.a)).forEach(o=>{
+    const c=Math.cos(o.a),x=CX+RB*(o.t==="m"?1.02:1)*Math.sin(o.a),yb=GY-RB*(o.t==="m"?1.02:1)*TILT*c,lf=.45+.55*c;
+    if(x<-S||x>W+S)return;
+    if(o.t==="g"){
+      const gw=S*.62*Math.max(.35,c),gy=yb-(h1+h2+hp);
+      bc.fillStyle=`rgb(${214*lf|0},${198*lf|0},${160*lf|0})`;bc.fillRect(x-gw/2,gy-S*.12,gw,S*.12+hp);
+      const dg=bc.createLinearGradient(0,gy-S*.34,0,gy);dg.addColorStop(0,`rgb(${240*lf|0},${238*lf|0},${230*lf|0})`);dg.addColorStop(1,`rgb(${176*lf|0},${176*lf|0},${170*lf|0})`);
+      bc.fillStyle=dg;bc.beginPath();bc.ellipse(x,gy-S*.12,gw*.46,S*.2,0,Math.PI,TAU);bc.fill();
+      bc.strokeStyle=`rgb(${236*lf|0},${196*lf|0},${100*lf|0})`;bc.lineWidth=1.5;
+      bc.beginPath();bc.moveTo(x,gy-S*.32);bc.lineTo(x,gy-S*.42);bc.stroke();
+    }else minaret(x,yb,S*1.5*K,S*.15,lf);
+  });
+}
+
+function minaret(x,yb,Hm,wb,lf){
+  const sc=(r,g,b,al=1)=>`rgba(${r*lf|0},${g*lf|0},${b*lf|0},${al})`;
+  const g=bc.createLinearGradient(x-wb/2,0,x+wb/2,0);
+  g.addColorStop(0,sc(150,142,125));g.addColorStop(.45,sc(248,242,226));g.addColorStop(1,sc(118,112,98));
+  bc.fillStyle=g;
+  bc.beginPath();bc.moveTo(x-wb/2,yb);bc.lineTo(x-wb*.38,yb-Hm*.62);bc.lineTo(x-wb*.33,yb-Hm*.84);
+  bc.lineTo(x+wb*.33,yb-Hm*.84);bc.lineTo(x+wb*.38,yb-Hm*.62);bc.lineTo(x+wb/2,yb);bc.closePath();bc.fill();
+  bc.fillStyle=sc(60,48,30,.6);
+  [.14,.3,.46].forEach(p=>bc.fillRect(x-1,yb-Hm*p,2,Hm*.05));
+  [[.62,1.55],[.84,1.3]].forEach(([p,m])=>{
+    const by=yb-Hm*p;
+    bc.fillStyle=sc(214,198,158);bc.fillRect(x-wb*m/2,by-S*.02,wb*m,S*.036);
+    bc.fillStyle=`rgba(255,216,140,${.5*lf})`;bc.fillRect(x-wb*m/2+1,by+S*.016,wb*m-2,1.6);
+  });
+  bc.fillStyle=g;bc.fillRect(x-wb*.28,yb-Hm*.97,wb*.56,Hm*.13);
+  bc.fillStyle=sc(228,188,98);
+  bc.beginPath();bc.moveTo(x-wb*.34,yb-Hm*.97);bc.quadraticCurveTo(x-wb*.2,yb-Hm*1.06,x,yb-Hm*1.14);
+  bc.quadraticCurveTo(x+wb*.2,yb-Hm*1.06,x+wb*.34,yb-Hm*.97);bc.closePath();bc.fill();
+  bc.strokeStyle=sc(242,204,112);bc.lineWidth=1.6;
+  bc.beginPath();bc.moveTo(x,yb-Hm*1.14);bc.lineTo(x,yb-Hm*1.2);bc.stroke();
+  bc.beginPath();bc.arc(x,yb-Hm*1.2,wb*.2,Math.PI*.1,Math.PI*.9);bc.stroke();
+  const gl=bc.createRadialGradient(x,yb-Hm*.62,0,x,yb-Hm*.62,wb*2.2);
+  gl.addColorStop(0,`rgba(255,220,150,${.22*lf})`);gl.addColorStop(1,"rgba(255,220,150,0)");
+  bc.fillStyle=gl;bc.fillRect(x-wb*2.2,yb-Hm*.62-wb*2.2,wb*4.4,wb*4.4);
+}
+
+function draw(ang, time, theta){
   bc.clearRect(0,0,W,H); fc.clearRect(0,0,W,H);
 
   // stars
   bc.fillStyle = "#fff";
   for(const s of stars){
-    bc.globalAlpha = .35 + .4*Math.sin(time*0.0012 + s.p);
+    bc.globalAlpha = .3 + .4*Math.sin(time*0.0012 + s.p);
     bc.beginPath(); bc.arc(s.x*W, s.y*H, s.r, 0, TAU); bc.fill();
   }
   bc.globalAlpha = 1;
 
-  // golden glow behind Kaaba
-  const g = bc.createRadialGradient(CX,CY,S*0.3,CX,CY,S*3.2);
-  g.addColorStop(0,"rgba(243,221,154,.22)"); g.addColorStop(1,"rgba(243,221,154,0)");
-  bc.fillStyle = g; bc.fillRect(0,0,W,H);
+  // distant hills, city ground, clock tower
+  hillsAndGround(theta);
+  clockTower(theta);
 
-  // marble floor
-  const fg = bc.createRadialGradient(CX,GY,S*0.5,CX,GY,S*3.1);
-  fg.addColorStop(0,"rgba(230,215,170,.16)"); fg.addColorStop(1,"rgba(230,215,170,0)");
+  // marble plaza: dark surround + lit mataf
+  const fy = GY-RB*TILT;
+  const pg = bc.createLinearGradient(0,fy,0,H);
+  pg.addColorStop(0,"#0d1521");pg.addColorStop(.5,"#0b0f17");pg.addColorStop(1,"#06080c");
+  bc.fillStyle = pg; bc.fillRect(0,fy,W,H-fy);
   bc.save(); bc.translate(CX,GY); bc.scale(1,TILT); bc.translate(-CX,-GY);
-  bc.fillStyle = fg; bc.beginPath(); bc.arc(CX,GY,S*3.1,0,TAU); bc.fill(); bc.restore();
+  const fg = bc.createRadialGradient(CX,GY,S*.4,CX,GY,RB);
+  fg.addColorStop(0,"rgba(244,232,200,.42)"); fg.addColorStop(.6,"rgba(222,208,172,.22)"); fg.addColorStop(1,"rgba(170,156,124,.1)");
+  bc.fillStyle = fg; bc.beginPath(); bc.arc(CX,GY,RB,0,TAU); bc.fill(); bc.restore();
+
+  // the Haram: colonnade, gates, minarets
+  colonnade(theta);
+
+  // warm glow + Kaaba contact shadow
+  const g = bc.createRadialGradient(CX,CY,S*.3,CX,CY,S*3);
+  g.addColorStop(0,"rgba(255,226,160,.16)"); g.addColorStop(1,"rgba(255,226,160,0)");
+  bc.fillStyle = g; bc.fillRect(0,0,W,H);
+  bc.save(); bc.translate(CX,GY); bc.scale(1,TILT);
+  const sg = bc.createRadialGradient(0,0,S*.2,0,0,S*1.05);
+  sg.addColorStop(0,"rgba(0,0,0,.7)"); sg.addColorStop(1,"rgba(0,0,0,0)");
+  bc.fillStyle = sg; bc.beginPath(); bc.arc(0,0,S*1.05,0,TAU); bc.fill(); bc.restore();
 
   // ring guides
-  bc.strokeStyle = "rgba(217,178,90,.10)"; bc.lineWidth = 1;
+  bc.strokeStyle = "rgba(217,178,90,.09)"; bc.lineWidth = 1;
   for(let k=0;k<RINGS;k++){
     const r = S*(1.5+0.24*k);
     bc.beginPath(); bc.ellipse(CX,GY,r,r*TILT,0,0,TAU); bc.stroke();
@@ -325,7 +657,7 @@ function draw(ang, time){
   }
 
   // lead pilgrim (gold) with trail — completes exactly 7 circuits
-  const lr = S*1.22;
+  const lr = S*1.28;
   for(let j=14;j>=0;j--){
     const a = -ang + 0.6 + j*0.04, sn = Math.sin(a);
     const ctx = sn<0?bc:fc;
@@ -339,7 +671,6 @@ function draw(ang, time){
 }
 
 /* ---------- Scroll → everything ---------- */
-const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
 const hero = document.getElementById("hero"), hint = document.getElementById("hint");
 let pT=0, pS=0, idle=0, last=performance.now();
 
@@ -358,9 +689,11 @@ function frame(now){
   pS += (pT-pS)*0.12;
   if(!reduce) idle += dt*0.00012;
   const ang = pS*CIRCUITS*TAU + idle;
+  const thetaDeg = 37 + ang*180/Math.PI*0.3;
+  const theta = thetaDeg*Math.PI/180;
 
-  draw(ang, now);
-  kaaba.style.transform = `rotateX(-22deg) rotateY(${25 + ang*180/Math.PI*0.3}deg)`;
+  draw(ang, now, theta);
+  kaaba.style.transform = `rotateX(-22deg) rotateY(${thetaDeg}deg)`;
 
   // hero + hint
   const ho = clamp(1 - pS/0.025);
