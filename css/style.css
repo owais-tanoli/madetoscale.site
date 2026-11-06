@@ -554,3 +554,67 @@ h2{ font-weight: 500; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.1; let
 .enquiry__status--error{ border-color: rgba(255,120,100,0.55); background: rgba(255,120,100,0.07); }
 .enquiry__alt{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
 .enquiry__alt .btn{ min-height: 46px; }
+
+
+/* =========================================================
+   v15: concise layout - tighter spacing, compact cards, fewer repeats
+   ========================================================= */
+:root{ --section: clamp(52px, 6vw, 92px); }
+.section__head{ margin-bottom: clamp(26px, 3.4vw, 44px); }
+.section__head p{ font-size: clamp(15px, 1.2vw, 18px); }
+.intro{ padding: clamp(44px, 5.5vw, 76px) 0 0; }
+
+/* services: 2x2 compact cards, single-column lists */
+.svc-grid .svc{ padding: clamp(22px, 2.4vw, 32px); gap: 14px; }
+.svc-grid .svc__list{ grid-template-columns: 1fr; gap: 8px; }
+.svc__list li{ font-size: 16px; }
+.svc__name p{ font-size: 15px; }
+.svc__cta{ margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+/* how we work + why */
+.steps li{ padding: 22px 20px; }
+.steps__no{ font-size: 30px; margin-bottom: 8px; }
+.steps h3{ font-size: clamp(19px, 1.6vw, 24px); }
+.steps li p{ font-size: 15px; margin-top: 6px; }
+.why__title{ margin: clamp(36px, 4.5vw, 56px) 0 18px; text-align: center; font-size: clamp(22px, 2.2vw, 30px); font-weight: 500; }
+.why__list--row{ grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.why__list--row li{ padding: 20px; }
+.why__list--row h3{ font-size: 17px; margin-bottom: 6px; }
+.why__list--row p{ font-size: 15px; }
+@media (max-width: 1000px){ .why__list--row{ grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px){ .steps{ grid-template-columns: 1fr 1fr; } .why__list--row{ grid-template-columns: 1fr; } }
+
+/* work: one live card + a compact 3-column grid */
+.proj--live{ display: block; padding: clamp(22px, 2.6vw, 32px); margin-bottom: 16px; }
+.proj--live h3{ margin-top: 6px; font-size: clamp(20px, 2vw, 26px); }
+.proj--live p:not(.proj__tag):not(.proj__tools){ margin-top: 8px; color: var(--ink-soft); }
+.proj__tools{ margin-top: 10px; font-size: 14px; color: var(--ink-faint); }
+.proj-grid{ grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.proj-grid .proj:nth-child(n){ padding: 22px; }
+.proj-grid .proj h3{ font-size: 18px; margin-top: 6px; }
+.proj-grid .proj p:not(.proj__tag):not(.proj__tools){ margin-top: 8px; font-size: 15px; color: var(--ink-soft); }
+.work__note{ margin-top: 24px; text-align: center; font-size: 14px; color: var(--ink-faint); }
+@media (max-width: 1000px){ .proj-grid{ grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px){ .proj-grid{ grid-template-columns: 1fr; } }
+
+/* industries: one compact row */
+.ind{ grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.ind li{ padding: 20px; }
+.ind h3{ font-size: 18px; margin-bottom: 8px; }
+.ind p{ font-size: 15px; }
+@media (max-width: 520px){ .ind{ grid-template-columns: 1fr 1fr; } .ind li{ padding: 16px; } .ind p{ font-size: 14px; } }
+
+/* about */
+.about__body > p:not(.statement){ margin-top: 18px; }
+.partners{ margin-top: 32px; padding: clamp(20px, 2.4vw, 28px); }
+.partners li{ font-size: 15px; }
+
+/* faq: all answers one click away */
+.faq-q summary{ padding: 18px 0; font-size: 18px; }
+.faq-q p{ padding-bottom: 20px; font-size: 16px; }
+.faq-q p a{ color: var(--amber); }
+
+/* contact */
+.contact__note{ margin-top: 16px; }
+.contact__info{ margin-top: 24px; }
+.enquiry{ gap: 14px; }

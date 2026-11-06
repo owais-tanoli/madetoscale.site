@@ -90,7 +90,7 @@
 
   var qs = Array.prototype.slice.call(document.querySelectorAll('.faq-q'));
   var more = document.getElementById('faq-more');
-  var LIMIT = 6;
+  var LIMIT = 8;
   if (more && qs.length > LIMIT) {
     var expanded = false;
     qs.forEach(function (q, i) { if (i >= LIMIT) q.hidden = true; });
@@ -124,7 +124,7 @@
 
   // ---- reveal on scroll
   var targets = [
-    '.section__head', '.intro .statement', '.facts li', '.journey__steps li', '.journey__panel',
+    '.section__head', '.intro .statement', '.facts li', '.journey__steps', '.journey__panel',
     '.svc', '.svc__note', '.why__list li', '.steps li', '.filters', '.proj--live', '.proj-grid .proj',
     '.ind li', '.about__body', '.faq__head', '.faq-q', '.faq__more',
     '.close__title', '.close__row', '.close__audit', '.contact__copy', '.contact__form',
