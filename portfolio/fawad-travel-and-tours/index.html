@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fawad Travel & Tours | Umrah & Hajj Packages</title>
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="Fawad Travel & Tours — Umrah and Hajj packages for individuals, couples, families and groups. Scroll to begin your tawaf.">
+<meta property="og:title" content="Fawad Travel & Tours | Umrah & Hajj Packages">
+<meta property="og:description" content="Scroll to circle the Kaaba and discover our Umrah packages.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<style>
+  :root{
+    --gold:#d9b25a; --gold-2:#f3dd9a; --gold-3:#8a6414;
+    --ink:#05080f; --cream:#f4ecd8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--ink);color:var(--cream);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}
+  body{overflow-x:hidden}
+  #scroller{height:900vh}
+
+  /* ---------- Fixed stage ---------- */
+  .stage{position:fixed;inset:0;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 25%,#14283f 0%,#0a1220 55%,#03050a 100%)}
+  canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+  /* ---------- Kaaba (CSS 3D cube) ---------- */
+  .scene{position:absolute;left:50%;top:0;width:0;height:0;perspective:1400px}
+  .kaaba{position:absolute;left:0;top:0;transform-style:preserve-3d;
+    transform:rotateX(-22deg) rotateY(25deg)}
+  .face{position:absolute;left:calc(var(--s) / -2);top:calc(var(--h) / -2);
+    width:var(--s);height:var(--h);
+    background:
+      repeating-linear-gradient(90deg,transparent 0 9px,rgba(255,255,255,.035) 9px 10px),
+      linear-gradient(180deg,#1a1a1a 0%,#0b0b0b 100%);
+    backface-visibility:hidden;overflow:hidden}
+  .face::before{content:"";position:absolute;left:0;right:0;top:13%;height:11%;
+    background:
+      repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.22) 6px 8px),
+      linear-gradient(90deg,#8a6414,#f3dd9a,#b8892a,#f3dd9a,#8a6414);
+    border-top:1px solid rgba(255,245,200,.5);border-bottom:1px solid rgba(0,0,0,.6)}
+  .face.f::after{content:"";position:absolute;left:58%;width:15%;top:42%;height:40%;
+    background:linear-gradient(180deg,#f3dd9a,#b8892a 60%,#8a6414);
+    border-radius:2px 2px 0 0;box-shadow:0 0 12px rgba(243,221,154,.55)}
+  .f{transform:translateZ(calc(var(--s) / 2))}
+  .b{transform:rotateY(180deg) translateZ(calc(var(--s) / 2));filter:brightness(.6)}
+  .r{transform:rotateY(90deg) translateZ(calc(var(--s) / 2));filter:brightness(.78)}
+  .l{transform:rotateY(-90deg) translateZ(calc(var(--s) / 2));filter:brightness(.9)}
+  .t{height:var(--s);top:calc(var(--s) / -2);
+    transform:rotateX(90deg) translateZ(calc(var(--h) / 2));
+    background:linear-gradient(135deg,#2b2b2b,#141414)}
+  .t::before{display:none}
+
+  /* ---------- Header / hero / HUD ---------- */
+  header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;
+    justify-content:space-between;padding:12px clamp(14px,3vw,36px);
+    background:linear-gradient(180deg,rgba(3,5,10,.85),rgba(3,5,10,0))}
+  header img{height:62px;display:block}
+  .pill{color:#10150f;background:linear-gradient(135deg,var(--gold-2),var(--gold));
+    padding:9px 18px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;
+    box-shadow:0 4px 18px rgba(217,178,90,.3)}
+
+  .hero{position:absolute;z-index:10;top:15%;left:0;right:0;text-align:center;padding:0 20px;
+    pointer-events:none;will-change:opacity,transform}
+  .hero .ar{font-size:clamp(18px,2.4vw,28px);color:var(--gold-2);margin:0 auto 10px;max-width:none;text-align:center;
+    font-family:"Amiri","Traditional Arabic","Segoe UI",serif;direction:rtl}
+  .hero h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:700;
+    font-size:clamp(30px,5.2vw,68px);line-height:1.08;
+    background:linear-gradient(135deg,#fff6d6,var(--gold) 60%,#b8892a);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{margin:14px auto 0;max-width:620px;color:#cfd6e6;font-size:clamp(14px,1.5vw,18px);text-wrap:balance}
+  .scrollhint{position:absolute;z-index:10;left:0;right:0;bottom:6%;text-align:center;
+    color:var(--gold-2);font-size:13px;letter-spacing:.25em;text-transform:uppercase;pointer-events:none}
+  .scrollhint i{display:block;margin:10px auto 0;width:22px;height:36px;border:2px solid var(--gold);
+    border-radius:12px;position:relative}
+  .scrollhint i::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:8px;margin-left:-2px;
+    border-radius:2px;background:var(--gold-2);animation:wheel 1.6s infinite}
+  @keyframes wheel{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(14px)}}
+
+  .hud{position:absolute;z-index:12;left:0;right:0;bottom:16px;text-align:center;pointer-events:none;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#aab4c8;transition:opacity .3s}
+  .hud .dots{display:flex;gap:8px;justify-content:center;margin-top:8px}
+  .hud .dots b{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--gold);transition:all .3s}
+  .hud .dots b.on{background:var(--gold-2);box-shadow:0 0 10px var(--gold)}
+
+  /* ---------- Package pop-up cards ---------- */
+  .card{position:absolute;z-index:11;top:50%;width:340px;padding:24px 24px 22px;border-radius:22px;
+    background:linear-gradient(160deg,rgba(18,30,48,.82),rgba(7,12,22,.86));
+    border:1px solid rgba(217,178,90,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:0 24px 60px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);
+    opacity:0;pointer-events:none;will-change:transform,opacity;--ty:-50%;
+    transform:translateY(var(--ty)) scale(.8)}
+  .card.left{left:4vw}.card.right{right:4vw}
+  .card .tag{display:inline-block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:#10150f;background:linear-gradient(135deg,var(--gold-2),var(--gold));
+    padding:4px 11px;border-radius:999px;font-weight:700}
+  .card .num{position:absolute;right:20px;top:14px;font-family:Georgia,serif;font-size:44px;
+    color:rgba(217,178,90,.18);font-weight:700}
+  .card h3{margin:14px 0 10px;font-family:Georgia,serif;font-size:28px;color:#fff6d6}
+  .card ul{margin:0 0 16px;padding:0;list-style:none;color:#cfd6e6;font-size:14.5px}
+  .card li{padding:5px 0 5px 24px;position:relative}
+  .card li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+  .card .price{display:flex;justify-content:space-between;align-items:baseline;
+    border-top:1px dashed rgba(217,178,90,.3);padding-top:12px;margin-bottom:14px;color:#aab4c8;font-size:13px}
+  .card .price b{color:var(--gold-2);font-size:17px}
+  .btn{display:block;text-align:center;text-decoration:none;font-weight:700;font-size:15px;
+    color:#10150f;padding:12px 16px;border-radius:12px;
+    background:linear-gradient(135deg,var(--gold-2),var(--gold));transition:transform .2s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,178,90,.4)}
+  .btn.ghost{background:transparent;color:var(--gold-2);border:1px solid rgba(217,178,90,.5);margin-top:10px}
+  .card.contact p{color:#cfd6e6;font-size:14.5px;margin:0 0 16px}
+
+  .mts-badge{position:fixed;right:14px;bottom:14px;z-index:30;font-size:12px;letter-spacing:.04em;
+    color:#cfd6e6;background:rgba(5,8,15,.78);border:1px solid rgba(217,178,90,.35);border-radius:999px;
+    padding:7px 14px;text-decoration:none;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .mts-badge b{color:var(--gold-2)}
+  .mts-badge:hover{border-color:var(--gold)}
+  @media (max-width:760px){
+    .mts-badge{top:62px;bottom:auto;right:12px;font-size:11px;padding:5px 11px}
+    header img{height:48px}
+    .card{top:auto;bottom:60px;left:12px!important;right:12px!important;width:auto;--ty:0%;padding:18px}
+    .card h3{font-size:23px;margin:10px 0 6px}
+    .card li:nth-child(n+4){display:none}
+    .card .num{font-size:34px}
+    .hero{top:13%}
+    .hud{bottom:12px}
+  }
+  @media (prefers-reduced-motion:reduce){.scrollhint i::after{animation:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="logo.svg" alt="Fawad Travel & Tours logo">
+  <a class="pill" id="navWa" href="#" target="_blank" rel="noopener">WhatsApp us</a>
+</header>
+
+<div id="scroller"></div>
+
+<div class="stage" id="stage">
+  <canvas id="back"></canvas>
+  <div class="scene" id="scene">
+    <div class="kaaba" id="kaaba">
+      <div class="face f"></div><div class="face b"></div>
+      <div class="face r"></div><div class="face l"></div>
+      <div class="face t"></div>
+    </div>
+  </div>
+  <canvas id="front"></canvas>
+
+  <div class="hero" id="hero">
+    <p class="ar" lang="ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</p>
+    <h1>Walk the circle<br>of faith</h1>
+    <p>Umrah &amp; Hajj journeys by Fawad Travel &amp; Tours — scroll to begin your tawaf.</p>
+  </div>
+  <div class="scrollhint" id="hint">Scroll<i></i></div>
+
+  <div id="cards"></div>
+
+  <a class="mts-badge" href="https://madetoscale.site/#work">Concept build by <b>Made to Scale</b> &larr; back</a>
+
+  <div class="hud" id="hud"><span id="hudText"></span><div class="dots" id="dots"></div></div>
+</div>
+
+<script>
+/* =========================================================
+   EDIT THIS PART — your details and packages
+   ========================================================= */
+const CONFIG = {
+  brand: "Fawad Travel & Tours",
+  whatsapp: "",   // digits only with country code, e.g. "923001234567"
+  phone: "",      // e.g. "+92 300 1234567"
+  email: "",
+  facebook: "https://www.facebook.com/fawadtravelandtours/",
+  gbp: ""         // Google Business Profile link (when you have it)
+};
+
+const PACKAGES = [
+  { tag:"For 1 traveller",  title:"Solo Umrah",
+    points:["Visa processing","Return flights","Hotels near the Haram","Transport & ziyarat"], price:"On request" },
+  { tag:"For 2 travellers", title:"Couple Umrah",
+    points:["Visa processing","Return flights","Shared room, near the Haram","Transport & ziyarat"], price:"On request" },
+  { tag:"For 3 travellers", title:"Trio Umrah",
+    points:["Visa processing","Return flights","Triple room, near the Haram","Transport & ziyarat"], price:"On request" },
+  { tag:"Family of 4+",     title:"Family Umrah",
+    points:["Family rooms","Visa for all members","Child-friendly planning","Transport & ziyarat"], price:"On request" },
+  { tag:"Groups 10+",       title:"Group Umrah",
+    points:["Group discount","Guided by an experienced guide","Fixed departure dates","Transport & ziyarat"], price:"On request" },
+  { tag:"Custom",           title:"Ramadan & VIP Umrah",
+    points:["Your dates, your hotels","Premium rooms steps from the Haram","Private transport","Fully tailored"], price:"On request" }
+];
+/* ========================================================= */
+
+const TAU = Math.PI * 2;
+const CIRCUITS = 7;                 // tawaf = 7 circuits
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function waLink(msg){
+  return CONFIG.whatsapp
+    ? "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg)
+    : CONFIG.facebook;
+}
+document.getElementById("navWa").href = waLink("Assalamu alaikum, I would like to enquire about Umrah packages.");
+
+/* ---------- Build cards ---------- */
+const cardsEl = document.getElementById("cards");
+const cards = [];
+PACKAGES.forEach((p,i)=>{
+  const el = document.createElement("article");
+  el.className = "card " + (i%2===0 ? "left":"right");
+  el.innerHTML = `
+    <span class="num">0${i+1}</span>
+    <span class="tag">${p.tag}</span>
+    <h3>${p.title}</h3>
+    <ul>${p.points.map(x=>`<li>${x}</li>`).join("")}</ul>
+    <div class="price"><span>Price</span><b>${p.price}</b></div>
+    <a class="btn" target="_blank" rel="noopener"
+       href="${waLink("Assalamu alaikum, I am interested in: "+p.title+" ("+p.tag+")")}">Enquire on WhatsApp</a>`;
+  cardsEl.appendChild(el);
+  cards.push({el, c:(i+0.5)/CIRCUITS, side:i%2===0?-1:1});
+});
+/* final contact card */
+(function(){
+  const el = document.createElement("article");
+  el.className = "card contact left";
+  const tel = CONFIG.phone ? `<a class="btn ghost" href="tel:${CONFIG.phone.replace(/\s/g,'')}">Call ${CONFIG.phone}</a>` : "";
+  const gbp = CONFIG.gbp ? `<a class="btn ghost" target="_blank" rel="noopener" href="${CONFIG.gbp}">Find us on Google</a>` : "";
+  el.innerHTML = `
+    <span class="num">✦</span>
+    <span class="tag">Your journey</span>
+    <h3>Begin your Umrah</h3>
+    <p>Seven circuits complete. Tell us your dates and group size and we'll shape the perfect package.</p>
+    <a class="btn" target="_blank" rel="noopener" href="${waLink("Assalamu alaikum, I would like a custom Umrah quote.")}">Get a quote on WhatsApp</a>
+    <a class="btn ghost" target="_blank" rel="noopener" href="${CONFIG.facebook}">Visit our Facebook page</a>
+    ${tel}${gbp}`;
+  cardsEl.appendChild(el);
+  cards.push({el, c:(CIRCUITS-0.5)/CIRCUITS, side:-1});
+})();
+
+/* ---------- HUD dots ---------- */
+const dotsEl = document.getElementById("dots");
+for(let i=0;i<CIRCUITS;i++) dotsEl.appendChild(document.createElement("b"));
+const dotEls = [...dotsEl.children];
+const hudText = document.getElementById("hudText");
+
+/* ---------- Canvas + layout ---------- */
+const back = document.getElementById("back"), front = document.getElementById("front");
+const bc = back.getContext("2d"), fc = front.getContext("2d");
+const scene = document.getElementById("scene"), kaaba = document.getElementById("kaaba");
+const stage = document.getElementById("stage");
+let W,H,DPR,mobile,S,Hh,CX,CY,GY;
+const TILT = Math.sin(22*Math.PI/180);   // ring squash = camera elevation
+
+function resize(){
+  W = innerWidth; H = innerHeight; DPR = Math.min(devicePixelRatio||1, 2);
+  mobile = W < 760;
+  S  = mobile ? W*0.15 : Math.min(W*0.12, H*0.17);
+  Hh = S*1.12;
+  CX = W/2; CY = H*(mobile?0.36:0.55);
+  GY = CY + (Hh/2)*Math.cos(22*Math.PI/180);
+  [back,front].forEach(c=>{c.width=W*DPR;c.height=H*DPR});
+  bc.setTransform(DPR,0,0,DPR,0,0); fc.setTransform(DPR,0,0,DPR,0,0);
+  stage.style.setProperty("--s", S+"px"); stage.style.setProperty("--h", Hh+"px");
+  scene.style.top = CY+"px";
+}
+addEventListener("resize", resize); resize();
+
+/* ---------- Crowd + stars ---------- */
+const RINGS = 6;
+const crowd = [];
+for(let k=0;k<RINGS;k++){
+  const n = 36 + k*16;
+  for(let i=0;i<n;i++){
+    crowd.push({k, base:Math.random()*TAU, j:(Math.random()-.5), sp:1+(Math.random()-.5)*0.03,
+      col: Math.random()<.78 ? "#f1ece0" : "#9fb0cc", sz:0.85+Math.random()*0.3});
+  }
+}
+const stars = Array.from({length:180},()=>({x:Math.random(),y:Math.random()*0.7,r:Math.random()*1.3+.2,p:Math.random()*TAU}));
+
+function person(ctx,x,y,sz,col){
+  ctx.fillStyle = col;
+  ctx.beginPath(); ctx.ellipse(x,y,sz*.7,sz*1.1,0,0,TAU); ctx.fill();
+  ctx.fillStyle = "#d8a77a";
+  ctx.beginPath(); ctx.arc(x,y-sz*1.3,sz*.42,0,TAU); ctx.fill();
+}
+
+function draw(ang, time){
+  bc.clearRect(0,0,W,H); fc.clearRect(0,0,W,H);
+
+  // stars
+  bc.fillStyle = "#fff";
+  for(const s of stars){
+    bc.globalAlpha = .35 + .4*Math.sin(time*0.0012 + s.p);
+    bc.beginPath(); bc.arc(s.x*W, s.y*H, s.r, 0, TAU); bc.fill();
+  }
+  bc.globalAlpha = 1;
+
+  // golden glow behind Kaaba
+  const g = bc.createRadialGradient(CX,CY,S*0.3,CX,CY,S*3.2);
+  g.addColorStop(0,"rgba(243,221,154,.22)"); g.addColorStop(1,"rgba(243,221,154,0)");
+  bc.fillStyle = g; bc.fillRect(0,0,W,H);
+
+  // marble floor
+  const fg = bc.createRadialGradient(CX,GY,S*0.5,CX,GY,S*3.1);
+  fg.addColorStop(0,"rgba(230,215,170,.16)"); fg.addColorStop(1,"rgba(230,215,170,0)");
+  bc.save(); bc.translate(CX,GY); bc.scale(1,TILT); bc.translate(-CX,-GY);
+  bc.fillStyle = fg; bc.beginPath(); bc.arc(CX,GY,S*3.1,0,TAU); bc.fill(); bc.restore();
+
+  // ring guides
+  bc.strokeStyle = "rgba(217,178,90,.10)"; bc.lineWidth = 1;
+  for(let k=0;k<RINGS;k++){
+    const r = S*(1.5+0.24*k);
+    bc.beginPath(); bc.ellipse(CX,GY,r,r*TILT,0,0,TAU); bc.stroke();
+  }
+
+  // pilgrims
+  const base = Math.max(1.6, S*0.026);
+  for(const d of crowd){
+    const r = S*(1.5+0.24*d.k) + d.j*S*0.07;
+    const a = d.base - ang*d.sp*(1 - d.k*0.05);
+    const sn = Math.sin(a);
+    const x = CX + r*Math.cos(a), y = GY + r*TILT*sn;
+    person(sn<0?bc:fc, x, y, base*d.sz*(1+0.25*sn), d.col);
+  }
+
+  // lead pilgrim (gold) with trail — completes exactly 7 circuits
+  const lr = S*1.22;
+  for(let j=14;j>=0;j--){
+    const a = -ang + 0.6 + j*0.04, sn = Math.sin(a);
+    const ctx = sn<0?bc:fc;
+    ctx.globalAlpha = (1 - j/15)*0.85;
+    ctx.fillStyle = "#ffd770";
+    ctx.beginPath();
+    ctx.arc(CX+lr*Math.cos(a), GY+lr*TILT*sn - base, base*(j===0?1.5:0.8), 0, TAU);
+    ctx.fill();
+  }
+  bc.globalAlpha = 1; fc.globalAlpha = 1;
+}
+
+/* ---------- Scroll → everything ---------- */
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const hero = document.getElementById("hero"), hint = document.getElementById("hint");
+let pT=0, pS=0, idle=0, last=performance.now();
+
+function readScroll(){
+  const max = document.documentElement.scrollHeight - innerHeight;
+  pT = max>0 ? clamp(scrollY/max) : 0;
+}
+addEventListener("scroll", readScroll, {passive:true}); readScroll();
+
+// testing helper: index.html?p=0.4 jumps to that point
+const q = new URLSearchParams(location.search).get("p");
+if(q!==null){ addEventListener("load",()=>{scrollTo(0,(document.documentElement.scrollHeight-innerHeight)*parseFloat(q)); readScroll(); pS=pT;}); }
+
+function frame(now){
+  const dt = Math.min(64, now-last); last = now;
+  pS += (pT-pS)*0.12;
+  if(!reduce) idle += dt*0.00012;
+  const ang = pS*CIRCUITS*TAU + idle;
+
+  draw(ang, now);
+  kaaba.style.transform = `rotateX(-22deg) rotateY(${25 + ang*180/Math.PI*0.3}deg)`;
+
+  // hero + hint
+  const ho = clamp(1 - pS/0.025);
+  hero.style.opacity = ho; hero.style.transform = `translateY(${-(1-ho)*30}px)`;
+  hint.style.opacity = clamp(1 - pS/0.012);
+
+  // cards pop in/out
+  for(const c of cards){
+    const d = Math.abs(pS - c.c);
+    const t = clamp(1 - (d-0.03)/0.03);
+    const e = t*t*(3-2*t);
+    c.el.style.opacity = e;
+    c.el.style.pointerEvents = e>0.6 ? "auto":"none";
+    c.el.style.transform =
+      `translateY(var(--ty)) translateX(${c.side*(1-e)*(mobile?0:-70)}px) translateY(${mobile?(1-e)*50:0}px) scale(${0.8+0.2*e}) rotate(${(1-e)*4*c.side}deg)`;
+  }
+
+  // HUD
+  const circ = clamp(Math.floor(pS*CIRCUITS)+1,1,CIRCUITS);
+  hudText.textContent = pS<0.01 ? "Tawaf begins" : (pS>0.995 ? "Tawaf complete" : `Circuit ${circ} of ${CIRCUITS}`);
+  dotEls.forEach((b,i)=>b.classList.toggle("on", pS>0.01 && i<circ));
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

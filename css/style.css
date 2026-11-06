@@ -618,3 +618,7 @@ h2{ font-weight: 500; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.1; let
 .contact__note{ margin-top: 16px; }
 .contact__info{ margin-top: 24px; }
 .enquiry{ gap: 14px; }
+
+/* portfolio demo link */
+.proj__link{ display: inline-block; margin-top: 14px; font-weight: 600; color: var(--amber); text-decoration: none; border-bottom: 1px solid transparent; }
+.proj__link:hover{ border-bottom-color: var(--amber); }

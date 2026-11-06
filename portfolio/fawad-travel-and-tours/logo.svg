@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 120" role="img" aria-label="Fawad Travel &amp; Tours">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6e6a6"/>
+      <stop offset="0.5" stop-color="#d4a640"/>
+      <stop offset="1" stop-color="#8a6414"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="0.4" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#14614a"/>
+      <stop offset="1" stop-color="#062a20"/>
+    </radialGradient>
+    <mask id="cres">
+      <rect width="120" height="120" fill="#fff"/>
+      <circle cx="74" cy="50" r="31" fill="#000"/>
+    </mask>
+  </defs>
+
+  <!-- Emblem -->
+  <circle cx="60" cy="60" r="54" fill="url(#bg)" stroke="url(#g)" stroke-width="4"/>
+  <circle cx="60" cy="60" r="47" fill="none" stroke="#d4a640" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="2 4"/>
+
+  <!-- Crescent -->
+  <circle cx="58" cy="56" r="34" fill="url(#g)" mask="url(#cres)"/>
+
+  <!-- Kaaba -->
+  <polygon points="60,54 68,47 96,47 88,54" fill="#2a2a2a"/>
+  <rect x="60" y="54" width="28" height="26" fill="#0c0c0c"/>
+  <polygon points="88,54 96,47 96,73 88,80" fill="#171717"/>
+  <rect x="60" y="59" width="28" height="5" fill="url(#g)"/>
+  <polygon points="88,59 96,52 96,57 88,64" fill="#b8892a"/>
+  <rect x="71" y="67" width="6" height="13" fill="url(#g)"/>
+
+  <!-- Flight swoosh + plane -->
+  <path d="M16 86 Q56 112 104 78" fill="none" stroke="url(#g)" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="104,78 94,76 97,81 92,86" fill="#f6e6a6"/>
+
+  <!-- Wordmark -->
+  <text x="128" y="62" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="700" letter-spacing="3" fill="url(#g)">FAWAD</text>
+  <text x="130" y="85" font-family="Georgia, 'Times New Roman', serif" font-size="14.5" letter-spacing="4.2" fill="#efe3c2">TRAVEL &amp; TOURS</text>
+  <line x1="130" y1="94" x2="318" y2="94" stroke="url(#g)" stroke-width="1"/>
+  <text x="130" y="109" font-family="Georgia, serif" font-size="10.5" letter-spacing="2.6" fill="#c9b98a" font-style="italic">Umrah • Hajj • Tickets</text>
+</svg>
