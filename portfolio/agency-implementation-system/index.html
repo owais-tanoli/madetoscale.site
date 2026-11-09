@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agency Implementation System - Concept Demo</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="An interactive concept demo: a website, CRM, workflows and integrations working as one system, delivered under a marketing agency's own brand. Fictional names and placeholder details.">
+<meta name="robots" content="noindex, follow">
+<meta name="color-scheme" content="dark">
+<style>
+:root{
+  --bg:#0a0c1e; --bg2:#0f1230; --surface:#141838; --surface2:#1b2048; --line:#2c3263;
+  --text:#eceeff; --muted:#a9aed6; --violet:#8b6bff; --cyan:#27d3f0; --ok:#5eead4;
+  --grad:linear-gradient(90deg,#8b6bff,#27d3f0);
+  --r:16px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1200px 500px at 70% -100px,#242a6b55,transparent),var(--bg);color:var(--text);font-family:var(--font);line-height:1.55;font-size:16px;overflow-x:hidden}
+img,svg{max-width:100%}
+a{color:var(--cyan)}
+:focus-visible{outline:3px solid #7ff0ff;outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.topbar{background:#070816;border-bottom:1px solid var(--line);font-size:.8125rem}
+.topbar .wrap{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:center;padding-top:8px;padding-bottom:8px}
+.topbar p{margin:0;color:var(--muted)}
+.topbar a{font-weight:600;white-space:nowrap}
+
+/* hero */
+.hero{padding:40px 0 28px}
+.eyebrow{display:inline-block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin:0 0 12px}
+h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.08;margin:0 0 16px;letter-spacing:-.02em}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.125rem;color:#cfd3f5;max-width:46rem;margin:0 0 20px}
+.cast{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:0;list-style:none}
+.cast li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.875rem;color:var(--muted)}
+.cast b{color:var(--text)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{font:inherit;font-weight:600;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:11px 18px;min-height:44px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn:hover{border-color:#5b63b8}
+.btn.primary{background:linear-gradient(90deg,#6d4aff,#0f8fb0);border-color:transparent;color:#fff}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+section{padding:36px 0}
+h2{font-size:clamp(1.5rem,4.5vw,2.125rem);line-height:1.15;margin:0 0 8px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 24px;max-width:44rem}
+
+/* map */
+.mapbox{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:16px}
+.map{position:relative;display:flex;flex-direction:column;gap:30px}
+.map::before{content:"";position:absolute;left:50%;top:20px;bottom:20px;width:3px;margin-left:-1.5px;background:var(--line);border-radius:3px}
+.map.flow::before{background:repeating-linear-gradient(180deg,var(--cyan) 0 8px,transparent 8px 16px)}
+.edges,.elabel{display:none}
+.node{position:relative;font:inherit;color:inherit;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:var(--r);padding:14px 16px;cursor:pointer;width:100%;display:block}
+.node:hover{border-color:#5b63b8}
+.node .k{display:block;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.node .n{display:block;font-size:1.25rem;font-weight:700;margin:2px 0}
+.node .t{display:inline-block;font-size:.8125rem;color:#c9ccf0;background:#0c0f2a;border:1px solid var(--line);border-radius:6px;padding:1px 8px;margin:2px 0 6px}
+.node .d{display:block;font-size:.875rem;color:var(--muted)}
+.node.linked{border-color:#3aa9c4}
+.node.act{border-color:var(--cyan);box-shadow:0 0 0 3px #27d3f033}
+.node.sel{border-color:var(--violet);background:#1d2252;box-shadow:0 0 0 3px #8b6bff44}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{font-size:.75rem;background:#0c0f2a;border:1px dashed #4a529b;border-radius:6px;padding:3px 8px;color:#c9ccf0}
+.chip.lit{border-style:solid;border-color:var(--cyan);color:#06222b;background:var(--cyan);font-weight:700}
+
+.panel{background:var(--surface);border:1px solid var(--violet);border-radius:var(--r);padding:16px;position:relative;z-index:1}
+.panel h3{margin:0 0 6px;font-size:1.125rem}
+.panel h4{margin:14px 0 6px;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan)}
+.panel p{margin:0;color:#d5d8f6}
+.panel ul{margin:0;padding-left:18px;color:#d5d8f6}
+.panel li{margin:3px 0}
+.talks{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0!important}
+.talks button{font:inherit;font-size:.875rem;color:var(--text);background:#0c0f2a;border:1px solid var(--line);border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer}
+.talks button:hover{border-color:var(--cyan)}
+.talks span{display:block;font-size:.75rem;color:var(--muted)}
+.note{font-size:.8125rem;color:var(--muted);margin:12px 0 0}
+
+@media (min-width:860px){
+  .mapbox{padding:24px}
+  .map{display:block;height:590px}
+  .map::before{display:none}
+  .edges{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .edges line{stroke:#394080;stroke-width:2;vector-effect:non-scaling-stroke;stroke-dasharray:3 6;stroke-linecap:round}
+  .edges line.on{stroke:var(--cyan);stroke-width:3;stroke-dasharray:7 7}
+  .elabel{display:block;position:absolute;transform:translate(-50%,-50%);font-size:.75rem;color:var(--muted);background:var(--bg2);padding:2px 8px;border-radius:6px;pointer-events:none;white-space:nowrap;border:1px solid transparent}
+  .elabel.on{color:var(--cyan);border-color:#27d3f055}
+  .node{position:absolute;width:27%;transform:translate(-50%,-50%)}
+  .node[data-node=web]{left:16%;top:48%}
+  .node[data-node=crm]{left:50%;top:16%}
+  .node[data-node=flow]{left:84%;top:48%}
+  .node[data-node=int]{left:50%;top:83%;width:48%}
+  .panel{margin-top:20px;display:grid;grid-template-columns:1.1fr 1.3fr .9fr;gap:8px 28px}
+  .panel h4{margin-top:0}
+  .panel .head{grid-column:1/-1}
+}
+
+/* stepper */
+.stepper{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px}
+.steps{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px;grid-template-columns:1fr}
+.steps button{font:inherit;width:100%;text-align:left;display:flex;gap:10px;align-items:center;background:#0e1130;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-height:44px;cursor:pointer;font-size:.9375rem}
+.steps .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-size:.8125rem;font-weight:700;color:var(--text)}
+.steps button[aria-current=step]{border-color:var(--cyan);color:var(--text);background:#13204a}
+.steps button[aria-current=step] .num{background:var(--grad);color:#05101d}
+.steps button.done .num{background:#17406b}
+.scard{background:#0e1130;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px;min-height:140px}
+.scard .cnt{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);font-weight:700}
+.scard h3{margin:4px 0 6px;font-size:1.25rem}
+.scard p{margin:0 0 10px;color:#d5d8f6}
+.mini{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.mini li{font-size:.8125rem;border:1px solid var(--line);border-radius:999px;padding:3px 12px;color:var(--muted)}
+.mini li.on{background:var(--cyan);border-color:var(--cyan);color:#06222b;font-weight:700}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px}
+@media (min-width:860px){
+  .stepper{padding:24px}
+  .steps{grid-template-columns:repeat(6,1fr)}
+  .steps button{flex-direction:column;align-items:flex-start;height:100%;font-size:.8125rem}
+}
+
+/* brand */
+.brandgrid{display:grid;gap:20px;grid-template-columns:1fr}
+.ctl{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+fieldset{border:0;margin:0 0 16px;padding:0}
+legend{font-weight:700;margin-bottom:8px;padding:0}
+.presets{display:grid;gap:8px}
+.presets label{display:flex;align-items:center;gap:12px;background:#0e1130;border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;min-height:48px}
+.presets input{position:absolute;opacity:0;width:1px;height:1px}
+.presets label:has(input:checked){border-color:var(--cyan);background:#13204a}
+.presets label:has(input:focus-visible){outline:3px solid #7ff0ff;outline-offset:3px}
+.sw{flex:none;width:34px;height:34px;border-radius:9px}
+.field label{display:block;font-weight:700;margin-bottom:6px}
+.field input{font:inherit;width:100%;background:#0b0d26;color:var(--text);border:2px solid var(--line);border-radius:10px;padding:11px 12px;min-height:46px}
+.field input:focus-visible{border-color:var(--cyan)}
+.field small{display:block;color:var(--muted);margin-top:6px}
+
+.dash{--b1:#6d4aff;--b2:#0b7a9c;background:#f5f6fd;color:#1a1d3b;border-radius:20px;overflow:hidden;border:1px solid #cfd3f0;box-shadow:0 20px 50px -20px #000a;transition:none}
+.dh{background:linear-gradient(110deg,var(--b1),var(--b2));color:#fff;padding:16px 18px;display:flex;gap:12px;align-items:center}
+.logo{flex:none;width:46px;height:46px;border-radius:12px;background:#ffffff2e;border:1px solid #ffffff66;display:grid;place-items:center;font-weight:800;font-size:1.1rem;letter-spacing:.02em}
+.dh b{display:block;font-size:1.0625rem;line-height:1.2;overflow-wrap:anywhere}
+.dh span{font-size:.8125rem;opacity:.95}
+.db{padding:16px 18px}
+.db h4{margin:0 0 8px;font-size:.6875rem;letter-spacing:.09em;text-transform:uppercase;color:#4c5280}
+.stages{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0 0 16px;padding:0}
+.stages li{font-size:.8125rem;padding:4px 10px;border-radius:999px;background:#e5e8fa;color:#2b2f58}
+.stages li:first-child{background:var(--b1);color:#fff}
+.act{list-style:none;margin:0 0 16px;padding:0}
+.act li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid #e0e3f5;font-size:.875rem}
+.act li:last-child{border-bottom:0}
+.act i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--b2);margin-top:6px}
+.act small{display:block;color:#5a5f8c}
+.mail{background:#fff;border:1px solid #d9dcf3;border-left:4px solid var(--b1);border-radius:10px;padding:10px 12px;font-size:.8125rem;color:#33375f}
+.mail .from{font-size:.75rem;color:#5a5f8c;margin-bottom:4px;overflow-wrap:anywhere}
+.mail .from b{color:var(--b1)}
+.mail .go{display:inline-block;margin-top:6px;background:var(--b1);color:#fff;border-radius:8px;padding:5px 12px;font-weight:600}
+.dfoot{font-size:.75rem;color:#5a5f8c;padding:0 18px 14px}
+@media (min-width:860px){
+  .brandgrid{grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:start}
+}
+
+/* handover */
+.hand{display:grid;gap:12px;grid-template-columns:1fr;list-style:none;margin:0;padding:0}
+.hand li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.hand label{display:flex;gap:12px;cursor:pointer;align-items:flex-start}
+.hand input{flex:none;width:22px;height:22px;margin-top:2px;accent-color:#27d3f0}
+.hand b{display:block}
+.hand span{display:block;color:var(--muted);font-size:.9375rem}
+.hand .tag{display:inline-block;font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:6px;padding:0 6px;color:#c9ccf0;margin-left:6px;vertical-align:middle}
+.notin{margin-top:16px;background:#10143a;border:1px dashed #4a529b;border-radius:14px;padding:14px 16px;color:#d5d8f6}
+.notin b{color:var(--text)}
+@media (min-width:700px){.hand{grid-template-columns:1fr 1fr}}
+
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:.875rem}
+footer p{margin:0 0 6px}
+
+/* motion: only when the visitor has no reduced-motion preference */
+@media (prefers-reduced-motion:no-preference){
+  .node,.btn,.steps button,.talks button{transition:border-color .2s,box-shadow .2s,background .2s}
+  .edges line.on{animation:dash 1.2s linear 6}
+  .map.flow::before{animation:spine 1s linear 6}
+  .dash,.dh,.stages li,.mail,.mail .go,.act i{transition:background .35s,color .35s,border-color .35s}
+  @keyframes dash{to{stroke-dashoffset:-28}}
+  @keyframes spine{to{background-position:0 16px}}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <p>Concept demo by Made to Scale. Names and details are placeholders.</p>
+    <a href="https://madetoscale.site/#work">Back to Made to Scale</a>
+  </div>
+</div>
+
+<main id="main">
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Concept build</p>
+      <h1>Agency Implementation <span class="g">System</span></h1>
+      <p class="lead">Most small businesses have a website here, a contact list there and follow-up that depends on someone remembering. This is the same thing wired together: a website, a CRM, automations and the everyday tools around them, working as one system. Built behind the scenes and handed over under your agency's name.</p>
+      <ul class="cast" aria-label="Who is in this demo">
+        <li>Agency: <b>Brightside Growth Studio</b> (demo)</li>
+        <li>Delivers to: <b>Harbor Physio Clinic</b> (demo)</li>
+        <li>Everything here is fictional</li>
+      </ul>
+      <div class="ctas">
+        <a class="btn primary" href="#map">Explore the system map</a>
+        <a class="btn" href="#lead">Follow one lead</a>
+        <a class="btn" href="#brand">See it under your brand</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="map" aria-labelledby="h-map">
+    <div class="wrap">
+      <h2 id="h-map">The system map</h2>
+      <p class="sub">Four layers, one flow of information. Select a layer to see what it does, what gets set up and which other layers it talks to.</p>
+      <div class="mapbox">
+        <div class="map" id="mapEl">
+          <svg class="edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <line data-edge="WC" x1="16" y1="48" x2="50" y2="16"/>
+            <line data-edge="CF" x1="50" y1="16" x2="84" y2="48"/>
+            <line data-edge="FI" x1="84" y1="48" x2="50" y2="83"/>
+            <line data-edge="WI" x1="16" y1="48" x2="50" y2="83"/>
+            <line data-edge="CI" x1="50" y1="16" x2="50" y2="83"/>
+          </svg>
+          <span class="elabel" data-elabel="WC" style="left:32%;top:31%">enquiry data</span>
+          <span class="elabel" data-elabel="CF" style="left:68%;top:31%">triggers</span>
+          <span class="elabel" data-elabel="FI" style="left:68%;top:67%">messages, reminders</span>
+          <span class="elabel" data-elabel="WI" style="left:32%;top:67%">booking widget</span>
+          <span class="elabel" data-elabel="CI" style="left:50%;top:50%">appointments, payments</span>
+
+          <button type="button" class="node" data-node="web" aria-pressed="false">
+            <span class="k">Layer 1</span><span class="n">Website</span>
+            <span class="t">Pages and enquiry forms</span>
+            <span class="d">Where visitors arrive and get in touch.</span>
+          </button>
+          <button type="button" class="node" data-node="crm" aria-pressed="false">
+            <span class="k">Layer 2</span><span class="n">CRM</span>
+            <span class="t">e.g. GoHighLevel</span>
+            <span class="d">One record per person, with their stage.</span>
+          </button>
+          <button type="button" class="node" data-node="flow" aria-pressed="false">
+            <span class="k">Layer 3</span><span class="n">Workflows</span>
+            <span class="t">e.g. n8n or Make</span>
+            <span class="d">Automatic replies, reminders and routing.</span>
+          </button>
+          <button type="button" class="node" data-node="int" aria-pressed="false">
+            <span class="k">Layer 4</span><span class="n">Integrations</span>
+            <span class="d">The everyday services the clinic already uses.</span>
+            <span class="chips" aria-hidden="true">
+              <span class="chip" data-chip="calendar">Calendar</span>
+              <span class="chip" data-chip="email">Email</span>
+              <span class="chip" data-chip="sms">SMS</span>
+              <span class="chip" data-chip="google">Google Business</span>
+              <span class="chip" data-chip="pay">Payments</span>
+            </span>
+          </button>
+
+          <div class="panel" id="panel" aria-live="polite" tabindex="-1"></div>
+        </div>
+      </div>
+      <p class="note">Tool names are examples of what an agency might choose, not endorsements. Which pieces apply depends on the client.</p>
+    </div>
+  </section>
+
+  <section id="lead" aria-labelledby="h-lead">
+    <div class="wrap">
+      <h2 id="h-lead">Follow one lead</h2>
+      <p class="sub">A made-up visitor, "Alex", contacts Harbor Physio Clinic. Press Play, or step through one move at a time and watch the system map light up.</p>
+      <div class="stepper">
+        <ol class="steps" id="stepList"></ol>
+        <div class="scard" id="scard" aria-live="polite"></div>
+        <div class="ctrl">
+          <button type="button" class="btn" id="prev">Previous</button>
+          <button type="button" class="btn primary" id="play">Play</button>
+          <button type="button" class="btn" id="next">Next</button>
+        </div>
+      </div>
+      <p class="note">In this demo the lit-up pieces are in the system map above. Selecting a layer there pauses the walkthrough.</p>
+    </div>
+  </section>
+
+  <section id="brand" aria-labelledby="h-brand">
+    <div class="wrap">
+      <h2 id="h-brand">Delivery under your brand</h2>
+      <p class="sub">The client sees your agency, not ours. Pick a preset or type a name and watch the sample client dashboard take it on.</p>
+      <div class="brandgrid">
+        <div class="ctl">
+          <fieldset>
+            <legend>Choose a preset</legend>
+            <div class="presets" id="presets">
+              <label><input type="radio" name="preset" value="0" checked><span class="sw" style="background:linear-gradient(135deg,#6d4aff,#0b7a9c)"></span>Brightside Growth Studio</label>
+              <label><input type="radio" name="preset" value="1"><span class="sw" style="background:linear-gradient(135deg,#0f766e,#1d4ed8)"></span>Northline Digital</label>
+              <label><input type="radio" name="preset" value="2"><span class="sw" style="background:linear-gradient(135deg,#c2410c,#be185d)"></span>Copperleaf Media</label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="agName">Or type your agency name</label>
+            <input id="agName" type="text" maxlength="28" autocomplete="off" placeholder="Your agency name">
+            <small>Keeps the colours of the selected preset. Nothing leaves this page.</small>
+          </div>
+        </div>
+
+        <article class="dash" id="dash" aria-label="Sample client dashboard">
+          <div class="dh">
+            <div class="logo" id="logo" aria-hidden="true">BG</div>
+            <div><b id="dname">Brightside Growth Studio</b><span>Client portal for Harbor Physio Clinic (demo)</span></div>
+          </div>
+          <div class="db">
+            <h4>Enquiry stages</h4>
+            <ul class="stages"><li>New enquiry</li><li>Contacted</li><li>Booked</li><li>Attended</li><li>Review asked</li></ul>
+            <h4>Recent activity (sample)</h4>
+            <ul class="act">
+              <li><i></i><span>New enquiry from the website form<small>Alex (placeholder)</small></span></li>
+              <li><i></i><span>Reply sent automatically<small>Workflow: acknowledgement</small></span></li>
+              <li><i></i><span>Appointment booked<small>Calendar slot held</small></span></li>
+            </ul>
+            <h4>What the patient receives</h4>
+            <div class="mail">
+              <div class="from">From: <b id="mname">Brightside Growth Studio</b> for Harbor Physio Clinic</div>
+              Hi Alex, thanks for getting in touch. Pick a time that suits you below.<br>
+              <span class="go">Choose a time</span>
+            </div>
+          </div>
+          <p class="dfoot">Logo, colours, sender name and booking pages all carry the agency's identity. Custom domains and white-label options depend on the plans of the tools used.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="handover" aria-labelledby="h-hand">
+    <div class="wrap">
+      <h2 id="h-hand">What is handed over</h2>
+      <p class="sub">A system is only useful if your team can run it. Tick items off as you review them (this stays on your screen and is not saved).</p>
+      <ul class="hand">
+        <li><label><input type="checkbox"><span><b>Documented workflows</b>A plain-language page for each workflow: what starts it, what it does and who is alerted if it fails. Written for your team, not only for developers.</span></label></li>
+        <li><label><input type="checkbox"><span><b>Logins list</b>Every tool and account involved, who owns it and what it is for. Ownership moves to you or your client, and passwords are shared through a password manager, never by email.</span></label></li>
+        <li><label><input type="checkbox"><span><b>Training videos <em class="tag" style="font-style:normal">Placeholder</em></b>Short walkthroughs for your team and the client's front desk. They are placeholders in this demo and would be recorded on the real setup for a real project.</span></label></li>
+        <li><label><input type="checkbox"><span><b>Support window</b>A fixed period after launch for fixes and questions. Its length and scope are agreed in writing beforehand. When it ends, further support is a separate agreement.</span></label></li>
+      </ul>
+      <p class="notin"><b>What this is not.</b> It does not promise leads, bookings or any particular result. It makes follow-up consistent and visible. Outcomes still depend on the client's market, offer and team.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Concept demo by Made to Scale. Brightside Growth Studio, Harbor Physio Clinic and the other names are fictional placeholders. No real client, result or testimonial is shown.</p>
+    <p><a href="https://madetoscale.site/#work">Back to Made to Scale</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var NODES={
+    web:{name:"Website",tool:"Pages and enquiry forms",
+      does:"Shows the clinic's services and captures every enquiry in one tracked form, so nothing sits unnoticed in someone's inbox.",
+      setup:["Service pages and a clear enquiry form","Form fields matched to CRM fields","Booking link placed on the key pages","Tracking agreed with the client, with a consent banner where required"],
+      talks:[["crm","sends each enquiry"],["int","booking widget, Google Business link"]]},
+    crm:{name:"CRM",tool:"e.g. GoHighLevel",
+      does:"Keeps one record per person: who they are, where they came from, what has been said and what stage they are at.",
+      setup:["A simple pipeline: New enquiry, Contacted, Booked, Attended, Review asked","Tags and lead-source tracking","Staff logins with sensible roles","Message templates written in the agency's voice"],
+      talks:[["web","receives enquiries"],["flow","triggers follow-up"],["int","appointments, payments"]]},
+    flow:{name:"Workflows",tool:"e.g. n8n or Make",
+      does:"Handles the repetitive follow-up: replies, routing, reminders and review requests, so staff only step in when a person is needed.",
+      setup:["New enquiry gets an instant acknowledgement","Booking confirmation and reminders","Review request after an attended visit","Failure alerts to one named person","Each workflow written up in plain language"],
+      talks:[["crm","reads and updates records"],["int","sends messages, checks calendar"]]},
+    int:{name:"Integrations",tool:"Calendar, email, SMS, Google Business, payments",
+      does:"The connections to everyday services the clinic already uses, so the system works with their tools instead of replacing them.",
+      setup:["Calendar connected so slots reflect real availability","Email sent from the clinic's own domain","SMS provider connected, with consent rules checked","Google Business link ready for review requests","Payments connected only if the clinic takes online deposits"],
+      talks:[["web","booking widget"],["crm","appointment status"],["flow","outgoing messages"]]}
+  };
+  var EDGES={WC:["web","crm"],CF:["crm","flow"],FI:["flow","int"],WI:["web","int"],CI:["crm","int"]};
+  var STEPS=[
+    {t:"Enquiry on the website",d:"Alex fills in the enquiry form on Harbor Physio Clinic's website.",n:["web"],e:[],c:[]},
+    {t:"Contact in the CRM",d:"The form creates a contact, records where it came from and places it in the New enquiry stage.",n:["web","crm"],e:["WC"],c:[]},
+    {t:"Workflow sends a reply",d:"A workflow sends a friendly acknowledgement by email or SMS with a booking link, and tells the front desk.",n:["crm","flow","int"],e:["CF","FI"],c:["email","sms"]},
+    {t:"Calendar booking",d:"Alex picks a slot. The calendar holds it and the CRM moves the contact to Booked.",n:["web","crm","int"],e:["WI","CI"],c:["calendar"]},
+    {t:"Reminder",d:"Before the appointment, a workflow sends a reminder with the time and what to bring.",n:["flow","int"],e:["FI"],c:["sms","email"]},
+    {t:"Review request",d:"Once the visit is marked attended, a workflow politely asks for a review through the clinic's Google Business link. It only asks; it does not promise anything.",n:["crm","flow","int"],e:["CF","FI"],c:["google"]}
+  ];
+
+  var mapEl=$("#mapEl"), panel=$("#panel");
+  var nodeEls={}; $$(".node").forEach(function(b){nodeEls[b.dataset.node]=b});
+  var edgeEls={}; $$("[data-edge]").forEach(function(l){edgeEls[l.dataset.edge]=l});
+  var labelEls={}; $$("[data-elabel]").forEach(function(l){labelEls[l.dataset.elabel]=l});
+  var chipEls=$$("[data-chip]");
+  var mq=window.matchMedia("(min-width:860px)");
+  var sel="crm", mode="node", step=-1, timer=null;
+
+  function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+
+  function renderPanel(){
+    var n=NODES[sel];
+    var h='<div class="head"><h3>'+esc(n.name)+' <small style="color:var(--muted);font-weight:400">· '+esc(n.tool)+'</small></h3></div>';
+    h+='<div><h4>What it does</h4><p>'+esc(n.does)+'</p></div>';
+    h+='<div><h4>What gets set up</h4><ul>'+n.setup.map(function(s){return "<li>"+esc(s)+"</li>"}).join("")+'</ul></div>';
+    h+='<div><h4>Talks to</h4><ul class="talks">'+n.talks.map(function(t){
+      return '<li><button type="button" data-go="'+t[0]+'">'+esc(NODES[t[0]].name)+'<span>'+esc(t[1])+'</span></button></li>'}).join("")+'</ul></div>';
+    panel.innerHTML=h;
+  }
+  function placePanel(){
+    if(mq.matches){ mapEl.after(panel); }
+    else { nodeEls[sel].after(panel); }
+  }
+
+  function paint(){
+    var act={},edges={},chips={},linked={};
+    if(mode==="node"){
+      Object.keys(EDGES).forEach(function(k){
+        var p=EDGES[k];
+        if(p.indexOf(sel)>-1){edges[k]=1;linked[p[0]===sel?p[1]:p[0]]=1}
+      });
+    } else if(step>-1){
+      STEPS[step].n.forEach(function(k){act[k]=1});
+      STEPS[step].e.forEach(function(k){edges[k]=1});
+      STEPS[step].c.forEach(function(k){chips[k]=1});
+    }
+    Object.keys(nodeEls).forEach(function(k){
+      var el=nodeEls[k];
+      var isSel=mode==="node"&&k===sel;
+      el.classList.toggle("sel",isSel);
+      el.classList.toggle("linked",!!linked[k]);
+      el.classList.toggle("act",!!act[k]);
+      el.setAttribute("aria-pressed",isSel?"true":"false");
+    });
+    Object.keys(edgeEls).forEach(function(k){
+      var on=!!edges[k];
+      edgeEls[k].classList.toggle("on",on);
+      labelEls[k].classList.toggle("on",on);
+    });
+    chipEls.forEach(function(c){c.classList.toggle("lit",!!chips[c.dataset.chip])});
+    mapEl.classList.toggle("flow",Object.keys(edges).length>0);
+    $$("#miniflow li").forEach(function(li){li.classList.toggle("on",!!act[li.dataset.m]||(mode==="node"&&li.dataset.m===sel&&false))});
+  }
+
+  function select(k,fromUser){
+    pause();
+    sel=k; mode="node";
+    renderPanel(); placePanel(); paint(); updateStepper();
+    if(fromUser&&!mq.matches){ /* keep the opened panel in view on phones */
+      var r=panel.getBoundingClientRect();
+      if(r.bottom>window.innerHeight||r.top<0){panel.scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"})}
+    }
+  }
+  $$(".node").forEach(function(b){b.addEventListener("click",function(){select(b.dataset.node,true)})});
+  panel.addEventListener("click",function(e){
+    var g=e.target.closest("[data-go]"); if(!g)return;
+    select(g.dataset.go,true);
+    nodeEls[g.dataset.go].focus();
+  });
+  (mq.addEventListener?mq.addEventListener("change",placePanel):mq.addListener(placePanel));
+
+  /* stepper */
+  var list=$("#stepList"), scard=$("#scard"), bPrev=$("#prev"), bNext=$("#next"), bPlay=$("#play");
+  STEPS.forEach(function(s,i){
+    var li=document.createElement("li");
+    li.innerHTML='<button type="button" data-i="'+i+'"><span class="num">'+(i+1)+'</span><span>'+esc(s.t)+'</span></button>';
+    list.appendChild(li);
+  });
+  function updateStepper(){
+    $$("button",list).forEach(function(b,i){
+      var cur=mode==="step"&&i===step;
+      if(cur)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");
+      b.classList.toggle("done",mode==="step"&&i<step);
+    });
+    if(mode!=="step"||step<0){
+      scard.innerHTML='<div class="cnt">Ready</div><h3>Six moves, start to finish</h3><p>Press Play or Next to follow Alex through the system. The matching parts of the map above will light up.</p>'+mini(null);
+    } else {
+      var s=STEPS[step];
+      scard.innerHTML='<div class="cnt">Step '+(step+1)+' of '+STEPS.length+'</div><h3>'+esc(s.t)+'</h3><p>'+esc(s.d)+'</p>'+mini(s);
+    }
+    bPrev.disabled=!(mode==="step"&&step>0);
+    bNext.disabled=(mode==="step"&&step===STEPS.length-1);
+    bPlay.textContent=timer?"Pause":"Play";
+  }
+  function mini(s){
+    var order=["web","crm","flow","int"];
+    var h='<ul class="mini" aria-label="Parts involved in this step">';
+    order.forEach(function(k){
+      var on=s&&s.n.indexOf(k)>-1;
+      h+='<li class="'+(on?"on":"")+'">'+esc(NODES[k].name)+(on?'<span class="sr"> (involved)</span>':'')+'</li>';
+    });
+    return h+'</ul>';
+  }
+  function go(i){
+    mode="step"; step=Math.max(0,Math.min(STEPS.length-1,i));
+    paint(); updateStepper();
+  }
+  function pause(){ if(timer){clearInterval(timer);timer=null;} bPlay.textContent="Play"; }
+  function play(){
+    if(mode!=="step"||step>=STEPS.length-1){go(0)}
+    timer=setInterval(function(){
+      if(step>=STEPS.length-1){pause();updateStepper();return}
+      go(step+1);
+    },3000);
+    updateStepper();
+  }
+  bPlay.addEventListener("click",function(){ timer?(pause(),updateStepper()):play(); });
+  bNext.addEventListener("click",function(){pause();go(mode==="step"?step+1:0)});
+  bPrev.addEventListener("click",function(){pause();go(step-1)});
+  list.addEventListener("click",function(e){var b=e.target.closest("button[data-i]");if(!b)return;pause();go(+b.dataset.i)});
+
+  /* branding */
+  var PRESETS=[
+    {name:"Brightside Growth Studio",b1:"#6d4aff",b2:"#0b7a9c"},
+    {name:"Northline Digital",b1:"#0f766e",b2:"#1d4ed8"},
+    {name:"Copperleaf Media",b1:"#c2410c",b2:"#be185d"}
+  ];
+  var dash=$("#dash"), agName=$("#agName"), cur=0;
+  function initials(n){
+    var w=n.trim().split(/\s+/).filter(Boolean);
+    if(!w.length)return "?";
+    var a=w[0].charAt(0), b=w.length>1?w[1].charAt(0):"";
+    return (a+b).toUpperCase();
+  }
+  function skin(){
+    var p=PRESETS[cur], typed=agName.value.trim();
+    var name=typed||p.name;
+    dash.style.setProperty("--b1",p.b1); dash.style.setProperty("--b2",p.b2);
+    $("#dname").textContent=name; $("#mname").textContent=name; $("#logo").textContent=initials(name);
+  }
+  $$("input[name=preset]").forEach(function(r){r.addEventListener("change",function(){cur=+r.value;agName.value="";skin()})});
+  agName.addEventListener("input",skin);
+
+  /* init */
+  renderPanel(); placePanel(); paint(); updateStepper(); skin();
+})();
+</script>
+</body>
+</html>

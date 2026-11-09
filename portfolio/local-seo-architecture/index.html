@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local SEO Website Architecture: Concept Demo | Made to Scale</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Interactive concept demo: how service pages, location pages, metadata, internal links and technical checks fit together on a local business website. Fictional HVAC example.">
+<meta name="robots" content="noindex, follow">
+<style>
+:root{
+  --bg:#f5f7fa; --panel:#ffffff; --ink:#1e293b; --muted:#526072; --line:#d5dce6; --line2:#e8edf3;
+  --blue:#1d4ed8; --blue-soft:#e8eefc; --green:#15803d; --green-soft:#e6f4ea;
+  --amber:#b45309; --amber-soft:#fdf1dc; --red:#b91c1c; --red-soft:#fce8e8;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);
+  background-image:radial-gradient(#d9e0ea 1px,transparent 1px);background-size:22px 22px}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:8px;top:-60px;background:var(--ink);color:#fff;padding:8px 12px;border-radius:6px;z-index:10}
+.skip:focus{top:8px}
+.bar{background:var(--ink);color:#e2e8f0;font-size:13px;padding:8px 16px;display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:space-between;align-items:center}
+.bar a{color:#fff;font-weight:600;white-space:nowrap}
+.bar a:focus-visible{outline-color:#93c5fd}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+header.hero{padding:36px 0 10px}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin:0 0 12px}
+h1{font-size:clamp(1.7rem,5vw,2.8rem);line-height:1.1;margin:0 0 14px;letter-spacing:-.02em;max-width:22ch}
+h1 span{color:var(--blue)}
+.lede{max-width:68ch;color:var(--muted);margin:0 0 6px;font-size:1.05rem}
+.fict{display:inline-block;font:600 12px var(--mono);background:var(--blue-soft);color:var(--blue);padding:4px 8px;border-radius:4px;margin-top:8px}
+section.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:22px 0;padding:20px 16px;box-shadow:0 1px 0 rgba(15,23,42,.04)}
+.sh{display:flex;gap:12px;align-items:baseline;margin:0 0 6px}
+.num{font:700 13px var(--mono);color:#fff;background:var(--blue);padding:3px 7px;border-radius:4px}
+h2{font-size:1.35rem;margin:0;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 16px;max-width:75ch}
+h3{font-size:1rem;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-bottom:12px}
+.toggle{display:inline-flex;gap:10px;align-items:center;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px 6px 8px;font-weight:600}
+.toggle .sw{width:34px;height:20px;border-radius:999px;background:#94a3b8;position:relative;flex:none}
+.toggle .sw::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff}
+.toggle[aria-pressed="true"]{border-color:var(--green);background:var(--green-soft)}
+.toggle[aria-pressed="true"] .sw{background:var(--green)}
+.toggle[aria-pressed="true"] .sw::after{left:16px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);align-items:center}
+.legend i{display:inline-block;width:26px;height:0;border-top:2px solid #94a3b8;vertical-align:middle;margin-right:6px}
+.legend i.g{border-top:2px solid var(--green)}
+.mapgrid{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.mapscroll{overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fbfcfe;min-width:0}
+.map{position:relative;width:780px;height:545px}
+.map svg{position:absolute;inset:0;width:780px;height:545px}
+.node{position:absolute;width:150px;height:44px;text-align:left;background:#fff;border:1.5px solid #94a3b8;border-radius:8px;padding:4px 10px;line-height:1.2}
+.node b{display:block;font-size:13px}
+.node small{display:block;font:600 10px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.node.t-hub{border-color:var(--ink)}
+.node.t-service{border-left:5px solid var(--blue)}
+.node.t-location{border-left:5px solid var(--green)}
+.node:hover{background:var(--blue-soft)}
+.node[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.node[aria-pressed="true"] small{color:#dbe6ff}
+.badge{display:none;font:600 11px var(--mono);color:var(--green);margin-left:6px}
+.tree{fill:none;stroke:#94a3b8;stroke-width:1.5}
+.xl{fill:none;stroke:var(--green);stroke-width:1.6;opacity:.5}
+.xl.hot{opacity:1;stroke-width:2.6}
+.xl.dim{opacity:.12}
+.links-off .xl,.links-off #arrowdefs{display:none}
+.panel{border:1px solid var(--line);border-radius:10px;padding:16px;background:#fff;min-width:0}
+.panel h3{font-size:1.15rem;margin:2px 0 4px}
+.tag{display:inline-block;font:600 11px var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:var(--blue-soft);color:var(--blue)}
+.tag.loc{background:var(--green-soft);color:var(--green)}
+.tag.hub{background:#e8edf3;color:var(--ink)}
+dl{margin:12px 0 0}
+dt{font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:11px}
+dd{margin:2px 0 0;overflow-wrap:anywhere}
+dd.m{font-family:var(--mono);font-size:13.5px;background:var(--bg);border:1px solid var(--line2);border-radius:6px;padding:5px 8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0;padding:0;list-style:none}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:13px}
+.chip:hover{background:var(--blue-soft);border-color:var(--blue)}
+.note{font-size:13px;color:var(--muted);margin-top:12px}
+.backmap{display:none;margin-top:12px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px}
+.tips{display:grid;gap:10px;margin-top:16px}
+.tips p{margin:0;background:var(--green-soft);border-left:4px solid var(--green);border-radius:6px;padding:9px 12px;font-size:14.5px}
+/* SERP */
+.sergrid{display:grid;gap:18px;grid-template-columns:minmax(0,1fr)}
+label{display:block;font-weight:600;margin-bottom:5px}
+input[type=text],textarea{width:100%;font:inherit;padding:9px 11px;border:1.5px solid #8b98aa;border-radius:8px;background:#fff;color:var(--ink);resize:vertical}
+.field{margin-bottom:16px}
+.meter{display:flex;align-items:center;gap:10px;margin-top:6px;font:600 13px var(--mono)}
+.bar2{flex:1;height:8px;background:var(--line2);border-radius:99px;overflow:hidden}
+.bar2 i{display:block;height:100%;width:0;background:var(--green)}
+.st{min-width:9.5em;text-align:right}
+.ok{color:var(--green)} .warn{color:var(--amber)} .bad{color:var(--red)}
+.bar2 .warn-f{background:#d97706} .bar2 .bad-f{background:var(--red)}
+.editing{font-size:14px;color:var(--muted);margin:0 0 14px}
+.reset{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font-size:14px}
+.serp{border:1px solid var(--line);border-radius:10px;padding:16px;background:#fff;box-shadow:0 2px 10px rgba(15,23,42,.06)}
+.serp .src{display:flex;gap:10px;align-items:center;margin-bottom:6px;min-width:0}
+.fav{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font:700 13px var(--sans);display:grid;place-items:center;flex:none}
+.srcname{font-size:14px;line-height:1.25;min-width:0}
+.srcname b{display:block;font-weight:600}
+.srcname span{color:#4b5a6b;font-size:12.5px;overflow-wrap:anywhere}
+.serp .ttl{font-size:1.2rem;line-height:1.3;color:#1a4fc4;margin:2px 0 4px;overflow-wrap:anywhere}
+.serp .dsc{font-size:14.5px;color:#3d4a5c;overflow-wrap:anywhere}
+.serp .empty{color:#8b98aa;font-style:italic}
+.cap{font-size:13px;color:var(--muted);margin:10px 0 0}
+/* checklist */
+.cgrid{display:grid;gap:18px;grid-template-columns:minmax(0,1fr)}
+.prog{display:flex;gap:10px;align-items:center;margin:0 0 12px;font:600 13px var(--mono);color:var(--muted)}
+.prog .bar2{max-width:260px}
+.cl{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ci{border:1px solid var(--line);border-radius:10px;background:#fff}
+.ci.done{border-color:#86c79b;background:#f4fbf6}
+.ci .row{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;padding:11px 12px;border-radius:10px}
+.box{flex:none;width:22px;height:22px;border:2px solid #8b98aa;border-radius:5px;margin-top:1px;display:grid;place-items:center;background:#fff}
+.done .box{background:var(--green);border-color:var(--green)}
+.done .box::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.ci b{display:block}
+.ci .why{display:block;color:var(--muted);font-size:14.5px}
+.more{background:none;border:0;color:var(--blue);font-size:13.5px;font-weight:600;padding:0 12px 10px 44px;text-align:left;text-decoration:underline;text-underline-offset:2px}
+.tipbox{margin:0 12px 12px 44px;font-size:14px;background:var(--bg);border-radius:6px;padding:8px 10px;border-left:3px solid var(--blue)}
+.code{border:1px solid var(--line);border-radius:10px;background:#0f172a;color:#e2e8f0;overflow:hidden;align-self:start;min-width:0}
+.codehead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px 8px 14px;background:#1e293b;font:600 12px var(--mono);flex-wrap:wrap}
+.copy{background:#22c55e;color:#052e16;border:0;border-radius:6px;padding:6px 12px;font-weight:700;font-size:13px}
+.copy:focus-visible{outline-color:#bbf7d0}
+.codehead .msg{color:#bbf7d0;margin-right:8px}
+pre{margin:0;padding:14px;overflow:auto;font:12.5px/1.55 var(--mono);max-height:420px}
+.fine{font-size:13.5px;color:var(--muted);margin:10px 0 0}
+.honest{background:var(--ink);color:#e2e8f0;border-radius:12px;padding:20px 16px;margin:22px 0}
+.honest h2{color:#fff;font-size:1.2rem;margin-bottom:10px}
+.honest ul{margin:0;padding-left:20px}
+.honest li{margin:6px 0}
+footer{padding:6px 0 40px;font-size:13px;color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (min-width:820px){
+  section.card{padding:26px 28px}
+  .sergrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .cgrid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+  .honest{padding:26px 28px}
+}
+@media (min-width:1120px){
+  .mapgrid{grid-template-columns:minmax(0,1fr) 340px}
+}
+@media (max-width:819px){
+  .mapscroll{border:0;background:none;overflow:visible}
+  .map{width:auto;height:auto;display:grid;gap:6px}
+  .map svg{display:none}
+  .node{position:static;width:auto;margin-left:calc(var(--l)*20px);height:auto;min-height:44px}
+  .node.t-hub{margin-left:calc(var(--l)*20px)}
+  .links-on .badge{display:inline}
+  .backmap{display:inline-block}
+  .legend .gx{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .node,.chip,.xl,.bar2 i,.sw,.sw::after{transition:all .18s ease}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="bar"><span>Concept demo by Made to Scale. Names and details are placeholders.</span><a href="https://madetoscale.site/#work">Back to Made to Scale</a></div>
+
+<main id="main">
+<div class="wrap">
+<header class="hero">
+  <p class="eyebrow">Concept build / Local SEO</p>
+  <h1>Local SEO website <span>architecture</span></h1>
+  <p class="lede">Service pages, location pages, metadata, internal links and technical checks, laid out so search engines can match a local business to what it offers. Explore a fictional example below.</p>
+  <span class="fict">Fictional client: Northfield Heating &amp; Air (demo), four invented towns</span>
+</header>
+
+<section class="card" aria-labelledby="h-map">
+  <div class="sh"><span class="num">01</span><h2 id="h-map">Site map and internal links</h2></div>
+  <p class="sub">Select any page to see its planned keyword idea, URL, title tag, meta description, H1 and links. Then switch on internal links to see how pages point to each other.</p>
+  <div class="toolbar">
+    <button type="button" class="toggle" id="lt" aria-pressed="false"><span class="sw" aria-hidden="true"></span>Show internal links</button>
+    <div class="legend"><span><i></i>Site hierarchy</span><span class="gx"><i class="g"></i>Internal link in page content</span></div>
+  </div>
+  <div class="mapgrid">
+    <div class="mapscroll" tabindex="-1"><div class="map links-off" id="map" role="group" aria-label="Site map: buttons for each page"></div></div>
+    <aside class="panel" id="panel" aria-label="Selected page details">
+      <h3 id="p-name">Select a page</h3>
+    </aside>
+  </div>
+  <div class="tips">
+    <p><b>Why location pages link to services:</b> each town page should point to the services offered there, and each service page back to contact and FAQ, so visitors and crawlers can move through the site in a few clicks.</p>
+    <p><b>Keep location pages real:</b> only build a page for a town the business genuinely serves, with local details. Near-identical pages with only the town name swapped add little value.</p>
+  </div>
+</section>
+
+<section class="card" aria-labelledby="h-serp" id="serp">
+  <div class="sh"><span class="num">02</span><h2 id="h-serp">Search result preview</h2></div>
+  <p class="sub">Edit the title and description and watch a generic search result update. Selecting a page in the site map loads its suggested text here.</p>
+  <div class="sergrid">
+    <div>
+      <p class="editing" id="editing">Editing: Home</p>
+      <div class="field">
+        <label for="in-title">Title tag</label>
+        <input type="text" id="in-title" autocomplete="off" aria-describedby="t-meter">
+        <div class="meter" id="t-meter"><div class="bar2" aria-hidden="true"><i id="t-bar"></i></div><span id="t-count">0 / 60</span><span class="st" id="t-st" aria-live="polite"></span></div>
+      </div>
+      <div class="field">
+        <label for="in-desc">Meta description</label>
+        <textarea id="in-desc" rows="4" autocomplete="off" aria-describedby="d-meter"></textarea>
+        <div class="meter" id="d-meter"><div class="bar2" aria-hidden="true"><i id="d-bar"></i></div><span id="d-count">0 / 155</span><span class="st" id="d-st" aria-live="polite"></span></div>
+      </div>
+      <button type="button" class="reset" id="reset">Reset to suggested text</button>
+    </div>
+    <div>
+      <div class="serp" aria-label="Search result preview">
+        <div class="src"><span class="fav" aria-hidden="true">N</span><div class="srcname"><b>Northfield Heating &amp; Air (demo)</b><span id="s-url">northfield-heating.example</span></div></div>
+        <div class="ttl" id="s-title"></div>
+        <div class="dsc" id="s-desc"></div>
+      </div>
+      <p class="cap">Approximation only. Search engines cut titles and descriptions by pixel width, may rewrite them, and show them differently by device and query. About 60 and 155 characters are common rules of thumb, not limits.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card" aria-labelledby="h-tech">
+  <div class="sh"><span class="num">03</span><h2 id="h-tech">Technical checklist</h2></div>
+  <p class="sub">Click an item to tick it off, or "How to check" for a quick test. This is a personal tracker, not an automated audit.</p>
+  <div class="cgrid">
+    <div>
+      <p class="prog"><span id="prog">0 of 9 checked</span><span class="bar2" aria-hidden="true"><i id="prog-bar"></i></span></p>
+      <ul class="cl" id="cl"></ul>
+    </div>
+    <div class="code">
+      <div class="codehead"><span>LocalBusiness JSON-LD (placeholder data)</span><span><span class="msg" id="cmsg" role="status"></span><button type="button" class="copy" id="copy">Copy</button></span></div>
+      <pre tabindex="0" aria-label="JSON-LD code sample"><code id="code"></code></pre>
+    </div>
+  </div>
+  <p class="fine">Structured data must match what is visible on the page. It helps search engines understand a business but does not guarantee any special display.</p>
+</section>
+
+<div class="honest">
+  <h2>What this can and cannot do</h2>
+  <ul>
+    <li>A clear structure helps search engines understand which page answers which question, and helps visitors find what they need.</li>
+    <li>No structure, tag or checklist can promise a ranking. Results also depend on competition, content quality, reviews, and how long the site has existed.</li>
+    <li>This demo uses invented names and placeholder text. It is a model of an approach, not a result.</li>
+  </ul>
+</div>
+<footer>Concept demo by Made to Scale. All business names, towns, phone numbers and addresses are fictional.</footer>
+</div>
+</main>
+
+<script>
+(function(){
+var BRAND="Northfield Heating & Air";
+var DOMAIN="northfield-heating.example";
+var towns=[["Maplewick","maplewick"],["Ridgemoor","ridgemoor"],["Cedar Hollow","cedar-hollow"],["Alder Falls","alder-falls"]];
+var N=[
+{id:"home",name:"Home",type:"hub",lvl:0,x:10,cy:275,slug:"/",kw:"heating and air conditioning company",
+ title:BRAND+" | Heating, AC & Maintenance",
+ desc:"Family-run heating and cooling for Maplewick, Ridgemoor, Cedar Hollow and Alder Falls. Repairs, installs and maintenance plans. Request a visit.",
+ h1:"Heating and air conditioning for four local towns",
+ role:"The front door. Says who the business is, what it does and where, and routes people to services and towns.",
+ out:["services","locations","heat","ac","maint","contact","faq"]},
+{id:"services",name:"Services",type:"hub",lvl:1,x:230,cy:90,slug:"/services/",kw:"hvac services",
+ title:"HVAC Services: Repair, Installation, Care | Northfield",
+ desc:"See everything Northfield Heating & Air offers: heating repair, AC installation and maintenance plans for homes in our four service towns.",
+ h1:"Heating and cooling services",
+ role:"A hub that introduces each service and passes visitors on to the detailed pages.",
+ out:["heat","ac","maint","contact"]},
+{id:"heat",name:"Heating repair",type:"service",lvl:2,x:450,cy:40,slug:"/services/heating-repair/",kw:"furnace repair",
+ title:"Heating and Furnace Repair | "+BRAND,
+ desc:"Furnace or heating not working? Learn how our repair visits work, what we check first, and how to book a technician.",
+ h1:"Heating and furnace repair",
+ role:"Answers one specific need in depth: what the service is, how it works, who it is for.",
+ out:["contact","faq"]},
+{id:"ac",name:"AC installation",type:"service",lvl:2,x:450,cy:90,slug:"/services/ac-installation/",kw:"air conditioner installation",
+ title:"AC Installation and Replacement | "+BRAND,
+ desc:"Planning a new air conditioner? See how sizing, installation and a final walkthrough work, and request a quote for your home.",
+ h1:"Air conditioner installation",
+ role:"One service, one page: the steps, the questions people ask and a clear next action.",
+ out:["contact","faq"]},
+{id:"maint",name:"Maintenance plans",type:"service",lvl:2,x:450,cy:140,slug:"/services/maintenance-plans/",kw:"hvac maintenance plan",
+ title:"HVAC Maintenance Plans for Homes | "+BRAND,
+ desc:"Seasonal tune-ups for your heating and cooling. See what each plan includes and how scheduling works.",
+ h1:"HVAC maintenance plans",
+ role:"Explains an ongoing service so visitors can compare what is included before they call.",
+ out:["contact","faq"]},
+{id:"locations",name:"Locations",type:"hub",lvl:1,x:230,cy:290,slug:"/locations/",kw:"hvac service areas",
+ title:"Areas We Serve: Four Local Towns | "+BRAND,
+ desc:"Northfield Heating & Air serves Maplewick, Ridgemoor, Cedar Hollow and Alder Falls. Pick your town to see local service details.",
+ h1:"Where we work",
+ role:"A hub listing every town actually served, linking to each town page.",
+ out:towns.map(function(t){return "t-"+t[1]})}
+];
+towns.forEach(function(t,i){
+ N.push({id:"t-"+t[1],name:t[0],type:"location",lvl:2,x:450,cy:215+i*50,slug:"/locations/"+t[1]+"/",kw:"hvac company in "+t[0],
+ title:"HVAC Service in "+t[0]+" | "+BRAND,
+ desc:"Heating repair, AC installation and maintenance plans for homes in "+t[0]+". See what we cover locally and request a visit.",
+ h1:"Heating and air conditioning in "+t[0],
+ role:"A page for real service in this town. It needs local specifics so it is not a copy of the other town pages.",
+ out:["heat","ac","maint"]});
+});
+N.push({id:"contact",name:"Contact",type:"hub",lvl:1,x:450,cy:450,slug:"/contact/",kw:"contact hvac company",
+ title:"Contact and Request a Visit | "+BRAND,
+ desc:"Call or send a message to book a visit. Tell us your town and what you need help with and we will get back to you.",
+ h1:"Contact Northfield Heating & Air",
+ role:"Makes the next step easy: phone, form and service area in one place.",
+ out:["faq","locations"]});
+N.push({id:"faq",name:"FAQ",type:"hub",lvl:1,x:450,cy:505,slug:"/faq/",kw:"hvac questions homeowners ask",
+ title:"HVAC Questions Answered | "+BRAND,
+ desc:"Plain answers to common questions about repairs, new systems and maintenance, plus how to reach us if yours is not covered.",
+ h1:"Frequently asked questions",
+ role:"Answers common questions in plain language and points to the matching service or contact page.",
+ out:["heat","ac","maint","contact"]});
+var by={};N.forEach(function(n){by[n.id]=n});
+var parent={heat:"services",ac:"services",maint:"services",services:"home",locations:"home",contact:"home",faq:"home"};
+towns.forEach(function(t){parent["t-"+t[1]]="locations"});
+var W=150,H=44;
+function isTree(a,b){return parent[a]===b||parent[b]===a}
+var cross=[];
+N.forEach(function(n){ if(n.id==="home")return; n.out.forEach(function(t){ if(!isTree(n.id,t)) cross.push([n.id,t]); }); });
+function inlinks(id){var r=[];N.forEach(function(n){if(n.out.indexOf(id)>-1)r.push(n.id)});return r}
+
+var map=document.getElementById("map");
+var NS="http://www.w3.org/2000/svg";
+var svg=document.createElementNS(NS,"svg");
+svg.setAttribute("viewBox","0 0 780 545");svg.setAttribute("aria-hidden","true");svg.setAttribute("focusable","false");
+svg.innerHTML='<defs id="arrowdefs"><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#15803d"/></marker></defs>';
+map.appendChild(svg);
+function mk(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);svg.appendChild(e);return e}
+// tree
+N.forEach(function(n){var p=parent[n.id];if(!p)return;var P=by[p];
+ var x1=P.x+W,y1=P.cy,x2=n.x,y2=n.cy;
+ var xm=(P.id==="home")?200:(x1+x2)/2;
+ mk("path",{"class":"tree",d:"M"+x1+" "+y1+" H"+xm+" V"+y2+" H"+x2});
+});
+// cross
+var xls=[];
+cross.forEach(function(c){var a=by[c[0]],b=by[c[1]];
+ var xa=a.x+W,xb=b.x+W,ya=a.cy,yb=b.cy;
+ if(a.x!==b.x){return}
+ var d=34+0.2*Math.abs(ya-yb);
+ var p=mk("path",{"class":"xl",d:"M"+xa+" "+ya+" C"+(xa+d)+" "+ya+" "+(xb+d)+" "+yb+" "+(xb+3)+" "+yb,"marker-end":"url(#ar)"});
+ p.dataset.a=c[0];p.dataset.b=c[1];xls.push(p);
+});
+// nodes
+var typeLabel={hub:"Hub page",service:"Service page",location:"Location page"};
+N.forEach(function(n){
+ var b=document.createElement("button");b.type="button";b.className="node t-"+n.type;b.id="n-"+n.id;
+ b.style.left=n.x+"px";b.style.top=(n.cy-H/2)+"px";b.style.setProperty("--l",n.lvl);
+ b.setAttribute("aria-pressed","false");b.dataset.id=n.id;
+ var cnt=n.out.length;
+ b.innerHTML="<b></b><small></small>";
+ b.firstChild.textContent=n.name;
+ b.lastChild.textContent=typeLabel[n.type];
+ var bd=document.createElement("span");bd.className="badge";bd.textContent=" → "+cnt+" links";b.lastChild.appendChild(bd);
+ b.addEventListener("click",function(){select(n.id,true)});
+ map.appendChild(b);
+});
+var sel=null;
+var mq=window.matchMedia("(max-width:819px)");
+var reduce=window.matchMedia("(prefers-reduced-motion:reduce)");
+function chipList(ids){
+ var ul=document.createElement("ul");ul.className="chips";
+ ids.forEach(function(id){var li=document.createElement("li");var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=by[id].name;
+  b.setAttribute("aria-label","Go to "+by[id].name+" page details");
+  b.addEventListener("click",function(){select(id,true,true)});li.appendChild(b);ul.appendChild(li)});
+ return ul;
+}
+function row(dl,label,val,mono){var dt=document.createElement("dt");dt.textContent=label;var dd=document.createElement("dd");
+ if(typeof val==="string"){dd.textContent=val;if(mono)dd.className="m"}else dd.appendChild(val);dl.appendChild(dt);dl.appendChild(dd)}
+function renderPanel(n){
+ var p=document.getElementById("panel");p.innerHTML="";
+ var tg=document.createElement("span");tg.className="tag "+(n.type==="location"?"loc":n.type==="hub"?"hub":"");tg.textContent=typeLabel[n.type];p.appendChild(tg);
+ var h=document.createElement("h3");h.id="p-name";h.tabIndex=-1;h.textContent=n.name;p.appendChild(h);
+ var r=document.createElement("p");r.className="note";r.style.marginTop="2px";r.textContent=n.role;p.appendChild(r);
+ var dl=document.createElement("dl");
+ row(dl,"Target keyword idea",n.kw);
+ row(dl,"URL slug",n.slug,true);
+ row(dl,"Title tag",n.title,true);
+ row(dl,"Meta description",n.desc,true);
+ row(dl,"H1",n.h1);
+ row(dl,"Links to",chipList(n.out));
+ row(dl,"Linked from",chipList(inlinks(n.id)));
+ p.appendChild(dl);
+ var nt=document.createElement("p");nt.className="note";nt.innerHTML='Every page also carries the site header menu. Keyword ideas are examples, not researched volumes. <a href="#serp">Edit this title and description in the preview</a>.';p.appendChild(nt);
+ var bm=document.createElement("button");bm.type="button";bm.className="backmap";bm.textContent="Back to site map";
+ bm.addEventListener("click",function(){var b=document.getElementById("n-"+n.id);b.scrollIntoView({block:"center"});b.focus()});
+ p.appendChild(bm);
+}
+function select(id,user,focusPanel){
+ sel=id;var n=by[id];
+ N.forEach(function(m){document.getElementById("n-"+m.id).setAttribute("aria-pressed",m.id===id?"true":"false")});
+ renderPanel(n);hl();loadSerp(n);
+ if(user){
+  if(focusPanel||mq.matches){var h=document.getElementById("p-name");
+   if(mq.matches){document.getElementById("panel").scrollIntoView({block:"start",behavior:reduce.matches?"auto":"smooth"})}
+   if(focusPanel){h.focus({preventScroll:true})}}
+ }
+}
+function hl(){xls.forEach(function(p){
+ p.classList.remove("hot","dim");
+ if(sel){ if(p.dataset.a===sel||p.dataset.b===sel)p.classList.add("hot"); else p.classList.add("dim"); }
+});}
+var lt=document.getElementById("lt");
+lt.addEventListener("click",function(){var on=lt.getAttribute("aria-pressed")!=="true";lt.setAttribute("aria-pressed",on);
+ map.classList.toggle("links-on",on);map.classList.toggle("links-off",!on);});
+// SERP
+var inT=document.getElementById("in-title"),inD=document.getElementById("in-desc");
+function meter(len,lim,warnMax,cEl,sEl,bEl,short){
+ cEl.textContent=len+" / "+lim;
+ var cls,txt,fill;
+ if(len===0){cls="";txt="Empty";fill=""}
+ else if(len<=lim){cls="ok";txt=(len<short)?"A bit short":"Good length";fill=""}
+ else if(len<=warnMax){cls="warn";txt="Getting long";fill="warn-f"}
+ else{cls="bad";txt="Too long";fill="bad-f"}
+ sEl.className="st "+cls;sEl.textContent=txt;cEl.className=cls;
+ bEl.className=fill;bEl.style.width=Math.min(100,len/lim*100)+"%";
+}
+function cut(s,lim){return s.length>lim?s.slice(0,lim-1).replace(/\s+$/,"")+"…":s}
+function serp(){
+ var t=inT.value,d=inD.value;
+ meter(t.length,60,70,document.getElementById("t-count"),document.getElementById("t-st"),document.getElementById("t-bar"),30);
+ meter(d.length,155,175,document.getElementById("d-count"),document.getElementById("d-st"),document.getElementById("d-bar"),70);
+ var st=document.getElementById("s-title"),sd=document.getElementById("s-desc");
+ st.textContent=t?cut(t,60):"(No title: the engine will choose one)";
+ sd.textContent=d?cut(d,155):"(No description: the engine will pick text from the page)";
+ st.className="ttl"+(t?"":" empty");sd.className="dsc"+(d?"":" empty");
+}
+function loadSerp(n){
+ inT.value=n.title;inD.value=n.desc;
+ document.getElementById("editing").textContent="Editing: "+n.name+" ("+n.slug+")";
+ document.getElementById("s-url").textContent=DOMAIN+(n.slug==="/"?"":" › "+n.slug.split("/").filter(Boolean).join(" › "));
+ serp();
+}
+inT.addEventListener("input",serp);inD.addEventListener("input",serp);
+document.getElementById("reset").addEventListener("click",function(){loadSerp(by[sel])});
+// checklist
+var C=[
+["HTTPS everywhere","Encrypts traffic and builds trust; browsers warn visitors on plain HTTP pages.","Open the site and look for the padlock. Make sure http:// addresses redirect to https://."],
+["Mobile friendly","Most local searches happen on phones, and search engines mainly crawl the mobile version of a page.","Open key pages on a real phone. Check text size, tap targets and that nothing scrolls sideways."],
+["sitemap.xml","Lists the URLs you want crawled, which helps new town or service pages get found.","Publish it at /sitemap.xml with only live, indexable pages, then submit it in Search Console."],
+["robots.txt","Tells crawlers what to skip and where the sitemap is; one wrong rule can block the whole site.","Open /robots.txt on the live site and confirm it does not contain \"Disallow: /\" for everyone."],
+["Canonical tags","Points duplicate or parameter URLs to one preferred version so signals are not split.","Each page should carry one rel=\"canonical\" link pointing to its own clean URL."],
+["Structured data","Gives search engines machine-readable business details; it does not guarantee rich results.","Add LocalBusiness JSON-LD (see the sample) and validate it. Details must match the visible page."],
+["Image alt text","Describes images for screen readers and gives search engines context about the page.","Describe what is in the photo in plain words. Decorative images get an empty alt. No keyword stuffing."],
+["Page speed basics","Slow pages lose visitors, and speed is one of many signals.","Compress and size images, limit heavy scripts, and test on a mid-range phone with a normal connection."],
+["Search Console connected","Shows which pages are indexed, which searches show your site, and any crawl problems.","Verify the domain, submit the sitemap, and review the Pages and Performance reports regularly."]
+];
+var cl=document.getElementById("cl"),doneN=0;
+C.forEach(function(c,i){
+ var li=document.createElement("li");li.className="ci";
+ var b=document.createElement("button");b.type="button";b.className="row";b.setAttribute("role","checkbox");b.setAttribute("aria-checked","false");
+ b.innerHTML='<span class="box" aria-hidden="true"></span><span><b></b><span class="why"></span></span>';
+ b.querySelector("b").textContent=c[0];b.querySelector(".why").textContent=c[1];
+ b.addEventListener("click",function(){var on=b.getAttribute("aria-checked")!=="true";b.setAttribute("aria-checked",on);li.classList.toggle("done",on);doneN+=on?1:-1;prog()});
+ var m=document.createElement("button");m.type="button";m.className="more";m.textContent="How to check";m.setAttribute("aria-expanded","false");m.setAttribute("aria-controls","tip"+i);
+ var tb=document.createElement("div");tb.className="tipbox";tb.id="tip"+i;tb.hidden=true;tb.textContent=c[2];
+ m.addEventListener("click",function(){var o=m.getAttribute("aria-expanded")==="true";m.setAttribute("aria-expanded",!o);tb.hidden=o;m.textContent=o?"How to check":"Hide"});
+ li.appendChild(b);li.appendChild(m);li.appendChild(tb);cl.appendChild(li);
+});
+function prog(){document.getElementById("prog").textContent=doneN+" of "+C.length+" checked";document.getElementById("prog-bar").style.width=(doneN/C.length*100)+"%"}
+// JSON-LD
+var json='{\n  "@context": "https://schema.org",\n  "@type": "HVACBusiness",\n  "name": "Northfield Heating & Air (demo)",\n  "url": "https://northfield-heating.example/",\n  "telephone": "+1-555-010-0100",\n  "address": {\n    "@type": "PostalAddress",\n    "streetAddress": "100 Example Street",\n    "addressLocality": "Maplewick",\n    "addressRegion": "ST",\n    "postalCode": "00000",\n    "addressCountry": "US"\n  },\n  "areaServed": ["Maplewick", "Ridgemoor", "Cedar Hollow", "Alder Falls"],\n  "openingHours": "Mo-Fr 08:00-17:00"\n}';
+document.getElementById("code").textContent=json;
+var cm=document.getElementById("cmsg");
+document.getElementById("copy").addEventListener("click",function(){
+ function ok(){cm.textContent="Copied";setTimeout(function(){cm.textContent=""},2000)}
+ function fb(){var t=document.createElement("textarea");t.value=json;t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();
+  try{document.execCommand("copy")?ok():cm.textContent="Press Ctrl+C"}catch(e){cm.textContent="Press Ctrl+C"}document.body.removeChild(t)}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(json).then(ok,fb)}else fb();
+});
+select("home",false);
+})();
+</script>
+</body>
+</html>

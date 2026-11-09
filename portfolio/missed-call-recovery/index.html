@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Missed Call Recovery Demo | Made to Scale</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Interactive concept demo: a missed call triggers an automatic text-back, creates a lead, follows up and links to booking. Simulation only, built by Made to Scale.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0f6f68">
+<style>
+:root{
+  --teal-900:#083f3b; --teal-700:#0f6f68; --teal-600:#14867e; --teal-100:#d9f0ed; --teal-50:#eaf7f5;
+  --paper:#f7fbfa; --card:#ffffff; --ink:#12302d; --muted:#4c6764; --line:#cfe3e0;
+  --coral:#ff7b6b; --coral-ink:#b73a2b; --coral-50:#ffeceb;
+  --radius:16px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.5;
+  background-image:radial-gradient(60rem 30rem at 85% -10%,var(--teal-50),transparent 70%),radial-gradient(40rem 24rem at -10% 40%,#fff4f1,transparent 70%);}
+:focus-visible{outline:3px solid var(--coral-ink);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.topbar{background:var(--teal-900);color:#e6f5f3;font-size:.8125rem;padding:.55rem 16px;display:flex;flex-wrap:wrap;gap:.25rem .9rem;justify-content:center;align-items:center;text-align:center}
+.topbar a{color:#fff;font-weight:600;text-underline-offset:3px}
+.topbar a:focus-visible{outline-color:#ffd2cb}
+main{max-width:1240px;margin:0 auto;padding:28px 16px 48px}
+.grid{display:grid;gap:28px;grid-template-columns:minmax(0,1fr)}
+.eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-700);background:var(--teal-100);padding:.3rem .65rem;border-radius:999px}
+h1{font-size:clamp(1.9rem,6.5vw,3rem);line-height:1.08;margin:.8rem 0 .7rem;letter-spacing:-.02em;color:var(--teal-900)}
+h1 span{color:var(--coral-ink)}
+.lede{font-size:1.05rem;color:var(--muted);margin:0 0 1rem;max-width:34rem}
+.how{margin:0 0 1.2rem;padding:0;list-style:none;display:grid;gap:.45rem;max-width:34rem}
+.how li{display:flex;gap:.6rem;font-size:.95rem}
+.how b{flex:none;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--teal-700);color:#fff;font-size:.8rem;display:grid;place-items:center}
+.controls{display:flex;flex-wrap:wrap;gap:.6rem;margin:0 0 1rem}
+.btn{font:inherit;font-weight:700;border-radius:12px;border:2px solid transparent;padding:.8rem 1.15rem;min-height:48px;cursor:pointer;transition:transform .15s,background .15s}
+.btn-primary{background:var(--coral);color:#2b0b07;box-shadow:0 6px 18px -8px #e2574c}
+.btn-primary:hover:not(:disabled){background:#ff8d7f;transform:translateY(-1px)}
+.btn-ghost{background:#fff;color:var(--teal-900);border-color:var(--teal-700)}
+.btn-ghost:hover{background:var(--teal-50)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.disclaimer{font-size:.85rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:4px solid var(--teal-600);border-radius:10px;padding:.65rem .8rem;max-width:34rem;margin:0}
+/* phone */
+.stage{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.caption{font-size:.8rem;color:var(--muted);margin:0;text-align:center;max-width:300px}
+.phone{width:min(100%,318px);height:640px;background:#16302d;border-radius:44px;padding:11px;box-shadow:0 30px 60px -28px rgba(8,63,59,.55),0 0 0 2px #2a4a46 inset;position:relative}
+.screen{position:relative;height:100%;border-radius:34px;overflow:hidden;background:var(--paper);display:flex;flex-direction:column}
+.notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:84px;height:22px;background:#16302d;border-radius:14px;z-index:5}
+.statusbar{display:flex;justify-content:space-between;padding:10px 24px 0;font-size:.72rem;font-weight:700;height:34px;position:relative;z-index:4}
+.view{position:absolute;inset:0;display:none;flex-direction:column}
+.view.on{display:flex}
+/* call view */
+.callview{background:linear-gradient(170deg,var(--teal-900),var(--teal-700) 60%,#1b9a90);color:#fff;align-items:center;padding:70px 20px 34px;text-align:center}
+.callview .st{font-size:.85rem;opacity:.9;margin-top:6px;min-height:1.3em}
+.avatar{width:96px;height:96px;border-radius:50%;background:#fff;display:grid;place-items:center;margin:26px 0 14px;position:relative}
+.avatar svg{width:56px;height:56px}
+.avatar::before,.avatar::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,255,255,.7);opacity:0}
+.ringing .avatar::before{animation:ring 1.6s ease-out infinite}
+.ringing .avatar::after{animation:ring 1.6s ease-out .8s infinite}
+@keyframes ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.8);opacity:0}}
+.callname{font-size:1.35rem;font-weight:700}
+.callsub{font-size:.85rem;opacity:.85}
+.callbtns{margin-top:auto;display:flex;gap:46px}
+.cb{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.72rem;opacity:.9}
+.cb i{width:56px;height:56px;border-radius:50%;display:grid;place-items:center}
+.cb.end i{background:#e2574c}.cb.ok i{background:#3fbf8f;opacity:.45}
+.cb svg{width:26px;height:26px;fill:#fff}
+.ringing .cb.end i{animation:none}
+.missed .st{color:#ffd2cb;font-weight:700;opacity:1}
+/* messages */
+.msgview{background:var(--paper)}
+.mhead{padding:2px 14px 10px;border-bottom:1px solid var(--line);background:#fff;text-align:center;font-size:.8rem}
+.mhead b{display:block;font-size:.95rem;color:var(--teal-900)}
+.mhead small{color:var(--muted)}
+.log{flex:1;overflow-y:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.sys{align-self:center;font-size:.7rem;color:var(--muted);background:var(--teal-50);padding:.2rem .6rem;border-radius:999px}
+.bubble{max-width:86%;padding:.55rem .8rem;border-radius:18px;font-size:.88rem;line-height:1.38;overflow-wrap:anywhere;animation:pop .25s ease-out}
+.bubble.them{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:6px}
+.bubble.me{align-self:flex-end;background:var(--teal-700);color:#fff;border-bottom-right-radius:6px}
+.bubble.them a{color:var(--teal-700);font-weight:600}
+@keyframes pop{from{transform:translateY(6px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.typing{align-self:flex-start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:.6rem .8rem;display:flex;gap:4px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--teal-600);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.slotcard{align-self:flex-start;width:92%;background:#fff;border:1px solid var(--line);border-radius:16px;padding:.7rem;animation:pop .25s ease-out}
+.slotcard h3{margin:0 0 .15rem;font-size:.85rem;color:var(--teal-900)}
+.slotcard p{margin:0 0 .5rem;font-size:.75rem;color:var(--muted)}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.slot{font:inherit;font-size:.78rem;font-weight:600;min-height:44px;border-radius:10px;border:1.5px solid var(--teal-600);background:var(--teal-50);color:var(--teal-900);cursor:pointer}
+.slot:hover:not(:disabled){background:var(--teal-100)}
+.slot:disabled{cursor:default}
+.slot.picked{background:var(--teal-700);color:#fff}
+.slot:disabled:not(.picked){opacity:.45}
+.booked{margin-top:.55rem;font-size:.8rem;font-weight:700;color:var(--teal-900);background:var(--teal-100);border-radius:10px;padding:.5rem .6rem}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:6px 12px 2px;scrollbar-width:thin}
+.chip{flex:none;font:inherit;font-size:.75rem;min-height:36px;padding:0 .8rem;border-radius:999px;border:1.5px solid var(--coral);background:#fff;color:var(--coral-ink);font-weight:600;cursor:pointer}
+.chip:disabled{opacity:.45;cursor:not-allowed}
+.composer{display:flex;gap:6px;padding:8px 10px 14px;background:#fff;border-top:1px solid var(--line)}
+.composer input{flex:1;min-width:0;font:inherit;font-size:.88rem;border:1.5px solid var(--line);border-radius:999px;padding:.5rem .85rem;min-height:44px;background:var(--paper);color:var(--ink)}
+.composer input:disabled{opacity:.6}
+.composer button{flex:none;font:inherit;font-weight:700;font-size:.85rem;min-width:56px;min-height:44px;border-radius:999px;border:0;background:var(--teal-700);color:#fff;cursor:pointer}
+.composer button:disabled{opacity:.45;cursor:not-allowed}
+/* side panels */
+.side{display:grid;gap:18px;align-content:start}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.15rem;box-shadow:0 14px 30px -24px rgba(8,63,59,.5)}
+.panel h2{margin:0 0 .15rem;font-size:1.05rem;color:var(--teal-900)}
+.panel .sub{margin:0 0 .8rem;font-size:.82rem;color:var(--muted)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:.15rem;position:relative}
+.steps li{display:grid;grid-template-columns:28px 1fr auto;gap:.7rem;align-items:start;padding:.5rem 0;position:relative;color:var(--muted)}
+.steps li::before{content:"";position:absolute;left:13px;top:34px;bottom:-8px;width:2px;background:var(--line)}
+.steps li:last-child::before{display:none}
+.dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);background:#fff;display:grid;place-items:center;transition:all .3s}
+.dot svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:3;opacity:0}
+.steps li.done{color:var(--ink)}
+.steps li.done .dot{background:var(--teal-700);border-color:var(--teal-700)}
+.steps li.done .dot svg{opacity:1}
+.steps li.active .dot{border-color:var(--coral);box-shadow:0 0 0 4px var(--coral-50)}
+.steps strong{display:block;font-size:.92rem}
+.steps span.d{display:block;font-size:.78rem;color:var(--muted)}
+.steps time{font-size:.75rem;font-weight:700;color:var(--teal-700);font-variant-numeric:tabular-nums;min-height:1em}
+.lead dl{display:grid;grid-template-columns:auto 1fr;gap:.35rem .9rem;margin:0;font-size:.88rem}
+.lead dt{color:var(--muted)}
+.lead dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.lead.empty dl{display:none}
+.lead .none{display:none;margin:0;font-size:.88rem;color:var(--muted)}
+.lead.empty .none{display:block}
+.pill{display:inline-block;padding:.1rem .6rem;border-radius:999px;font-size:.78rem;font-weight:700;background:var(--coral-50);color:var(--coral-ink)}
+.pill.ok{background:var(--teal-100);color:var(--teal-900)}
+footer{max-width:1240px;margin:0 auto;padding:0 16px 40px;font-size:.8rem;color:var(--muted)}
+/* layout */
+.intro{order:1}.stage{order:2}.side{order:3}
+@media (min-width:760px) and (max-width:1099px){
+  .grid{grid-template-columns:340px minmax(0,1fr);align-items:start}
+  .intro{grid-column:1/-1}
+  .stage{grid-column:1}.side{grid-column:2}
+}
+@media (min-width:1100px){
+  main{padding-top:48px}
+  .grid{grid-template-columns:minmax(0,1fr) 340px minmax(0,1fr);gap:40px;align-items:start}
+  .intro{order:1;position:sticky;top:24px}.stage{order:2}.side{order:3}
+}
+@media (max-width:420px){.phone{height:620px}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<div class="topbar"><span>Concept demo by Made to Scale. Names and details are placeholders.</span><a href="https://madetoscale.site/#work">Back to Made to Scale</a></div>
+<main>
+  <div class="grid">
+    <section class="intro" aria-labelledby="title">
+      <span class="eyebrow">Concept build</span>
+      <h1 id="title">Missed Call Recovery: <span>answer every caller</span>, even when nobody can pick up</h1>
+      <p class="lede">When the front desk is busy, a missed call can mean a patient who books somewhere else. This workflow texts the caller back within seconds, creates a lead, follows up and sends a booking link. Try it on a made-up dental clinic.</p>
+      <ol class="how">
+        <li><b>1</b><span>Press <em>Simulate a missed call</em>.</span></li>
+        <li><b>2</b><span>Wait for the clinic's automatic text.</span></li>
+        <li><b>3</b><span>Reply in the phone or tap a quick reply, then pick a time.</span></li>
+      </ol>
+      <div class="controls">
+        <button class="btn btn-primary" id="startBtn" type="button">Simulate a missed call</button>
+        <button class="btn btn-ghost" id="resetBtn" type="button">Reset demo</button>
+      </div>
+      <p class="disclaimer"><strong>Simulation of a GoHighLevel-style workflow.</strong> No real call or text is made.</p>
+    </section>
+
+    <section class="stage" aria-label="Phone demo">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch" aria-hidden="true"></div>
+          <div class="statusbar" aria-hidden="true"><span>9:41</span><span>5G &nbsp;100%</span></div>
+
+          <div class="view callview on" id="callView" aria-label="Call screen">
+            <div style="height:34px"></div>
+            <div class="callsub" id="callKind">Call screen</div>
+            <div class="avatar" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0f6f68" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+            </div>
+            <div class="callname">Willow Dental (demo)</div>
+            <div class="callsub">Front desk, placeholder number</div>
+            <div class="st" id="callStatus">Ready. Press the coral button.</div>
+            <div class="callbtns" aria-hidden="true">
+              <div class="cb end"><i><svg viewBox="0 0 24 24"><path d="M12 9c-3.3 0-6.3 1-8.5 2.7-.4.4-.5 1-.1 1.4l1.7 2.100c.3.4.9.5 1.300.2l2.300-1.500c.3-.2.5-.5.5-.9v-1.600c1.100-.3 2.200-.4 3.300-.4s2.200.1 3.300.4v1.600c0 .4.2.700.5.900l2.300 1.500c.4.300 1 .2 1.300-.2l1.700-2.100c.4-.4.300-1-.1-1.400C18.300 10 15.300 9 12 9z"/></svg></i>End</div>
+            </div>
+          </div>
+
+          <div class="view msgview" id="msgView">
+            <div style="height:34px"></div>
+            <div class="mhead"><b>Willow Dental (demo)</b><small>Text message</small></div>
+            <div class="log" id="log" role="log" aria-live="polite" aria-label="Messages"></div>
+            <div class="chips" id="chips" role="group" aria-label="Quick replies">
+              <button class="chip" type="button" data-q="I'd like a check-up">I'd like a check-up</button>
+              <button class="chip" type="button" data-q="I have a toothache">I have a toothache</button>
+              <button class="chip" type="button" data-q="Do you offer whitening?">Do you offer whitening?</button>
+            </div>
+            <form class="composer" id="composer" autocomplete="off">
+              <label class="sr-only" for="msgInput">Type a reply</label>
+              <input id="msgInput" type="text" placeholder="Type a reply" maxlength="120">
+              <button type="submit" id="sendBtn">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <p class="caption">The phone shows the caller's side. Willow Dental is a fictional clinic.</p>
+    </section>
+
+    <aside class="side" aria-label="What the system is doing">
+      <div class="panel">
+        <h2>What the system is doing</h2>
+        <p class="sub">Steps check off live as the demo runs.</p>
+        <ol class="steps" id="steps"></ol>
+      </div>
+      <div class="panel lead empty" id="leadCard">
+        <h2>Lead card</h2>
+        <p class="sub">What lands in the clinic's contact list.</p>
+        <p class="none">No lead yet. It appears after a missed call.</p>
+        <dl>
+          <dt>Name</dt><dd id="lName">Unknown caller (demo)</dd>
+          <dt>Phone</dt><dd>+1 555 0100 (placeholder)</dd>
+          <dt>Source</dt><dd>Missed call</dd>
+          <dt>Interest</dt><dd id="lInterest">Not yet known</dd>
+          <dt>Follow-up</dt><dd id="lFollow">None</dd>
+          <dt>Status</dt><dd><span class="pill" id="lStatus">New</span></dd>
+        </dl>
+      </div>
+    </aside>
+  </div>
+</main>
+<footer>Concept demo with placeholder names, number and times. Nothing is sent, stored or tracked.</footer>
+
+<script>
+(function(){
+  var STEPS=[
+    ["Call missed","The front desk could not answer."],
+    ["Text-back sent","Automatic text goes out within seconds."],
+    ["Lead created","Caller saved as a new contact."],
+    ["Follow-up scheduled","A reminder is queued if there is no reply."],
+    ["Booking link sent","Reply triggers a link and open times."],
+    ["Appointment booked","Caller picks a time slot."]
+  ];
+  var SLOTS=["Tue 10:30","Wed 14:00","Thu 09:15","Fri 16:00"];
+  var $=function(i){return document.getElementById(i)};
+  var stepsEl=$("steps"),log=$("log"),input=$("msgInput"),sendBtn=$("sendBtn"),chips=$("chips"),
+      startBtn=$("startBtn"),callView=$("callView"),msgView=$("msgView"),callStatus=$("callStatus"),callKind=$("callKind");
+  var timers=[],t0=0,replied=false,slotShown=false,booked=false,running=false;
+  var CHECK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.500 4.500L19 7.500"/></svg>';
+
+  function buildSteps(){
+    stepsEl.innerHTML="";
+    STEPS.forEach(function(s,i){
+      var li=document.createElement("li");li.id="s"+i;
+      li.innerHTML='<span class="dot">'+CHECK+'</span><div><strong>'+s[0]+'</strong><span class="d">'+s[1]+'</span></div><time></time>';
+      stepsEl.appendChild(li);
+    });
+  }
+  function later(fn,ms){timers.push(setTimeout(fn,ms))}
+  function markActive(n){
+    Array.prototype.forEach.call(stepsEl.children,function(li,i){li.classList.toggle("active",i===n)});
+  }
+  function done(n,detail){
+    var li=$("s"+n);if(li.classList.contains("done"))return;
+    li.classList.add("done");
+    var el=((Date.now()-t0)/1000);
+    li.querySelector("time").textContent="+"+el.toFixed(1)+"s";
+    if(detail)li.querySelector(".d").textContent=detail;
+    markActive(n+1<STEPS.length?n+1:-1);
+  }
+  function scroll(){log.scrollTop=log.scrollHeight}
+  function bubble(who,html){
+    var b=document.createElement("div");b.className="bubble "+who;
+    if(who==="me")b.textContent=html;else b.innerHTML=html;
+    log.appendChild(b);scroll();return b;
+  }
+  function sys(t){var d=document.createElement("div");d.className="sys";d.textContent=t;log.appendChild(d);scroll()}
+  function typing(on){
+    var t=$("typingEl");
+    if(on&&!t){t=document.createElement("div");t.id="typingEl";t.className="typing";t.setAttribute("aria-hidden","true");t.innerHTML="<i></i><i></i><i></i>";log.appendChild(t);scroll()}
+    if(!on&&t)t.remove();
+  }
+  function setInputs(on){input.disabled=!on;sendBtn.disabled=!on;Array.prototype.forEach.call(chips.children,function(c){c.disabled=!on})}
+  function show(v){callView.classList.toggle("on",v==="call");msgView.classList.toggle("on",v==="msg")}
+
+  function reset(){
+    timers.forEach(clearTimeout);timers=[];running=false;replied=false;slotShown=false;booked=false;
+    log.innerHTML="";buildSteps();markActive(-1);
+    $("leadCard").classList.add("empty");
+    $("lInterest").textContent="Not yet known";$("lFollow").textContent="None";
+    var p=$("lStatus");p.textContent="New";p.className="pill";
+    callView.classList.remove("ringing","missed");
+    callKind.textContent="Call screen";callStatus.textContent="Ready. Press the coral button.";
+    show("call");setInputs(false);input.value="";startBtn.disabled=false;
+  }
+
+  function start(){
+    if(running)return;running=true;startBtn.disabled=true;
+    t0=Date.now();
+    callKind.textContent="Calling";
+    callView.classList.add("ringing");callStatus.textContent="Ringing...";
+    markActive(0);
+    later(function(){
+      callView.classList.remove("ringing");callView.classList.add("missed");
+      callKind.textContent="Call ended";callStatus.textContent="Missed call. Nobody answered.";
+      t0=Date.now();
+      done(0,"Nobody answered at the clinic.");
+    },4200);
+    later(function(){show("msg");sys("Today");typing(true)},5800);
+    later(function(){
+      typing(false);
+      bubble("them","Hi, sorry we missed your call at Willow Dental. How can we help? You can book here: <a href=\"#\" onclick=\"return false\">example.com/book</a>");
+      var s=((Date.now()-t0)/1000).toFixed(0);
+      done(1,"Sent "+s+"s after the missed call (simulated).");
+      setInputs(true);
+    },8400);
+    later(function(){
+      done(2,"Caller saved as a new contact.");
+      $("leadCard").classList.remove("empty");
+    },9300);
+    later(function(){
+      done(3,"Reminder text in 2 hours if no reply (simulated).");
+      $("lFollow").textContent="Reminder in 2h if no reply";
+    },10200);
+    later(function(){markActive(4)},10300);
+  }
+
+  function reply(text){
+    text=text.trim();if(!text||input.disabled)return;
+    bubble("me",text);input.value="";
+    if(!replied){
+      replied=true;setInputs(false);
+      var l=text.toLowerCase(),interest,ans;
+      if(/pain|ache|hurt|sore/.test(l)){interest="Toothache";ans="Sorry to hear that. We keep time free for urgent visits."}
+      else if(/white/.test(l)){interest="Whitening";ans="Yes, we can talk you through whitening options at a short visit."}
+      else if(/check|clean|exam/.test(l)){interest="Check-up";ans="Happy to help with a check-up."}
+      else{interest="General enquiry";ans="Thanks for your message."}
+      $("lInterest").textContent=interest;
+      var p=$("lStatus");p.textContent="Replied";p.className="pill";
+      $("lName").textContent="Alex (demo caller)";
+      $("lFollow").textContent="Reminder cancelled, caller replied";
+      later(function(){typing(true)},500);
+      later(function(){
+        typing(false);bubble("them",ans+" Here are some open times, pick whichever suits you.");
+      },2000);
+      later(function(){
+        slotCard();done(4,"Link and open times sent after the reply.");
+        setInputs(true);
+      },2900);
+    }else if(!booked){
+      later(function(){bubble("them","Thanks, noted. Tap a time above to confirm your visit.")},900);
+    }else{
+      later(function(){bubble("them","You're all set (demo). Press Reset demo to run it again.")},900);
+    }
+  }
+
+  function slotCard(){
+    slotShown=true;
+    var c=document.createElement("div");c.className="slotcard";c.setAttribute("role","group");c.setAttribute("aria-labelledby","slotTitle");
+    c.innerHTML='<h3 id="slotTitle">Book at Willow Dental (demo)</h3><p>Placeholder times. Tap one to confirm.</p><div class="slots"></div>';
+    var w=c.querySelector(".slots");
+    SLOTS.forEach(function(s){
+      var b=document.createElement("button");b.type="button";b.className="slot";b.textContent=s;
+      b.addEventListener("click",function(){pick(c,b,s)});w.appendChild(b);
+    });
+    log.appendChild(c);scroll();
+  }
+  function pick(card,btn,s){
+    if(booked)return;booked=true;
+    Array.prototype.forEach.call(card.querySelectorAll(".slot"),function(x){x.disabled=true});
+    btn.classList.add("picked");
+    var m=document.createElement("div");m.className="booked";m.setAttribute("role","status");
+    m.textContent="Booked (demo): "+s+", check-up with Willow Dental";
+    card.appendChild(m);scroll();
+    done(5,"Booked (demo) for "+s+".");
+    var p=$("lStatus");p.textContent="Booked";p.className="pill ok";
+    $("lFollow").textContent="Appointment reminder (simulated)";
+    later(function(){bubble("them","Confirmed (demo): "+s+". See you then!")},800);
+  }
+
+  startBtn.addEventListener("click",start);
+  $("resetBtn").addEventListener("click",reset);
+  $("composer").addEventListener("submit",function(e){e.preventDefault();reply(input.value)});
+  chips.addEventListener("click",function(e){var b=e.target.closest(".chip");if(b)reply(b.getAttribute("data-q"))});
+  reset();
+  window.__demo={reset:reset};
+})();
+</script>
+</body>
+</html>

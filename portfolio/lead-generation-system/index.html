@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lead Generation System Demo | Made to Scale</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Interactive concept demo: a landing page form connected to a CRM workflow with contact creation, a pipeline stage and automated follow-up. Simulation only, built as an example for GoHighLevel setups.">
+<meta name="robots" content="noindex, follow">
+<style>
+:root{--navy:#0b1b3a;--navy2:#16294f;--sun:#ffc933;--orange:#ff7a1a;--cream:#fff8e6;--bg:#f4f7fc;--ink:#14213d;--mut:#51607c;--line:#d9e1ee;--ok:#12805c;--white:#fff;--r:14px}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:4px}
+.topbar{background:var(--navy);color:#fff;font-size:.8125rem;padding:8px 16px;display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;align-items:center;text-align:center}
+.topbar a{color:var(--sun);font-weight:600}
+.wrap{max-width:1360px;margin:0 auto;padding:16px}
+.grid{display:grid;gap:20px}
+@media(min-width:1000px){.grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:start}.panel{position:sticky;top:12px}}
+/* landing */
+.site{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 8px 28px rgba(11,27,58,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+.nav small{color:var(--mut);font-size:.75rem}
+.hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;padding:28px 18px 24px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,var(--sun) 0 38%,rgba(255,201,51,.25) 39% 60%,transparent 61%)}
+.hero>*{position:relative;z-index:1}
+.tag{display:inline-block;background:var(--sun);color:var(--navy);font-weight:700;font-size:.75rem;padding:3px 10px;border-radius:99px;margin:0 0 12px}
+h1{font-size:clamp(1.65rem,5.2vw,2.5rem);line-height:1.12;margin:0 0 10px;letter-spacing:-.02em;max-width:15em}
+.hero p{margin:0;color:#d6e0f5;max-width:30em}
+.ticks{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:6px;font-size:.9rem}
+.ticks li:before{content:"";display:inline-block;width:.6em;height:.6em;background:var(--sun);border-radius:50%;margin-right:.6em}
+form{padding:20px 18px 22px}
+form h2{margin:0 0 4px;font-size:1.2rem;color:var(--navy)}
+.hint{margin:0 0 14px;color:var(--mut);font-size:.875rem}
+.f{display:grid;gap:12px}
+@media(min-width:520px){.f{grid-template-columns:1fr 1fr}.f .full{grid-column:1/-1}}
+label{display:block;font-weight:600;font-size:.875rem;margin-bottom:4px;color:var(--navy)}
+input,select{width:100%;font:inherit;font-size:1rem;padding:11px 12px;border:1.5px solid #b9c5db;border-radius:10px;background:#fff;color:var(--ink);min-height:46px}
+input:focus-visible,select:focus-visible{outline:3px solid var(--orange);outline-offset:1px;border-color:var(--navy)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button{font:inherit;cursor:pointer;border-radius:10px;min-height:46px;padding:10px 18px;font-weight:700;border:2px solid transparent}
+.primary{background:linear-gradient(180deg,var(--sun),#ffb515);color:var(--navy);box-shadow:0 3px 0 #d98d00}
+.primary:hover{filter:brightness(1.05)}
+.primary:active{transform:translateY(2px);box-shadow:0 1px 0 #d98d00}
+.ghost{background:#fff;border-color:var(--navy);color:var(--navy)}
+.ghost:hover{background:var(--cream)}
+.fine{margin:12px 0 0;font-size:.78rem;color:var(--mut)}
+/* panel */
+.panel{background:var(--navy);color:#fff;border-radius:var(--r);padding:18px;box-shadow:0 8px 28px rgba(11,27,58,.18)}
+.panel h2{margin:0 0 6px;font-size:1.15rem}
+.notice{background:rgba(255,201,51,.14);border:1px solid rgba(255,201,51,.5);color:#ffe9a8;border-radius:10px;padding:9px 12px;font-size:.84rem;margin:0 0 14px}
+.phead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.panel .ghost{background:transparent;color:#fff;border-color:#8da0c6;min-height:40px;padding:6px 14px}
+.panel .ghost:hover{background:rgba(255,255,255,.1)}
+.panel .ghost[disabled]{opacity:.4;cursor:not-allowed}
+.idle{color:#b8c6e3;font-size:.92rem;margin:0 0 12px}
+ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.step{background:var(--navy2);border:1px solid #2a3f6b;border-radius:12px;padding:12px 14px;transition:opacity .3s,border-color .3s}
+.step.pending{opacity:.45}
+.step.active{border-color:var(--sun);opacity:1}
+.step.done{border-color:#2f8f6f;opacity:1}
+.sh{display:flex;align-items:center;gap:10px;font-weight:700}
+.badge{flex:none;width:26px;height:26px;border-radius:50%;background:#2a3f6b;color:#fff;display:grid;place-items:center;font-size:.8rem}
+.active .badge{background:var(--sun);color:var(--navy)}
+.done .badge{background:#2f8f6f}
+.sb{margin-top:10px;display:none}
+.step:not(.pending) .sb{display:block;animation:in .4s ease both}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sub{font-weight:400;color:#b8c6e3;font-size:.84rem;margin:0}
+.contact{background:#fff;color:var(--ink);border-radius:10px;padding:12px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center}
+.av{grid-row:span 2;width:44px;height:44px;border-radius:50%;background:var(--orange);color:#fff;font-weight:800;display:grid;place-items:center}
+.contact b{font-size:1rem;overflow-wrap:anywhere}
+.chip{display:inline-block;font-size:.72rem;font-weight:700;background:var(--cream);color:#8a4b00;border-radius:99px;padding:1px 8px;margin-left:4px}
+dl{grid-column:1/-1;margin:6px 0 0;display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:.88rem}
+dt{color:var(--mut)}dd{margin:0;overflow-wrap:anywhere}
+.kb{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:8px;overflow-x:auto;padding-bottom:6px}
+.col{background:#0e2247;border:1px dashed #36508a;border-radius:10px;padding:8px;min-height:92px}
+.col h3{margin:0 0 8px;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:#b8c6e3}
+.kc{background:#fff;color:var(--ink);border-radius:8px;padding:8px 10px;font-size:.85rem;border-left:4px solid var(--orange);overflow-wrap:anywhere;animation:in .5s ease both}
+.kc small{display:block;color:var(--mut)}
+.kc.moved{border-left-color:var(--ok);box-shadow:0 0 0 2px var(--sun)}
+.msgs{display:grid;gap:10px}
+@media(min-width:620px){.msgs{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}}
+.msg{background:#fff;color:var(--ink);border-radius:10px;padding:10px 12px;font-size:.88rem}
+.msg h4{margin:0 0 6px;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+.sms{background:#e8f0ff;border-radius:14px 14px 14px 4px;padding:8px 11px}
+.msg p{margin:0 0 6px}.msg p:last-child{margin:0}
+.subj{font-weight:700;border-bottom:1px solid var(--line);padding-bottom:5px;margin-bottom:7px!important}
+.task{display:flex;gap:10px;align-items:flex-start;background:#fff;color:var(--ink);border-radius:10px;padding:10px 12px}
+.task i{flex:none;width:20px;height:20px;border:2px solid var(--orange);border-radius:5px;margin-top:2px}
+.task b{display:block}.task span{font-size:.84rem;color:var(--mut)}
+.done-note{margin:12px 0 0;color:#b8c6e3;font-size:.84rem}
+footer{max-width:1360px;margin:0 auto;padding:4px 16px 28px;color:var(--mut);font-size:.82rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><span>Concept demo by Made to Scale. Names and details are placeholders.</span><a href="https://madetoscale.site/#work">Back to Made to Scale</a></div>
+<main class="wrap">
+<div class="grid">
+<section class="site" aria-label="Demo landing page">
+<div class="nav"><span class="logo"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="6" fill="#ff7a1a"/><g stroke="#ffc933" stroke-width="2.4" stroke-linecap="round"><path d="M13 2v3M13 21v3M2 13h3M21 13h3M5.2 5.2l2.1 2.1M18.7 18.7l2.1 2.1M5.2 20.8l2.1-2.1M18.7 7.3l2.1-2.1"/></g></svg>Sunvale Solar <small>(demo)</small></span><small>Fictional company</small></div>
+<div class="hero">
+<p class="tag">Free roof check</p>
+<h1>Find out if solar suits your roof</h1>
+<p>Tell us a little about your home and our team will get in touch with a no-obligation quote.</p>
+<ul class="ticks"><li>Takes about a minute</li><li>No obligation</li><li>A real person calls you back</li></ul>
+</div>
+<form id="f" novalidate>
+<h2>Get your free quote</h2>
+<p class="hint">Demo form. Nothing you type leaves this page.</p>
+<div class="f">
+<div class="full"><label for="n">Full name</label><input id="n" name="n" autocomplete="name" required></div>
+<div><label for="e">Email</label><input id="e" name="e" type="email" autocomplete="email" required></div>
+<div><label for="p">Phone</label><input id="p" name="p" type="tel" autocomplete="tel" required></div>
+<div><label for="z">Postcode / ZIP</label><input id="z" name="z" autocomplete="postal-code" required></div>
+<div><label for="r">Roof type</label><select id="r" name="r" required><option value="">Choose one</option><option>Tile</option><option>Metal</option><option>Flat</option><option>Not sure</option></select></div>
+</div>
+<p id="err" role="alert" class="fine" style="color:#b3261e;font-weight:600"></p>
+<div class="btns"><button class="primary" type="submit">Get my free quote</button><button class="ghost" type="button" id="sample">Try with sample data</button></div>
+<p class="fine">Sunvale Solar is a made-up company used for this example. Please do not enter real personal details.</p>
+</form>
+</section>
+
+<section class="panel" aria-labelledby="ph">
+<div class="phead"><h2 id="ph">Behind the scenes</h2><button class="ghost" type="button" id="replay" disabled>Replay</button></div>
+<p class="notice">This is a simulation of how a GoHighLevel workflow would behave. No data is stored or sent.</p>
+<p class="idle" id="idle">Submit the form, or press "Try with sample data", to watch what would happen next.</p>
+<ol class="steps" id="steps" aria-live="polite">
+<li class="step pending" data-s="1"><div class="sh"><span class="badge">1</span>Form received</div><div class="sb"><p class="sub">The landing page form submits to the workflow trigger.</p></div></li>
+<li class="step pending" data-s="2"><div class="sh"><span class="badge">2</span>Contact created in the CRM</div><div class="sb"><div class="contact" id="contact"></div></div></li>
+<li class="step pending" data-s="3"><div class="sh"><span class="badge">3</span>Pipeline stage updated</div><div class="sb"><p class="sub" id="pipeSub" style="margin-bottom:8px"></p>
+<div class="kb" tabindex="0" role="group" aria-label="Pipeline board, scrolls sideways on small screens">
+<div class="col" data-c="0"><h3>New lead</h3></div><div class="col" data-c="1"><h3>Contacted</h3></div><div class="col" data-c="2"><h3>Quote sent</h3></div><div class="col" data-c="3"><h3>Booked</h3></div></div></div></li>
+<li class="step pending" data-s="4"><div class="sb" style="margin-top:0"></div><div class="sh">4 <span style="display:none"></span></div></li>
+<li class="step pending" data-s="5"><div class="sh"><span class="badge">5</span>Reminder for the team</div><div class="sb"><div class="task"><i></i><div><b>Call within 15 minutes</b><span id="taskTxt"></span></div></div></div></li>
+</ol>
+<p class="done-note" id="doneNote" hidden>Workflow complete. In a real build, each step above is a configurable action inside the CRM.</p>
+</section>
+</div>
+</main>
+<footer>Concept build by Made to Scale. It shows a typical structure only and makes no claims about results.</footer>
+<script>
+(function(){
+var $=function(s,c){return (c||document).querySelector(s)};
+var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+var steps=[].slice.call(document.querySelectorAll(".step"));
+// rebuild step 4 properly
+steps[3].innerHTML='<div class="sh"><span class="badge">4</span>Automated follow-up sent</div><div class="sb"><div class="msgs"><div class="msg"><h4>SMS, sent instantly</h4><div class="sms" id="sms"></div></div><div class="msg"><h4>Email, sent instantly</h4><p class="subj" id="subj"></p><div id="mail"></div></div></div></div>';
+var form=$("#f"),err=$("#err"),replay=$("#replay"),last=null,token=0;
+function sleep(ms){return new Promise(function(r){setTimeout(r,reduce?0:ms)})}
+function reset(){steps.forEach(function(s){s.className="step pending"});document.querySelectorAll(".col .kc").forEach(function(k){k.remove()});$("#doneNote").hidden=true}
+function fill(d){
+ var first=(d.n.trim().split(/\s+/)[0])||"there";
+ var c=$("#contact");c.textContent="";
+ var av=document.createElement("div");av.className="av";av.textContent=d.n.trim().charAt(0).toUpperCase()||"?";
+ var nm=document.createElement("div");var b=document.createElement("b");b.textContent=d.n.trim();var ch=document.createElement("span");ch.className="chip";ch.textContent="New contact";nm.appendChild(b);nm.appendChild(ch);
+ var src=document.createElement("div");src.style.cssText="font-size:.8rem;color:#51607c";src.textContent="Source: Sunvale quote form";
+ c.appendChild(av);c.appendChild(nm);c.appendChild(src);
+ var dl=document.createElement("dl");
+ [["Email",d.e],["Phone",d.p],["Postcode / ZIP",d.z],["Roof type",d.r],["Tags","solar-quote, website-form"]].forEach(function(x){var t=document.createElement("dt");t.textContent=x[0];var v=document.createElement("dd");v.textContent=x[1];dl.appendChild(t);dl.appendChild(v)});
+ c.appendChild(dl);
+ $("#sms").textContent="Hi "+first+", thanks for asking about solar for your "+d.r.toLowerCase()+" roof. This is Sunvale Solar (demo). A team member will call you shortly. Reply STOP to opt out.";
+ $("#subj").textContent="Thanks "+first+", we have your quote request";
+ var m=$("#mail");m.textContent="";
+ ["Hi "+first+",","Thanks for your request. We have received your details for "+d.z+" and a team member will call you very soon to talk through your roof and answer questions.","Sunvale Solar (demo)"].forEach(function(t){var p=document.createElement("p");p.textContent=t;m.appendChild(p)});
+ $("#taskTxt").textContent="Contact "+d.n.trim()+" on "+d.p+". Created automatically and assigned to the sales team.";
+ return first;
+}
+function card(d){var k=document.createElement("div");k.className="kc";var b=document.createElement("b");b.textContent=d.n.trim();var s=document.createElement("small");s.textContent=d.z+" · "+d.r+" roof";k.appendChild(b);k.appendChild(s);return k}
+async function run(d){
+ var my=++token;last=d;replay.disabled=true;$("#idle").hidden=true;reset();fill(d);
+ var k=card(d),cols=document.querySelectorAll(".col");
+ function ok(){return my===token}
+ function act(i){steps[i].className="step active"}
+ function fin(i){steps[i].className="step done"}
+ act(0);await sleep(700);if(!ok())return;fin(0);
+ act(1);await sleep(1100);if(!ok())return;fin(1);
+ act(2);$("#pipeSub").textContent="Opportunity created in stage: New lead";cols[0].appendChild(k);
+ await sleep(1500);if(!ok())return;
+ $("#pipeSub").textContent="Workflow moved it to: Contacted";k.classList.add("moved");cols[1].appendChild(k);
+ await sleep(900);if(!ok())return;fin(2);
+ act(3);await sleep(1400);if(!ok())return;fin(3);
+ act(4);await sleep(900);if(!ok())return;fin(4);
+ $("#doneNote").hidden=false;replay.disabled=false;
+}
+function get(){return{n:$("#n").value,e:$("#e").value,p:$("#p").value,z:$("#z").value,r:$("#r").value}}
+form.addEventListener("submit",function(ev){
+ ev.preventDefault();var d=get(),miss=[];
+ if(!d.n.trim())miss.push("name");if(!/^\S+@\S+\.\S+$/.test(d.e))miss.push("a valid email");if(!d.p.trim())miss.push("phone");if(!d.z.trim())miss.push("postcode / ZIP");if(!d.r)miss.push("roof type");
+ if(miss.length){err.textContent="Please add: "+miss.join(", ")+".";return}
+ err.textContent="";run(d);
+ if(window.matchMedia("(max-width:999px)").matches)$("#ph").scrollIntoView({behavior:reduce?"auto":"smooth"});
+});
+$("#sample").addEventListener("click",function(){
+ $("#n").value="Ava Mitchell";$("#e").value="ava@example.com";$("#p").value="555 0142";$("#z").value="12345";$("#r").value="Tile";
+ err.textContent="";form.requestSubmit();
+});
+replay.addEventListener("click",function(){if(last)run(last)});
+})();
+</script>
+</body>
+</html>

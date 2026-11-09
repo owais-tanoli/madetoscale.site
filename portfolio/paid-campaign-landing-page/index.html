@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ironleaf Fitness (demo): 7-Day Free Trial | Concept by Made to Scale</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Concept demo of a paid-campaign landing page for a fictional gym: offer, short form, thank-you state and planned conversion tracking. Placeholder content only.">
+<meta name="robots" content="noindex, follow">
+<style>
+:root{--bg:#0b0d0a;--bg2:#14170f;--line:#2a3020;--lime:#c6ff1a;--lime-d:#a8dd0c;--white:#fff;--mute:#b4baa6;--err:#ff7a6b;
+--display:Impact,"Arial Narrow Bold","Franklin Gothic Medium","Arial Black",system-ui,sans-serif;
+--body:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--white);font:16px/1.55 var(--body);-webkit-text-size-adjust:100%}
+img,svg{max-width:100%}
+a{color:var(--lime)}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:2px}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--lime);color:#000;padding:8px 12px;z-index:100;font-weight:700}
+.skip:focus{top:8px}
+/* top bar */
+.demo-bar{background:#f2f4ea;color:#111;font-size:13px;line-height:1.4;padding:7px 0}
+.demo-bar .wrap{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:space-between;align-items:center}
+.demo-bar a{color:#111;font-weight:700}
+.demo-bar a:focus-visible{outline-color:#111}
+/* header */
+header.site{border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:22px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--white)}
+.logo svg{width:28px;height:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--lime);color:#0b0d0a;border:0;font:800 16px/1 var(--body);letter-spacing:.03em;text-transform:uppercase;padding:15px 22px;min-height:48px;text-decoration:none;cursor:pointer;transform:skewX(-8deg);transition:background .15s}
+.btn>span{display:inline-block;transform:skewX(8deg)}
+.btn:hover{background:#dbff5c}
+.btn.sm{padding:10px 16px;min-height:44px;font-size:14px}
+.btn.block{width:100%}
+/* hero */
+.hero{position:relative;overflow:hidden;padding:36px 0 48px}
+.hero::before{content:"";position:absolute;right:-120px;top:-80px;width:520px;height:520px;background:repeating-linear-gradient(115deg,rgba(198,255,26,.08) 0 2px,transparent 2px 22px);pointer-events:none}
+.hero .wrap{display:grid;gap:32px;position:relative}
+.tag{display:inline-block;background:var(--lime);color:#000;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;transform:skewX(-8deg)}
+h1{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(46px,13vw,104px);line-height:.95;letter-spacing:.01em;margin:16px 0 14px}
+h1 em{font-style:normal;color:var(--lime)}
+.lead{font-size:18px;color:var(--mute);max-width:34em;margin:0 0 18px}
+.offer-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.offer-list li{display:flex;gap:10px;align-items:flex-start}
+.offer-list svg{flex:none;width:20px;height:20px;margin-top:2px}
+.fine{font-size:13px;color:var(--mute)}
+/* form card */
+.card{background:var(--white);color:#0b0d0a;padding:22px 18px 20px;border-top:8px solid var(--lime);box-shadow:8px 8px 0 var(--lime-d)}
+.card h2{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:30px;line-height:1;margin:0 0 4px}
+.card p.sub{margin:0 0 16px;color:#3b4130;font-size:15px}
+.field{margin-bottom:14px}
+label{display:block;font-weight:700;font-size:14px;margin-bottom:5px}
+input,select{width:100%;font:inherit;font-size:16px;color:#0b0d0a;background:#f4f6ee;border:2px solid #0b0d0a;padding:12px;min-height:48px;border-radius:0}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#000 50%),linear-gradient(135deg,#000 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+input:focus-visible,select:focus-visible{outline:3px solid #0b0d0a;outline-offset:2px;background:#fff;box-shadow:0 0 0 6px var(--lime)}
+.err{color:#b3261e;font-size:13px;font-weight:600;margin:4px 0 0;min-height:0}
+input[aria-invalid=true],select[aria-invalid=true]{border-color:#b3261e}
+.card .fine{color:#4a5140;margin:12px 0 0}
+.card .btn{background:#0b0d0a;color:var(--lime)}
+.card .btn:hover{background:#222a14}
+/* sections */
+section.band{padding:48px 0;border-top:1px solid var(--line)}
+section.alt{background:var(--bg2)}
+h2.sec{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(32px,7vw,52px);line-height:1;margin:0 0 24px}
+h2.sec em{font-style:normal;color:var(--lime)}
+.grid3{display:grid;gap:16px}
+.ben{border:2px solid var(--line);padding:20px;background:var(--bg)}
+.ben svg{width:40px;height:40px;margin-bottom:10px}
+.ben h3{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:24px;margin:0 0 6px;letter-spacing:.02em}
+.ben p{margin:0;color:var(--mute)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:16px;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:4px 0 4px 64px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:48px;height:48px;background:var(--lime);color:#000;font:400 30px/48px var(--display);text-align:center;transform:skewX(-8deg)}
+.steps strong{display:block;font-size:18px}
+.steps span{color:var(--mute)}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:700;font-size:17px;padding:16px 36px 16px 0;position:relative;list-style:none;min-height:48px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:12px;color:var(--lime);font-size:26px;line-height:1}
+details[open] summary::after{content:"\2212"}
+details p{margin:0 0 16px;color:var(--mute);max-width:42em}
+.cta-band{background:var(--lime);color:#0b0d0a;padding:44px 0;text-align:left}
+.cta-band h2{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(34px,8vw,64px);line-height:1;margin:0 0 10px}
+.cta-band p{margin:0 0 20px;font-size:18px}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center}
+.cta-band .btn{background:#0b0d0a;color:var(--lime)}
+.cta-band .btn:hover{background:#222a14}
+.cta-band a.tel{color:#0b0d0a;font-weight:800;font-size:18px}
+.cta-band :focus-visible{outline-color:#0b0d0a}
+footer.site{padding:24px 0 96px;font-size:13px;color:var(--mute)}
+footer.site p{margin:0 0 6px}
+/* thank you */
+.thanks{padding:40px 0 56px}
+.thanks .wrap{max-width:820px}
+.thanks h2.t{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(44px,12vw,88px);line-height:.95;margin:14px 0 14px}
+.thanks h2.t em{font-style:normal;color:var(--lime)}
+.thanks h2.t:focus{outline:none}
+.thanks .steps{margin:24px 0 28px}
+.demo-note{border:2px dashed var(--lime);padding:14px 16px;color:var(--mute);margin-bottom:24px}
+.btn.ghost{background:transparent;color:var(--lime);box-shadow:inset 0 0 0 2px var(--lime)}
+.btn.ghost:hover{background:#1c2410}
+/* tracking */
+.trk-toggle{position:fixed;right:12px;bottom:12px;z-index:50;background:#fff;color:#000;border:3px solid var(--lime);box-shadow:0 0 0 3px #000;font:700 14px/1 var(--body);padding:12px 14px;min-height:48px;cursor:pointer;display:flex;gap:8px;align-items:center}
+.trk-toggle .dot{width:10px;height:10px;border-radius:50%;background:#777}
+.trk-toggle.pulse .dot{background:#4c8a00}
+.trk-toggle:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.trk{position:fixed;z-index:60;right:12px;bottom:72px;width:min(440px,calc(100vw - 24px));max-height:calc(100vh - 92px);overflow:auto;background:#fff;color:#0b0d0a;border:3px solid #0b0d0a;box-shadow:6px 6px 0 var(--lime);padding:16px;font-size:14px}
+.trk[hidden]{display:none}
+.trk h2{font-family:var(--display);font-weight:400;font-size:24px;text-transform:uppercase;margin:0 0 8px;line-height:1}
+.trk .warn{background:#0b0d0a;color:var(--lime);padding:8px 10px;font-weight:700;margin:0 0 12px}
+.trk h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 6px}
+.trk table{width:100%;border-collapse:collapse;font-size:13px}
+.trk th,.trk td{text-align:left;padding:6px 6px;border-bottom:1px solid #d5d9c9;vertical-align:top}
+.trk th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;background:#eef1e3}
+.trk tr.lit td{background:var(--lime);transition:background .8s}
+.trk code{font:600 12px ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+.trk .conv{font-size:11px;background:#0b0d0a;color:var(--lime);padding:1px 5px;margin-left:4px;white-space:nowrap}
+.trk ol{list-style:none;margin:0;padding:0;max-height:140px;overflow:auto;border:1px solid #d5d9c9;background:#f7f9f0}
+.trk ol li{padding:5px 8px;border-bottom:1px solid #e1e5d6;font:12px ui-monospace,Menlo,Consolas,monospace}
+.trk ol li.empty{color:#555;font-family:var(--body)}
+.trk .x{position:absolute;right:8px;top:8px;background:none;border:2px solid #0b0d0a;width:40px;height:40px;font-size:20px;cursor:pointer;line-height:1}
+.trk .x:focus-visible{outline:3px solid #0b0d0a}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media (min-width:760px){
+ .wrap{padding:0 32px}
+ .hero{padding:64px 0 72px}
+ .hero .wrap{grid-template-columns:1.15fr .85fr;gap:56px;align-items:start}
+ .grid3{grid-template-columns:repeat(3,1fr)}
+ .steps{grid-template-columns:repeat(3,1fr);gap:28px}
+ .steps li{padding:64px 0 0}
+ .card{padding:28px 26px 24px}
+ .thanks .steps{grid-template-columns:1fr}
+ .thanks .steps li{padding:4px 0 4px 64px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="demo-bar"><div class="wrap"><span>Concept demo by Made to Scale. Names, offer and details are placeholders.</span><a href="https://madetoscale.site/#work">Back to Made to Scale</a></div></div>
+
+<header class="site"><div class="wrap">
+ <a class="logo" href="#top" aria-label="Ironleaf Fitness (demo), top of page">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28C4 12 14 4 28 4c0 14-8 24-24 24Z" fill="#c6ff1a"/><path d="M4 28 20 12" stroke="#0b0d0a" stroke-width="2.5" stroke-linecap="round"/></svg>
+  Ironleaf <span style="color:var(--lime)">(demo)</span>
+ </a>
+ <a class="btn sm" href="#join" data-scroll-form><span>Claim trial</span></a>
+</div></header>
+
+<main id="main">
+<div id="view-form">
+ <section class="hero" id="top"><div class="wrap">
+  <div>
+   <span class="tag">7-day free trial</span>
+   <h1>Train free for <em>7 days.</em></h1>
+   <p class="lead">Try Ironleaf Fitness for a week. Use the floor, the classes and the equipment. Placeholder offer, for demonstration only.</p>
+   <ul class="offer-list">
+    <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10.5 8 15.5 17 5" fill="none" stroke="#c6ff1a" stroke-width="3"/></svg>Full gym access for 7 days</li>
+    <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10.5 8 15.5 17 5" fill="none" stroke="#c6ff1a" stroke-width="3"/></svg>A short intro session with a coach</li>
+    <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10.5 8 15.5 17 5" fill="none" stroke="#c6ff1a" stroke-width="3"/></svg>No card needed to start (placeholder terms)</li>
+   </ul>
+  </div>
+  <div class="card" id="join">
+   <h2>Claim your free week</h2>
+   <p class="sub">Four quick fields. Takes under a minute.</p>
+   <form id="lead" novalidate>
+    <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required aria-describedby="e-name"><p class="err" id="e-name" aria-live="polite"></p></div>
+    <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email"><p class="err" id="e-email" aria-live="polite"></p></div>
+    <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="e-phone"><p class="err" id="e-phone" aria-live="polite"></p></div>
+    <div class="field"><label for="f-goal">Main goal</label>
+     <select id="f-goal" name="goal" required aria-describedby="e-goal">
+      <option value="">Choose one</option><option>Build strength</option><option>Lose weight</option><option>Get more energy</option><option>Learn the basics</option><option>Just looking around</option>
+     </select><p class="err" id="e-goal" aria-live="polite"></p></div>
+    <button class="btn block" type="submit"><span>Start my free trial</span></button>
+    <p class="fine">Demo only. Nothing you type is sent anywhere. Please do not enter real personal details.</p>
+   </form>
+  </div>
+ </div></section>
+
+ <section class="band alt" aria-labelledby="h-ben"><div class="wrap">
+  <h2 class="sec" id="h-ben">Why try <em>Ironleaf</em></h2>
+  <div class="grid3">
+   <div class="ben"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="16" width="6" height="8" fill="#c6ff1a"/><rect x="9" y="11" width="6" height="18" fill="#c6ff1a"/><rect x="15" y="18" width="10" height="4" fill="#fff"/><rect x="25" y="11" width="6" height="18" fill="#c6ff1a"/><rect x="32" y="16" width="6" height="8" fill="#c6ff1a"/></svg><h3>Real equipment</h3><p>Free weights, racks and machines in one open floor. Placeholder copy.</p></div>
+   <div class="ben"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="#c6ff1a" stroke-width="4"/><path d="M20 10v10l7 4" fill="none" stroke="#fff" stroke-width="4"/></svg><h3>Flexible hours</h3><p>Come early, late or in between. Example hours would go here.</p></div>
+   <div class="ben"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="12" r="6" fill="#c6ff1a"/><path d="M8 34c0-9 5-14 12-14s12 5 12 14Z" fill="#fff"/></svg><h3>Coach on hand</h3><p>A short intro so your first week has a plan. Placeholder copy.</p></div>
+  </div>
+ </div></section>
+
+ <section class="band" aria-labelledby="h-next"><div class="wrap">
+  <h2 class="sec" id="h-next">What happens <em>next</em></h2>
+  <ol class="steps">
+   <li><strong>Send the form</strong><span>Four fields, under a minute.</span></li>
+   <li><strong>We get in touch</strong><span>A team member confirms a time to visit.</span></li>
+   <li><strong>Start training</strong><span>Show up and use your 7 days.</span></li>
+  </ol>
+ </div></section>
+
+ <section class="band alt" aria-labelledby="h-faq"><div class="wrap">
+  <h2 class="sec" id="h-faq">Quick <em>answers</em></h2>
+  <details><summary>Is the trial really free?</summary><p>In this demo, yes: it is a placeholder offer. A real campaign would state the exact terms here.</p></details>
+  <details><summary>Do I need experience?</summary><p>No. The intro session is designed for first-timers. Placeholder answer.</p></details>
+  <details><summary>What happens after 7 days?</summary><p>A real page would explain membership options and any follow-up here. Nothing is booked in this demo.</p></details>
+  <details><summary>Is my information saved?</summary><p>Not in this demo. The form runs in your browser only and nothing is sent or stored.</p></details>
+ </div></section>
+
+ <section class="cta-band" aria-labelledby="h-cta"><div class="wrap">
+  <h2 id="h-cta">Ready for your free week?</h2>
+  <p>Claim the 7-day trial in under a minute.</p>
+  <div class="cta-row">
+   <a class="btn" href="#join" data-scroll-form><span>Claim my free trial</span></a>
+   <a class="tel" href="tel:+15555550100" data-track="click_to_call">Or call (555) 555-0100</a>
+  </div>
+ </div></section>
+</div>
+
+<div id="view-thanks" hidden>
+ <section class="thanks"><div class="wrap">
+  <span class="tag">Demo thank-you state</span>
+  <h2 class="t" id="thanks-h" tabindex="-1">You're in<span id="t-name"></span>. <em>See you soon.</em></h2>
+  <p class="lead">Your 7-day free trial request is confirmed (in this demo only). Here is what a real visitor would see next.</p>
+  <ol class="steps">
+   <li><strong>Check your email</strong><span>A confirmation with your trial details would arrive within minutes.</span></li>
+   <li><strong>Expect a call or text</strong><span>The team would reach out to pick a time for your first visit.</span></li>
+   <li><strong>Bring gym clothes</strong><span>Show up, meet a coach and start your 7 days.</span></li>
+  </ol>
+  <p class="demo-note">Demo reset: nothing was sent. This thank-you page is where a real campaign would fire its conversion tag.</p>
+  <button class="btn ghost" type="button" id="reset"><span>Back to form</span></button>
+ </div></section>
+</div>
+</main>
+
+<footer class="site"><div class="wrap">
+ <p>Ironleaf Fitness (demo) is a fictional business. Address, hours and terms are placeholders.</p>
+ <p>Concept page by <a href="https://madetoscale.site/#work">Made to Scale</a>. No campaign has been run and no results are claimed.</p>
+</div></footer>
+
+<button class="trk-toggle" id="trk-toggle" type="button" aria-expanded="false" aria-controls="trk"><span class="dot" aria-hidden="true"></span>Planned tracking (concept)</button>
+<aside class="trk" id="trk" role="region" aria-labelledby="trk-h" hidden>
+ <button class="x" type="button" id="trk-x" aria-label="Close tracking panel">&times;</button>
+ <h2 id="trk-h">Planned tracking (concept)</h2>
+ <p class="warn">Nothing is sent to Google Ads, Meta or any analytics. This panel shows the plan.</p>
+ <h3>Campaign fields read from the URL</h3>
+ <table><tbody>
+  <tr><th scope="row">utm_source</th><td><code id="u-source"></code></td></tr>
+  <tr><th scope="row">utm_medium</th><td><code id="u-medium"></code></td></tr>
+  <tr><th scope="row">utm_campaign</th><td><code id="u-campaign"></code></td></tr>
+ </tbody></table>
+ <p class="fine" style="color:#4a5140;margin:6px 0 0">Try adding <code>?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=trial</code> to the address.</p>
+ <h3>Events that would be tracked</h3>
+ <table>
+  <thead><tr><th scope="col">Event</th><th scope="col">Trigger</th><th scope="col">Would fire</th></tr></thead>
+  <tbody>
+   <tr data-ev="page_view"><td><code>page_view</code></td><td>Page loads</td><td class="n">0</td></tr>
+   <tr data-ev="form_start"><td><code>form_start</code></td><td>First field touched</td><td class="n">0</td></tr>
+   <tr data-ev="form_submit"><td><code>form_submit</code><span class="conv">conversion</span></td><td>Valid form sent</td><td class="n">0</td></tr>
+   <tr data-ev="thank_you_view"><td><code>thank_you_view</code></td><td>Thank-you shown</td><td class="n">0</td></tr>
+   <tr data-ev="click_to_call"><td><code>click_to_call</code></td><td>Phone link clicked</td><td class="n">0</td></tr>
+  </tbody>
+ </table>
+ <h3>Log</h3>
+ <ol id="log" aria-live="polite"><li class="empty">Waiting for events...</li></ol>
+</aside>
+
+<script>
+(function(){
+ var $=function(s,r){return (r||document).querySelector(s)};
+ var q=new URLSearchParams(location.search);
+ ['source','medium','campaign'].forEach(function(k){
+  var v=q.get('utm_'+k); $('#u-'+k).textContent=v?v:'(not set)';
+ });
+ var log=$('#log'),counts={},started=false;
+ function fire(ev){
+  counts[ev]=(counts[ev]||0)+1;
+  var row=$('tr[data-ev="'+ev+'"]');
+  if(row){ $('.n',row).textContent=counts[ev]; row.classList.add('lit'); setTimeout(function(){row.classList.remove('lit')},1200); }
+  var e=log.querySelector('.empty'); if(e) e.remove();
+  var li=document.createElement('li'), d=new Date();
+  li.textContent=d.toLocaleTimeString([], {hour12:false})+'  '+ev+'  would fire';
+  log.insertBefore(li,log.firstChild);
+  var t=$('#trk-toggle'); t.classList.add('pulse'); setTimeout(function(){t.classList.remove('pulse')},1200);
+ }
+ // panel
+ var panel=$('#trk'),tg=$('#trk-toggle');
+ function setPanel(open){ panel.hidden=!open; tg.setAttribute('aria-expanded',open); if(open) $('#trk-x').focus(); else tg.focus(); }
+ tg.addEventListener('click',function(){setPanel(panel.hidden)});
+ $('#trk-x').addEventListener('click',function(){setPanel(false)});
+ document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!panel.hidden) setPanel(false); });
+ // events
+ fire('page_view');
+ var form=$('#lead');
+ form.addEventListener('focusin',function(){ if(!started){started=true;fire('form_start');} });
+ document.querySelectorAll('[data-scroll-form]').forEach(function(a){
+  a.addEventListener('click',function(e){ e.preventDefault(); $('#join').scrollIntoView(); $('#f-name').focus({preventScroll:true}); });
+ });
+ document.querySelectorAll('[data-track="click_to_call"]').forEach(function(a){
+  a.addEventListener('click',function(e){ e.preventDefault(); fire('click_to_call'); });
+ });
+ function setErr(id,msg){ var i=$('#f-'+id); $('#e-'+id).textContent=msg; if(msg) i.setAttribute('aria-invalid','true'); else i.removeAttribute('aria-invalid'); }
+ function validate(){
+  var first=null;
+  function chk(id,bad,msg){ setErr(id,bad?msg:''); if(bad&&!first) first=$('#f-'+id); }
+  var n=$('#f-name').value.trim(), em=$('#f-email').value.trim(), ph=$('#f-phone').value.trim(), g=$('#f-goal').value;
+  chk('name',!n,'Please enter your name.');
+  chk('email',!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em),'Please enter a valid email.');
+  chk('phone',ph.replace(/\D/g,'').length<7,'Please enter a phone number.');
+  chk('goal',!g,'Please choose a goal.');
+  if(first) first.focus();
+  return !first;
+ }
+ form.addEventListener('submit',function(e){
+  e.preventDefault();
+  if(!validate()) return;
+  fire('form_submit');
+  var first=$('#f-name').value.trim().split(/\s+/)[0];
+  $('#t-name').textContent=first?', '+first:'';
+  $('#view-form').hidden=true; $('#view-thanks').hidden=false;
+  window.scrollTo(0,0);
+  $('#thanks-h').focus();
+  fire('thank_you_view');
+ });
+ $('#reset').addEventListener('click',function(){
+  form.reset(); started=false;
+  ['name','email','phone','goal'].forEach(function(i){setErr(i,'')});
+  $('#view-thanks').hidden=true; $('#view-form').hidden=false;
+  window.scrollTo(0,0); $('#f-name').focus();
+ });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<title>Cedar Ridge Plumbing &amp; Heating | Concept Demo</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Concept demo of a local business website for a fictional plumbing and heating company: services, how it works, FAQ and a quote form. Built by Made to Scale. All details are placeholders.">
+<meta name="theme-color" content="#1f4d3a">
+<style>
+:root{
+  --green:#1f4d3a;--green-d:#14352a;--green-l:#e4ede6;
+  --copper:#b4622f;--copper-d:#8f4a1e;--copper-l:#f3dcc9;
+  --cream:#f8f2e6;--paper:#fffdf8;--ink:#1d2621;--muted:#55605a;--line:#ddd3bf;
+  --r:14px;--shadow:0 10px 30px rgba(20,53,42,.12);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--cream);line-height:1.6;font-size:17px;overflow-x:hidden}
+img,svg{max-width:100%}
+a{color:var(--green)}
+:focus-visible{outline:3px solid var(--copper);outline-offset:3px;border-radius:4px}
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--serif);line-height:1.15;margin:0 0 .5em;color:var(--green-d)}
+h1{font-size:clamp(2.1rem,7vw,3.6rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.7rem,4.6vw,2.4rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 1em}
+.eyebrow{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--copper-d);margin-bottom:.8em}
+.skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 14px;z-index:100}
+.skip:focus{left:8px;top:8px}
+
+/* demo bar */
+.demobar{background:#2b2b2b;color:#f1ece0;font-size:.82rem;padding:8px 0}
+.demobar .wrap{display:flex;gap:6px 16px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.demobar a{color:#ffd9b8;font-weight:600;white-space:nowrap}
+
+/* header */
+header.site{position:sticky;top:0;z-index:50;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--green-d)}
+.logo svg{width:38px;height:38px;flex:none}
+.logo b{display:block;font-family:var(--serif);font-size:1.12rem;line-height:1.05}
+.logo small{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--copper-d);font-weight:700}
+nav.main ul{list-style:none;margin:0;padding:0;display:flex;gap:6px}
+nav.main a{display:block;padding:10px 12px;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;border-radius:8px}
+nav.main a:hover{background:var(--green-l)}
+.right{display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:700;text-decoration:none;border:2px solid transparent;border-radius:999px;padding:12px 22px;cursor:pointer;transition:transform .15s,background .15s,box-shadow .15s;min-height:46px}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-copper{background:var(--copper);color:#fff}
+.btn-copper:hover{background:var(--copper-d);transform:translateY(-1px);box-shadow:0 6px 16px rgba(143,74,30,.3)}
+.btn-ghost{border-color:var(--green);color:var(--green);background:transparent}
+.btn-ghost:hover{background:var(--green);color:#fff}
+.btn-call{padding:10px 16px}
+.call-num{display:none}
+.menu-btn{display:inline-flex;background:none;border:2px solid var(--line);border-radius:10px;width:46px;height:46px;align-items:center;justify-content:center;cursor:pointer;color:var(--green-d)}
+.menu-btn svg{width:22px;height:22px}
+nav.main{display:none;position:absolute;left:0;right:0;top:100%;background:var(--paper);border-bottom:1px solid var(--line);padding:8px 20px 16px}
+nav.main.open{display:block}
+nav.main ul{flex-direction:column}
+@media(min-width:420px){.call-num{display:inline}}
+@media(min-width:900px){
+  .menu-btn{display:none}
+  nav.main{display:block;position:static;background:none;border:0;padding:0}
+  nav.main ul{flex-direction:row}
+}
+
+/* hero */
+.hero{position:relative;background:var(--green);color:#f3eee1;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:
+  radial-gradient(600px 300px at 85% 10%,rgba(180,98,47,.35),transparent 70%),
+  repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 2px,transparent 2px 22px)}
+.hero .wrap{position:relative;display:grid;gap:36px;padding-top:48px;padding-bottom:56px}
+.hero h1{color:#fff}
+.hero h1 em{font-style:normal;color:#f1b98c}
+.hero .eyebrow{color:#f1b98c}
+.hero p.lead{font-size:1.15rem;max-width:34em;color:#e3ebe4}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}
+.hero .btn-ghost{border-color:#f3eee1;color:#f3eee1}
+.hero .btn-ghost:hover{background:#f3eee1;color:var(--green-d)}
+.trust{list-style:none;padding:0;margin:0;display:grid;gap:10px;grid-template-columns:1fr}
+.trust li{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.98rem}
+.trust svg{width:22px;height:22px;flex:none;color:#f1b98c}
+.trust small{display:block;font-weight:400;color:#c9d6cb;font-size:.8rem}
+.hero-art{display:none}
+@media(min-width:620px){.trust{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:960px){
+  .hero .wrap{grid-template-columns:1.15fr .85fr;align-items:center;padding-top:84px;padding-bottom:84px}
+  .hero-art{display:block}
+  .trust{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.18);padding-top:24px}
+}
+
+/* sections */
+section{padding:68px 0}
+.sec-head{max-width:640px;margin-bottom:36px}
+.sec-head p{color:var(--muted)}
+.grid{display:grid;gap:18px}
+.services{background:var(--cream)}
+.cards{grid-template-columns:1fr}
+@media(min-width:620px){.cards{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--copper)}
+.ico{width:54px;height:54px;border-radius:14px;background:var(--green-l);color:var(--green);display:grid;place-items:center;margin-bottom:16px}
+.ico svg{width:30px;height:30px}
+.card p{color:var(--muted);margin-bottom:.8em;font-size:.97rem}
+.card a.more{font-weight:700;font-size:.93rem;color:var(--copper-d);text-decoration:none}
+.card a.more:hover{text-decoration:underline}
+
+.how{background:var(--green-l)}
+.steps{list-style:none;padding:0;margin:0;counter-reset:s;grid-template-columns:1fr}
+@media(min-width:800px){.steps{grid-template-columns:repeat(3,1fr)}}
+.steps li{counter-increment:s;background:var(--paper);border-radius:var(--r);padding:28px 26px 26px;position:relative;border:1px solid #cddccf}
+.steps li:before{content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--copper);color:#fff;font-family:var(--serif);font-size:1.3rem;font-weight:700;margin-bottom:14px}
+.steps p{color:var(--muted);margin:0}
+
+.area .cols{display:grid;gap:32px}
+@media(min-width:860px){.area .cols{grid-template-columns:1fr 1fr;align-items:center}}
+.towns{list-style:none;padding:0;margin:0 0 16px;display:flex;flex-wrap:wrap;gap:10px}
+.towns li{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:600;font-size:.95rem}
+.note{font-size:.88rem;color:var(--muted)}
+.map{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:10px}
+
+.faq{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.faq .wrap{max-width:820px}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-weight:700;font-size:1.05rem;position:relative;color:var(--green-d)}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:1.6rem;color:var(--copper);transition:transform .2s}
+details[open] summary:after{transform:translateY(-50%) rotate(45deg)}
+details p{color:var(--muted);padding-right:20px}
+
+.contact{background:var(--green);color:#f3eee1}
+.contact h2{color:#fff}
+.contact .cols{display:grid;gap:36px}
+@media(min-width:900px){.contact .cols{grid-template-columns:.8fr 1.2fr}}
+.contact .eyebrow{color:#f1b98c}
+.contact ul{list-style:none;padding:0;margin:20px 0 0}
+.contact li{margin-bottom:10px}
+.contact a{color:#ffd9b8}
+.form{background:var(--paper);color:var(--ink);border-radius:var(--r);padding:26px;box-shadow:var(--shadow)}
+.row{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:620px){.row.two{grid-template-columns:1fr 1fr}}
+.field{margin-bottom:14px}
+label{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px;color:var(--green-d)}
+label span{font-weight:400;color:var(--muted)}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:10px;padding:11px 12px;min-height:46px}
+textarea{min-height:110px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--copper);outline-offset:1px;border-color:var(--copper)}
+.err{display:none;color:#a3261a;font-size:.85rem;margin-top:5px;font-weight:600}
+.field.bad .err{display:block}
+.field.bad input,.field.bad select{border-color:#a3261a}
+.form .btn{width:100%}
+.thanks{display:none;text-align:center;padding:20px 6px}
+.thanks svg{width:64px;height:64px;color:var(--green)}
+.form.sent form{display:none}
+.form.sent .thanks{display:block}
+
+footer{background:var(--green-d);color:#cfdad2;padding:40px 0 28px;font-size:.93rem}
+footer .cols{display:grid;gap:24px}
+@media(min-width:760px){footer .cols{grid-template-columns:1.3fr 1fr 1fr}}
+footer h3{color:#fff;font-size:1rem;font-family:var(--font);letter-spacing:.06em;text-transform:uppercase}
+footer a{color:#ffd9b8}
+footer p{margin:0 0 .4em}
+.legal{border-top:1px solid rgba(255,255,255,.15);margin-top:26px;padding-top:18px;font-size:.82rem;color:#a9baae}
+
+/* reveal */
+.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;transition-delay:var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+@keyframes drip{0%,70%{transform:translateY(0);opacity:1}100%{transform:translateY(26px);opacity:0}}
+.drop{animation:drip 3s ease-in infinite}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="demobar"><div class="wrap">
+  <span>Concept demo by Made to Scale. Names, prices and details are placeholders.</span>
+  <a href="https://madetoscale.site/#work">Back to Made to Scale</a>
+</div></div>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="logo" href="#top" aria-label="Cedar Ridge Plumbing and Heating, home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#1f4d3a"/><path d="M20 7 11 20h5l-4 7h16l-4-7h5z" fill="#f8f2e6"/><rect x="18.5" y="27" width="3" height="5" fill="#b4622f"/><path d="M8 34c4-2 8-2 12 0s8 2 12 0" fill="none" stroke="#b4622f" stroke-width="2" stroke-linecap="round"/></svg>
+      <span><b>Cedar Ridge</b><small>Plumbing &amp; Heating</small></span>
+    </a>
+    <nav class="main" id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#area">Service area</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#quote">Get a quote</a></li>
+      </ul>
+    </nav>
+    <div class="right">
+      <a class="btn btn-copper btn-call" href="tel:+15550100" aria-label="Call 555-0100">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        <span class="call-num">555-0100</span><span class="sr" hidden>Call</span>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<div id="top"></div>
+<section class="hero" style="padding:0">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow reveal">Plumbing &amp; heating, Cedar Ridge and nearby</span>
+      <h1 class="reveal" style="--d:.08s">Leaks fixed. Heat back on. <em>No surprises.</em></h1>
+      <p class="lead reveal" style="--d:.16s">Cedar Ridge Plumbing &amp; Heating is a made-up local team for this demo. Tell us what is wrong and get a clear, written quote before any work starts.</p>
+      <div class="cta-row reveal" style="--d:.24s">
+        <a class="btn btn-copper" href="#quote">Get a free quote</a>
+        <a class="btn btn-ghost" href="tel:+15550100">Call 555-0100</a>
+      </div>
+    </div>
+    <div class="hero-art reveal" style="--d:.2s" aria-hidden="false">
+      <svg viewBox="0 0 400 340" role="img" aria-label="Illustration of a copper pipe, a tap with a falling drop and a radiator">
+        <rect x="20" y="20" width="360" height="300" rx="28" fill="#2a6049"/>
+        <g fill="none" stroke="#b4622f" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M60 90h140a30 30 0 0 1 30 30v40"/><path d="M60 90h-0"/>
+        </g>
+        <rect x="46" y="76" width="22" height="28" rx="4" fill="#8f4a1e"/>
+        <rect x="210" y="150" width="40" height="18" rx="4" fill="#8f4a1e"/>
+        <path d="M230 168v22" stroke="#f8f2e6" stroke-width="10" stroke-linecap="round"/>
+        <path class="drop" d="M230 214c-8 12-12 18-12 24a12 12 0 0 0 24 0c0-6-4-12-12-24z" fill="#9fd3e6"/>
+        <g transform="translate(70 215)">
+          <rect width="120" height="86" rx="10" fill="#f8f2e6"/>
+          <g fill="#e1d5bd"><rect x="12" y="10" width="16" height="66" rx="8"/><rect x="36" y="10" width="16" height="66" rx="8"/><rect x="60" y="10" width="16" height="66" rx="8"/><rect x="84" y="10" width="16" height="66" rx="8"/></g>
+          <rect x="104" y="30" width="22" height="8" rx="4" fill="#b4622f"/>
+        </g>
+        <g transform="translate(290 70)" fill="none" stroke="#f1b98c" stroke-width="5" stroke-linecap="round"><path d="M0 40c-10-14 10-22 0-38"/><path d="M26 44c-10-14 10-22 0-38"/><path d="M52 40c-10-14 10-22 0-38"/></g>
+        <text x="290" y="290" fill="#f8f2e6" font-family="Georgia,serif" font-size="22" text-anchor="middle">Warm &amp; dry</text>
+      </svg>
+    </div>
+    <ul class="trust reveal" style="--d:.3s">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg><span>Licensed &amp; insured<small>Placeholder claim</small></span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg><span>Upfront quotes<small>Placeholder claim</small></span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Same-day callouts<small>Placeholder claim</small></span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">What we do</span>
+      <h2>Services for the home</h2>
+      <p>Six example services. On a real site each would link to its own page with details, photos and a quote button.</p>
+    </div>
+    <div class="grid cards">
+      <article class="card reveal"><div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h14a4 4 0 0 1 4 4v12"/><path d="M4 8h18a8 8 0 0 1 8 8v12"/><path d="M16 22c-2 3-3 4-3 5.5a3 3 0 0 0 6 0c0-1.500-1-2.500-3-5.500z"/></svg></div><h3>Leak &amp; pipe repair</h3><p>Dripping taps, burst pipes and damp patches found and fixed.</p><a class="more" href="#quote">Ask about this</a></article>
+      <article class="card reveal" style="--d:.07s"><div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h20v6a10 10 0 0 1-20 0z"/><path d="M16 22v6M11 28h10"/><path d="M12 12h8"/></svg></div><h3>Blocked drains</h3><p>Slow sinks, smelly drains and blocked toilets cleared.</p><a class="more" href="#quote">Ask about this</a></article>
+      <article class="card reveal" style="--d:.14s"><div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="16" height="26" rx="5"/><path d="M13 22c0-3 3-4 3-8 2 2 4 4 4 7a4 4 0 0 1-7 1z" transform="translate(-1 0)"/><path d="M12 8h8"/></svg></div><h3>Water heaters</h3><p>Repair, replacement and servicing for hot water systems.</p><a class="more" href="#quote">Ask about this</a></article>
+      <article class="card reveal"><div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="24" height="15" rx="3"/><path d="M9 24v3M23 24v3M10 14v5M16 14v5M22 14v5"/></svg></div><h3>Boilers &amp; heating</h3><p>Boiler servicing, radiator fixes and heating system checks.</p><a class="more" href="#quote">Ask about this</a></article>
+      <article class="card reveal" style="--d:.07s"><div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15h26v4a7 7 0 0 1-7 7H10a7 7 0 0 1-7-7z"/><path d="M7 15V8a3 3 0 0 1 6 0"/><path d="M9 26l-2 3M23 26l2 3"/></svg></div><h3>Bathroom fit-outs</h3><p>Taps, showers, toilets and full bathroom plumbing.</p><a class="more" href="#quote">Ask about this</a></article>
+      <article class="card reveal" style="--d:.14s"><div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3l13 23H3z"/><path d="M16 12v7M16 23v.5"/></svg></div><h3>Emergency callouts</h3><p>Urgent water or heating problems, with a quick reply from the team.</p><a class="more" href="tel:+15550100">Call 555-0100</a></article>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>Three simple steps</h2>
+    </div>
+    <ol class="grid steps">
+      <li class="reveal"><h3>Tell us the problem</h3><p>Call or fill in the form below. A few lines is enough.</p></li>
+      <li class="reveal" style="--d:.1s"><h3>Get a clear quote</h3><p>We confirm the price in writing before any work starts.</p></li>
+      <li class="reveal" style="--d:.2s"><h3>We fix it and tidy up</h3><p>The job gets done and the area is left clean.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="area" id="area">
+  <div class="wrap cols">
+    <div class="reveal">
+      <span class="eyebrow">Service area</span>
+      <h2>Serving Cedar Ridge and nearby</h2>
+      <ul class="towns">
+        <li>Cedar Ridge</li><li>Maple Hollow</li><li>Stonebrook</li><li>Fernvale</li><li>Oak Bend</li><li>Willow Creek</li>
+      </ul>
+      <p class="note">Placeholder towns. A real site would list the actual areas covered, which also helps local search.</p>
+    </div>
+    <div class="map reveal" style="--d:.1s">
+      <svg viewBox="0 0 400 260" role="img" aria-label="Simple illustrative map showing the placeholder service area around Cedar Ridge">
+        <rect width="400" height="260" rx="10" fill="#e4ede6"/>
+        <path d="M0 190c60-30 110 10 170-10s110-50 230-20v100H0z" fill="#cfe0d3"/>
+        <path d="M-10 60c80 30 120-30 200 0s140 30 220-10" fill="none" stroke="#a9cfe0" stroke-width="12"/>
+        <circle cx="200" cy="130" r="95" fill="#1f4d3a" fill-opacity=".1" stroke="#1f4d3a" stroke-dasharray="6 6" stroke-width="2"/>
+        <g fill="#b4622f"><circle cx="200" cy="130" r="9"/><circle cx="140" cy="100" r="6"/><circle cx="262" cy="108" r="6"/><circle cx="238" cy="178" r="6"/><circle cx="150" cy="168" r="6"/></g>
+        <text x="200" y="156" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#14352a">Cedar Ridge</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow">FAQ</span><h2>Common questions</h2></div>
+    <div class="reveal">
+      <details><summary>Do you give a price before starting?</summary><p>In this demo, yes: the idea is a written quote first, so there are no surprises. A real business would add its own pricing policy here.</p></details>
+      <details><summary>Can you come out the same day?</summary><p>Same-day callouts are shown as a placeholder promise. A real site would state hours and how urgent jobs are handled.</p></details>
+      <details><summary>What areas do you cover?</summary><p>The towns listed above are made up. Replace them with the real service area.</p></details>
+      <details><summary>How do I book?</summary><p>Call 555-0100 (a placeholder number) or send the quote form below. Nothing on this demo is actually sent.</p></details>
+      <details><summary>Do you work on both plumbing and heating?</summary><p>Yes, this fictional company does both, from leaky taps to boiler servicing.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="quote">
+  <div class="wrap cols">
+    <div class="reveal">
+      <span class="eyebrow">Get a quote</span>
+      <h2>Tell us what needs fixing</h2>
+      <p>Fill in the form and the team replies with next steps. This is a demo form: it checks your entries in the browser and sends nothing.</p>
+      <ul>
+        <li><strong>Phone:</strong> <a href="tel:+15550100">555-0100</a></li>
+        <li><strong>Email:</strong> <a href="mailto:hello@example.com">hello@example.com</a></li>
+        <li><strong>Hours:</strong> Placeholder, e.g. Mon to Sat</li>
+      </ul>
+    </div>
+    <div class="form reveal" id="formBox" style="--d:.1s">
+      <form id="quoteForm" novalidate>
+        <div class="row two">
+          <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" required><p class="err" id="e-name">Please enter your name.</p></div>
+          <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required><p class="err" id="e-phone">Please enter a phone number (at least 7 digits).</p></div>
+        </div>
+        <div class="field"><label for="email">Email <span>(optional)</span></label><input id="email" name="email" type="email" autocomplete="email"><p class="err" id="e-email">That email does not look right.</p></div>
+        <div class="field"><label for="service">What do you need?</label>
+          <select id="service" name="service" required>
+            <option value="">Choose a service</option><option>Leak or pipe repair</option><option>Blocked drain</option><option>Water heater</option><option>Boiler or heating</option><option>Bathroom plumbing</option><option>Emergency</option><option>Something else</option>
+          </select><p class="err" id="e-service">Please choose a service.</p></div>
+        <div class="field"><label for="msg">Details <span>(optional)</span></label><textarea id="msg" name="msg"></textarea></div>
+        <button class="btn btn-copper" type="submit">Request my quote</button>
+      </form>
+      <div class="thanks" id="thanks" role="status" tabindex="-1">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="27"/><path d="m20 33 8 8 16-17"/></svg>
+        <h3>Thanks, <span id="who">friend</span>!</h3>
+        <p>In a real site, your request would now be on its way. This is a demo, so nothing was sent or stored.</p>
+        <button class="btn btn-ghost" type="button" id="again">Send another</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h3>Cedar Ridge Plumbing &amp; Heating</h3>
+        <p>A fictional company created for a concept demo.</p>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <p>12 Placeholder Lane, Cedar Ridge</p>
+        <p><a href="tel:+15550100">555-0100</a></p>
+        <p><a href="mailto:hello@example.com">hello@example.com</a></p>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <p><a href="#services">Services</a></p>
+        <p><a href="#faq">FAQ</a></p>
+        <p><a href="https://madetoscale.site/#work">Back to Made to Scale</a></p>
+      </div>
+    </div>
+    <p class="legal">Concept demo by Made to Scale. Names, prices and details are placeholders. Not a real business.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var btn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
+  btn.addEventListener('click',function(){var o=nav.classList.toggle('open');btn.setAttribute('aria-expanded',o)});
+  nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('open');btn.setAttribute('aria-expanded','false')}});
+
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+    els.forEach(function(el){io.observe(el)});
+  }else{els.forEach(function(el){el.classList.add('in')})}
+
+  var f=document.getElementById('quoteForm'),box=document.getElementById('formBox'),th=document.getElementById('thanks');
+  function bad(id,on){var el=document.getElementById(id);el.closest('.field').classList.toggle('bad',on);el.setAttribute('aria-invalid',on);return on}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=f.name.value.trim(),p=f.phone.value.replace(/\D/g,''),m=f.email.value.trim(),s=f.service.value;
+    var errs=[bad('name',!n),bad('phone',p.length<7),bad('email',m&&!/^\S+@\S+\.\S+$/.test(m)),bad('service',!s)];
+    var first=['name','phone','email','service'][errs.indexOf(true)];
+    if(first){document.getElementById(first).focus();return}
+    document.getElementById('who').textContent=n.split(' ')[0];
+    box.classList.add('sent');th.focus();
+  });
+  document.getElementById('again').addEventListener('click',function(){f.reset();box.classList.remove('sent');f.name.focus()});
+})();
+</script>
+</body>
+</html>
