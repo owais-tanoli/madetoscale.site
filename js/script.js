@@ -88,9 +88,24 @@
     });
   });
 
+  var wmore = document.getElementById('work-more');
+  var WLIMIT = 3;
+  if (wmore && items.length > WLIMIT) {
+    var wopen = false;
+    items.forEach(function (it, i) { if (i >= WLIMIT) it.hidden = true; });
+    wmore.hidden = false;
+    wmore.textContent = 'Show all ' + items.length + ' concept builds';
+    wmore.addEventListener('click', function () {
+      wopen = !wopen;
+      items.forEach(function (it, i) { if (i >= WLIMIT) it.hidden = !wopen; });
+      wmore.textContent = wopen ? 'Show fewer concept builds' : 'Show all ' + items.length + ' concept builds';
+      wmore.setAttribute('aria-expanded', String(wopen));
+    });
+  }
+
   var qs = Array.prototype.slice.call(document.querySelectorAll('.faq-q'));
   var more = document.getElementById('faq-more');
-  var LIMIT = 8;
+  var LIMIT = 4;
   if (more && qs.length > LIMIT) {
     var expanded = false;
     qs.forEach(function (q, i) { if (i >= LIMIT) q.hidden = true; });

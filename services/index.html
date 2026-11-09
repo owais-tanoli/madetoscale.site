@@ -63,6 +63,7 @@
     <nav class="top__nav" id="nav-links" aria-label="Main">
       <a href="../">Home</a>
       <a href="./" aria-current="page" style="color:var(--ink)">Services</a>
+      <a href="#plans">Pricing</a>
       <a href="../#work">Work</a>
       <a href="../#contact">Contact</a>
     </nav>
@@ -129,6 +130,7 @@
       <button class="btn btn--ghost" type="button" id="svc-close">Collapse all</button>
     </div>
     <div class="svc-qs" id="svc-list"></div>
+    <p class="more-row"><button class="more-btn" type="button" id="svc-more" hidden>Show all services</button></p>
   </div>
 </section>
 
@@ -262,7 +264,15 @@ var SERVICES = [
       '<div><h4>Outcome</h4><p>' + esc(s[3]) + '</p></div>' +
       '</div></details>';
   }).join('');
-  function setAll(open){ list.querySelectorAll('details').forEach(function (d) { d.open = open; }); }
+  var LIMIT = 6, more = document.getElementById('svc-more');
+  var rows = Array.prototype.slice.call(list.querySelectorAll('details'));
+  function showAll(on){
+    rows.forEach(function (d, i) { if (i >= LIMIT) d.hidden = !on; });
+    more.textContent = on ? 'Show fewer services' : 'Show all ' + rows.length + ' services';
+    more.setAttribute('aria-expanded', String(on));
+  }
+  if (rows.length > LIMIT) { more.hidden = false; showAll(false); more.addEventListener('click', function () { showAll(more.getAttribute('aria-expanded') !== 'true'); }); }
+  function setAll(open){ if (open && rows.length > LIMIT) showAll(true); rows.forEach(function (d) { d.open = open; }); }
   document.getElementById('svc-open').addEventListener('click', function () { setAll(true); });
   document.getElementById('svc-close').addEventListener('click', function () { setAll(false); });
 })();

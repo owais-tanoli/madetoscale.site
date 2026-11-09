@@ -622,3 +622,11 @@ h2{ font-weight: 500; font-size: clamp(30px, 4.2vw, 58px); line-height: 1.1; let
 /* portfolio demo link */
 .proj__link{ display: inline-block; margin-top: 14px; font-weight: 600; color: var(--amber); text-decoration: none; border-bottom: 1px solid transparent; }
 .proj__link:hover{ border-bottom-color: var(--amber); }
+
+/* "show all" buttons: keep pages short, options one click away */
+[hidden]{ display: none !important; }
+.more-row{ text-align: center; margin: 32px 0 0; }
+.faq__text .more-btn{ margin-top: 24px; }
+.more-btn{ min-height: 48px; padding: 0 26px; background: none; border: 1px solid var(--amber); color: var(--amber); border-radius: 999px; font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; transition: background-color .2s ease, color .2s ease; }
+.more-btn:hover{ background: var(--amber); color: var(--amber-ink); }
+.more-btn:focus-visible{ outline: 2px solid var(--blue); outline-offset: 4px; }
