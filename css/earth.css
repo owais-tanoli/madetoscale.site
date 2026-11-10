@@ -1,0 +1,31 @@
+/* Made to Scale: site-wide animated Earth (works with style.css + motion.css) */
+
+/* canvas sits behind the whole page and never blocks taps or scrolling */
+.earth-canvas{
+  position:fixed;inset:0;width:100vw;height:100vh;height:100lvh;
+  display:block;z-index:-2;pointer-events:none;
+}
+/* dark veil keeps text easy to read over the globe */
+.earth-veil{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,.2) 40%,rgba(0,0,0,.52));
+}
+@media (max-width:820px){ .earth-veil{ background:rgba(0,0,0,.52); } }
+
+/* everything below applies ONLY once the globe is on screen.
+   If WebGL or the files fail, the old hero picture stays exactly as it was. */
+html.earth-on{ background:#000; }
+html.earth-on body{ background:transparent; }
+
+/* old hero picture, sun and stars are replaced by the live globe */
+html.earth-on .hero__earth,
+html.earth-on .hero__sun,
+html.earth-on .hero__stars{ display:none !important; }
+
+/* let the globe show through the sections that had solid black backgrounds */
+html.earth-on .hero,
+html.earth-on .intro,
+html.earth-on .page-hero{ background:transparent; }
+html.earth-on .journey,
+html.earth-on .about{ background:rgba(0,0,0,.42); }
+html.earth-on .foot{ background:rgba(0,0,0,.72); }

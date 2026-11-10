@@ -8,6 +8,16 @@
 <meta name="theme-color" content="#000000">
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon-48.png">
 <link rel="stylesheet" href="/css/style.css">
+<!-- site-wide animated Earth -->
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="stylesheet" href="/css/earth.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.143.0/build/three.module.js",
+  "three/examples/jsm/": "https://unpkg.com/three@0.143.0/examples/jsm/"
+}}
+</script>
+<script type="module" src="/js/earth.js"></script>
 </head>
 <body>
 <main class="wrap" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;gap:24px">
