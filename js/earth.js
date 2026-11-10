@@ -64,7 +64,8 @@ float snoise(vec3 v){
   p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
   vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); m = m * m;
   return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
-}`;
+}
+`;
 const VERT_MAIN = /void\s+main\s*\(\s*\)\s*\{/;
 
 async function init(){
