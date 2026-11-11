@@ -2,7 +2,6 @@
    Made to Scale: cinematic motion layer (no libraries)
    - hero: words rise out of a mask, the earth rises, the sun comes up,
      stars drift behind, the whole scene follows the pointer and zooms in as you scroll
-   - a held statement whose words light up as you scroll
    - section headings rise word by word
    - cards follow the pointer with light and a gentle tilt
    - buttons lean toward the pointer
@@ -109,27 +108,6 @@
   });
   qa('.proj-grid .proj').forEach(function (el) { el.style.setProperty('--ry', '58px'); });
   qa('.ind li, .why__list li').forEach(function (el) { el.style.setProperty('--ry', '26px'); });
-
-  /* ---------- 3. held statement (words light up with scroll) ---------- */
-  var intro = doc.querySelector('.intro');
-  var statement = intro && intro.querySelector('.statement');
-  var inkWords = [];
-  if (statement) {
-    inkWords = splitWords(statement, false);
-    statement.classList.add('m-ink');
-    intro.classList.add('m-scene');
-  }
-  function paintInk() {
-    if (!inkWords.length) return;
-    var total = intro.offsetHeight - window.innerHeight + (header ? header.offsetHeight : 0);
-    var t = total > 0 ? clamp(-intro.getBoundingClientRect().top / total, 0, 1) : 1;
-    var f = clamp(t / 0.8, 0, 1); // finished with a short hold at the end
-    var n = inkWords.length, ramp = 2.6;
-    for (var k = 0; k < n; k++) {
-      var a = clamp((f * (n + ramp) - k) / ramp, 0, 1);
-      inkWords[k].style.opacity = (0.2 + 0.8 * a).toFixed(3);
-    }
-  }
 
   /* ---------- 4. hero scene: sun, stars, pointer, zoom ---------- */
   var hero = doc.querySelector('.hero');
@@ -247,7 +225,6 @@
       earth.style.setProperty('--es', (1 + p * 0.22).toFixed(4));
     }
     if (stars) stars.setScroll(y);
-    paintInk();
   }
   window.addEventListener('scroll', function () {
     if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }

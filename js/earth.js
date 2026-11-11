@@ -29,6 +29,7 @@ const CONFIG = {
   markerColor:'#ffd27a', markerCount: MOBILE ? 30 : 60, markerSize:16, markerSpeed:0.5,
 };
 
+const failEarth = () => document.documentElement.classList.add('earth-fail');
 const Lerp = (a,b,t) => a + (b-a)*t;
 const clamp = (v,lo,hi) => Math.min(hi, Math.max(lo, v));
 const hexToVec3 = h => { const n = parseInt(h.replace('#',''),16); return new THREE.Vector3(((n>>16)&255)/255, ((n>>8)&255)/255, (n&255)/255); };
@@ -75,7 +76,7 @@ async function init(){
   let renderer;
   try {
     renderer = new THREE.WebGL1Renderer({ canvas, antialias: !MOBILE, powerPreference: 'high-performance' });
-  } catch (e) { console.warn('[earth] WebGL not available', e); return; }
+  } catch (e) { console.warn('[earth] WebGL not available', e); failEarth(); return; }
   const veil = document.createElement('div');
   veil.className = 'earth-veil';
   document.body.prepend(veil);
@@ -365,11 +366,11 @@ async function init(){
 
   let pg;
   try { pg = await loadGLB(FILES.planet); }
-  catch (e) { console.warn('[earth] planet failed — keeping the normal site background', e); canvas.remove(); veil.remove(); return; }
+  catch (e) { console.warn('[earth] planet failed — keeping the normal site background', e); canvas.remove(); veil.remove(); failEarth(); return; }
 
   let mesh = null;
   pg.scene.traverse(o => { if (!mesh && o.isMesh) mesh = o; });
-  if (!mesh){ canvas.remove(); veil.remove(); return; }
+  if (!mesh){ canvas.remove(); veil.remove(); failEarth(); return; }
   mesh.geometry.computeBoundingSphere();
   const bs = mesh.geometry.boundingSphere, sc = CONFIG.planetRadius / bs.radius;
   mesh.scale.setScalar(sc); mesh.position.copy(bs.center).multiplyScalar(-sc); mesh.quaternion.identity();
@@ -491,9 +492,9 @@ async function init(){
     motes.material.uniforms.uTime.value = t * CONFIG.atmoSpeed * 8;
     finalPass.uniforms.iTime.value = REDUCED ? 0 : t * CONFIG.atmoSpeed * 0.4;
     composer.render();
-    if (!shown){ shown = true; document.documentElement.classList.add('earth-on'); }  /* switch the site to earth mode only once the globe is really on screen */
+    if (!shown){ shown = true; document.documentElement.classList.remove('earth-fail'); document.documentElement.classList.add('earth-on'); }  /* switch the site to earth mode only once the globe is really on screen */
   }
   requestAnimationFrame(frame);
 }
 
-init().catch(e => console.warn('[earth] failed', e));
+init().catch(e => { console.warn('[earth] failed', e); failEarth(); });

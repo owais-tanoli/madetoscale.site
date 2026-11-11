@@ -4,7 +4,9 @@
 .earth-canvas{
   position:fixed;inset:0;width:100vw;height:100vh;height:100lvh;
   display:block;z-index:-2;pointer-events:none;
+  opacity:0;transition:opacity 1.4s ease;
 }
+html.earth-on .earth-canvas{ opacity:1; }
 /* dark veil keeps text easy to read over the globe */
 .earth-veil{
   position:fixed;inset:0;z-index:-1;pointer-events:none;
@@ -29,3 +31,12 @@ html.earth-on .page-hero{ background:transparent; }
 html.earth-on .journey,
 html.earth-on .about{ background:rgba(0,0,0,.42); }
 html.earth-on .foot{ background:rgba(0,0,0,.72); }
+
+/* HERO ON FIRST LOAD: never flash the old flat picture while the globe is loading.
+   The old picture only comes back if the globe really cannot run (class "earth-fail"). */
+html:not(.earth-fail) .hero__earth,
+html:not(.earth-fail) .hero__sun,
+html:not(.earth-fail) .hero__stars{ display:none !important; }
+html:not(.earth-fail) .hero{ background:transparent; }
+html:not(.earth-fail) body{ background:transparent; }
+html:not(.earth-fail){ background:#000; }

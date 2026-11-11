@@ -62,16 +62,6 @@
   .hero__stars{ position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; animation: mStars 3s ease-out .4s forwards; }
   @keyframes mStars{ to{ opacity: 1; } }
 
-  /* ---------- 2. HELD STATEMENT: words light up as you scroll ---------- */
-
-  .m-on .intro.m-scene{ height: 230svh; padding: 0; }
-  .m-on .intro.m-scene > .wrap{
-    position: sticky; top: var(--hh); height: calc(100svh - var(--hh));
-    display: flex; align-items: center; justify-content: center;
-  }
-  .m-on .intro.m-scene .statement{ font-size: clamp(30px, 4.6vw, 68px); line-height: 1.12; max-width: 24ch; }
-  .m-ink .m-wi{ display: inline; opacity: .2; }
-
   /* ---------- 3. HEADINGS: words rise out of a mask when scrolled to ---------- */
 
   .m-split:not(.hero__title) .m-wi{ transform: translateY(112%); }
@@ -99,8 +89,6 @@
 }
 
 @media (prefers-reduced-motion: no-preference) and (max-width: 720px){
-  .m-on .intro.m-scene{ height: 190svh; }
-  .m-on .intro.m-scene .statement{ font-size: clamp(26px, 7.4vw, 40px); }
   .m-on .hero__earth{ translate: 0 0; }
   .m-on .hero__inner{ translate: 0 0; }
 }
