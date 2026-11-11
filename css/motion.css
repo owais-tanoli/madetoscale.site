@@ -51,7 +51,7 @@
   .hero__sun{
     position: absolute; left: 50%; top: 36%; width: 40%; aspect-ratio: 1;
     translate: -50% -50%; pointer-events: none; mix-blend-mode: screen; opacity: 0;
-    background: radial-gradient(circle, rgba(120,235,190,.9) 0, rgba(70,214,154,.38) 24%, rgba(70,214,154,0) 64%);
+    background: radial-gradient(circle, rgba(255,218,150,.9) 0, rgba(211,170,106,.38) 24%, rgba(211,170,106,0) 64%);
     animation: mSun 3.4s var(--ease-expo) .6s forwards, mBreathe 7s ease-in-out 4s infinite;
   }
   @keyframes mSun{ from{ opacity: 0; scale: .35; } to{ opacity: .9; scale: 1; } }
@@ -76,7 +76,7 @@
   .m-spot{
     position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none; opacity: 0;
     transition: opacity .35s ease;
-    background: radial-gradient(420px circle at var(--sx, 50%) var(--sy, 50%), rgba(70,214,154,.16), rgba(70,214,154,0) 62%);
+    background: radial-gradient(420px circle at var(--sx, 50%) var(--sy, 50%), rgba(211,170,106,.16), rgba(211,170,106,0) 62%);
   }
   .m-card.is-hot .m-spot{ opacity: 1; }
 
@@ -85,7 +85,7 @@
   .m-mag{ transition: transform .2s ease, background-color .2s ease, color .2s ease, translate .4s var(--ease-out); }
 
   /* ---------- 6. Scroll progress bar gets a soft head ---------- */
-  .progress{ box-shadow: 0 0 14px rgba(70,214,154,.7); }
+  .progress{ box-shadow: 0 0 14px rgba(211,170,106,.7); }
 }
 
 @media (prefers-reduced-motion: no-preference) and (max-width: 720px){

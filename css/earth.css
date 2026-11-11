@@ -16,7 +16,7 @@ html.earth-on .earth-canvas{ opacity:1; }
 
 /* everything below applies ONLY once the globe is on screen.
    If WebGL or the files fail, the old hero picture stays exactly as it was. */
-html.earth-on{ background:#05070B; }
+html.earth-on{ background:#050403; }
 html.earth-on body{ background:transparent; }
 
 /* old hero picture, sun and stars are replaced by the live globe */
@@ -39,4 +39,4 @@ html:not(.earth-fail) .hero__sun,
 html:not(.earth-fail) .hero__stars{ display:none !important; }
 html:not(.earth-fail) .hero{ background:transparent; }
 html:not(.earth-fail) body{ background:transparent; }
-html:not(.earth-fail){ background:#05070B; }
+html:not(.earth-fail){ background:#050403; }

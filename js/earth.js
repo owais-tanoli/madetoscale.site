@@ -17,16 +17,16 @@ const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MOBILE  = matchMedia('(max-width: 820px), (pointer: coarse)').matches;
 
 const CONFIG = {
-  rimColor:'#9CC8FF', rimPower:2.4, nightLights:10, terrainDepth:0.33, terrainShade:1.3,
+  rimColor:'#ffe0a0', rimPower:2.4, nightLights:10, terrainDepth:0.33, terrainShade:1.3,
   oceanGlint:0.45, oceanDeep:0.12, oceanFlow:3, oceanFlowSpeed:0.8, oceanFlowScale:2.1,
-  glowColor:'#2F5BFF', glowIntensity:1.7, planetRadius:1.95, spin:0.03, initRotation:2.07, tilt:0.37,
+  glowColor:'#d9a84a', glowIntensity:1.7, planetRadius:1.95, spin:0.03, initRotation:2.07, tilt:0.37,
   cloud1Height:1.005, cloud1Opacity:0.6, cloud1Spin:0.06,
   cloud2Height:1.03,  cloud2Opacity:0.5, cloud2Spin:0.14,
   cloud3Height:1.075, cloud3Opacity:0.5, cloud3Spin:0.1,
-  bgColor:'#05070B', flameColor:'#2A44C8', flameColor2:'#BCD4FF', flameAmt:0.12,
-  atmoColor:'#8FB8FF', atmoCount: MOBILE ? 120 : 320, atmoSize:22, atmoSpeed:0.8,
-  starColor:'#EAF1FF', starCount: MOBILE ? 600 : 1400, starSize:1.6, starFlicker:1,
-  markerColor:'#6EF0B0', markerCount: MOBILE ? 30 : 60, markerSize:16, markerSpeed:0.5,
+  bgColor:'#050403', flameColor:'#d4a23a', flameColor2:'#fff1c9', flameAmt:0.12,
+  atmoColor:'#f2d58a', atmoCount: MOBILE ? 120 : 320, atmoSize:22, atmoSpeed:0.8,
+  starColor:'#fff3d6', starCount: MOBILE ? 600 : 1400, starSize:1.6, starFlicker:1,
+  markerColor:'#ffd27a', markerCount: MOBILE ? 30 : 60, markerSize:16, markerSpeed:0.5,
 };
 
 const failEarth = () => document.documentElement.classList.add('earth-fail');
