@@ -85,7 +85,6 @@
   .m-mag{ transition: transform .2s ease, background-color .2s ease, color .2s ease, translate .4s var(--ease-out); }
 
   /* ---------- 6. Scroll progress bar gets a soft head ---------- */
-  .progress{ box-shadow: 0 0 14px rgba(211,170,106,.7); }
 }
 
 @media (prefers-reduced-motion: no-preference) and (max-width: 720px){

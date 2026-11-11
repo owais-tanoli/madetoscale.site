@@ -652,19 +652,15 @@ h1, h2, .hero__title, .close__title, .page-hero h1{ letter-spacing: -0.035em; }
    Shiny gold: moving metallic shine on buttons, numbers and prices
    ========================================================= */
 :root{ --gold-shine: linear-gradient(115deg, #8f6a22 0%, #d9ae4f 20%, #fff1b8 45%, #e6bf62 62%, #a67c2c 82%, #d9ae4f 100%); }
-.btn--amber{
-  background: var(--gold-shine); background-size: 240% 100%; color: #1a1206;
-  box-shadow: 0 0 26px rgba(233,196,106,.38), inset 0 1px 0 rgba(255,255,255,.55), inset 0 -2px 0 rgba(120,84,20,.35);
-  animation: goldShine 7s linear infinite;
-}
-.btn--amber:hover{ background: var(--gold-shine); background-size: 240% 100%; filter: brightness(1.12); box-shadow: 0 0 36px rgba(255,220,130,.55), inset 0 1px 0 rgba(255,255,255,.7); }
+.btn--amber{ background: #D3AA6A; color: #1a1206; box-shadow: none; animation: none; }
+.btn--amber:hover{ background: #E3C48E; box-shadow: none; filter: none; }
 .btn--ghost{ border-color: rgba(233,196,106,.7); color: #F0D08A; }
-.btn--ghost:hover{ background: var(--gold-shine); color: #1a1206; }
+.btn--ghost:hover{ background: #D3AA6A; color: #1a1206; }
 .steps__no, .how4 span, .result__total b, .plan__price, .svc-q__no{
   background: var(--gold-shine); background-size: 240% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
   animation: goldShine 8s linear infinite;
 }
-.progress{ background: var(--gold-shine); }
+.progress{ background: #D3AA6A; }
 @keyframes goldShine{ to{ background-position: -240% 0; } }
-@media (prefers-reduced-motion: reduce){ .btn--amber, .steps__no, .how4 span, .result__total b, .plan__price, .svc-q__no{ animation: none; } }
+@media (prefers-reduced-motion: reduce){ .steps__no, .how4 span, .result__total b, .plan__price, .svc-q__no{ animation: none; } }
