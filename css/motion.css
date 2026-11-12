@@ -76,7 +76,7 @@
   .m-spot{
     position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none; opacity: 0;
     transition: opacity .35s ease;
-    background: radial-gradient(420px circle at var(--sx, 50%) var(--sy, 50%), rgba(211,170,106,.16), rgba(211,170,106,0) 62%);
+    display: none;
   }
   .m-card.is-hot .m-spot{ opacity: 1; }
 

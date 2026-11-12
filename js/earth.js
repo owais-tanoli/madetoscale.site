@@ -1,4 +1,4 @@
-/* Made to Scale — site-wide animated Earth (Three.js r0.143, gold palette)
+/* Made to Scale: site-wide animated Earth (Three.js r0.143, gold palette)
    Put this file at: js/earth.js
    Needs: the importmap snippet in each page <head> (see instructions). */
 import * as THREE from 'three';
@@ -366,7 +366,7 @@ async function init(){
 
   let pg;
   try { pg = await loadGLB(FILES.planet); }
-  catch (e) { console.warn('[earth] planet failed — keeping the normal site background', e); canvas.remove(); veil.remove(); failEarth(); return; }
+  catch (e) { console.warn('[earth] planet failed, keeping the normal site background', e); canvas.remove(); veil.remove(); failEarth(); return; }
 
   let mesh = null;
   pg.scene.traverse(o => { if (!mesh && o.isMesh) mesh = o; });

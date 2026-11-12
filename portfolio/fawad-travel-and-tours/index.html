@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fawad Travel & Tours | Umrah & Hajj Packages</title>
 <meta name="robots" content="noindex, follow">
-<meta name="description" content="Fawad Travel & Tours — Umrah and Hajj packages for individuals, couples, families and groups. Scroll to begin your tawaf.">
+<meta name="description" content="Fawad Travel & Tours: Umrah and Hajj packages for individuals, couples, families and groups. Scroll to begin your tawaf.">
 <meta property="og:title" content="Fawad Travel & Tours | Umrah & Hajj Packages">
 <meta property="og:description" content="Scroll to circle the Kaaba and discover our Umrah packages.">
 <link rel="icon" href="logo-emblem.png" type="image/png">
@@ -103,7 +103,7 @@
   .card h3{margin:14px 0 10px;font-family:Georgia,serif;font-size:28px;color:#fff6d6}
   .card ul{margin:0 0 16px;padding:0;list-style:none;color:#cfd6e6;font-size:14.5px}
   .card li{padding:5px 0 5px 24px;position:relative}
-  .card li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+  .card li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:2px;background:var(--gold)}
   .card .price{display:flex;justify-content:space-between;align-items:baseline;
     border-top:1px dashed rgba(217,178,90,.3);padding-top:12px;margin-bottom:14px;color:#aab4c8;font-size:13px}
   .card .price b{color:var(--gold-2);font-size:17px}
@@ -156,7 +156,7 @@
   <div class="hero" id="hero">
     <p class="ar" lang="ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</p>
     <h1>Walk the circle<br>of faith</h1>
-    <p>Umrah &amp; Hajj journeys by Fawad Travel &amp; Tours — scroll to begin your tawaf.</p>
+    <p>Umrah &amp; Hajj journeys by Fawad Travel &amp; Tours. Scroll to begin your tawaf.</p>
   </div>
   <div class="scrollhint" id="hint">Scroll<i></i></div>
 
@@ -231,7 +231,7 @@ PACKAGES.forEach((p,i)=>{
   const tel = CONFIG.phone ? `<a class="btn ghost" href="tel:${CONFIG.phone.replace(/\s/g,'')}">Call ${CONFIG.phone}</a>` : "";
   const gbp = CONFIG.gbp ? `<a class="btn ghost" target="_blank" rel="noopener" href="${CONFIG.gbp}">Find us on Google</a>` : "";
   el.innerHTML = `
-    <span class="num">✦</span>
+    <span class="num">&bull;</span>
     <span class="tag">Your journey</span>
     <h3>Begin your Umrah</h3>
     <p>Seven circuits complete. Tell us your dates and group size and we'll shape the perfect package.</p>
